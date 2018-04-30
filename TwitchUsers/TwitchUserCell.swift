@@ -16,7 +16,6 @@ class TwitchUserCell: UICollectionViewCell{
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setup()
-        print("inited")
     }
     
     convenience init(frame: CGRect, image: UIImage, name: String) {
@@ -26,7 +25,6 @@ class TwitchUserCell: UICollectionViewCell{
     }
     
     func setup(){
-
         self.contentView.addSubview(photoFrame)
         self.contentView.addSubview(nameLabel)
     }

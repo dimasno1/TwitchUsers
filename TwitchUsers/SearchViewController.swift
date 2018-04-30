@@ -32,7 +32,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate{
         labelTest.font = font
         labelTest.text = "twitch users"
         labelTest.sizeToFit()
-        labelTest.center = self.view.center
     }
     
     @objc func makeLayout(notification: Notification){
@@ -40,6 +39,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate{
         let frameOfSafeArea = self.view.safeAreaLayoutGuide.layoutFrame
         searchbar.frame.origin = CGPoint(x: 0, y: frameOfSafeArea.minY)
         self.searchbar.frame.size = someSize
+        labelTest.center = self.view.center
     }
 }
 

@@ -39,19 +39,17 @@ class SearchBarController: UISearchBar, UISearchBarDelegate{
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-    }
-    
-    /* func searchBarSearchButtonClickedByMemberOfViewController(_ searchBar: UISearchBar, senderController: UIViewController){
+        guard let windowOnScreenController = UIApplication.shared.keyWindow?.rootViewController else { return }
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: senderController.view.frame.size.width - 10, height: senderController.view.frame.size.height / 3)
+        layout.itemSize = CGSize(width: windowOnScreenController.view.frame.size.width - 10, height: windowOnScreenController.view.frame.size.height / 3)
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         let vcToPresent = UsersCollectionView(collectionViewLayout: layout)
         vcToPresent.collectionView?.backgroundColor = color
         
-        senderController.present(vcToPresent, animated: true, completion: nil)
-    } Вот это хотел через extension попробовать реализовать */
+        windowOnScreenController.present(vcToPresent, animated: true, completion: nil)
+        searchBar.resignFirstResponder()
+    }
     
 }
 
