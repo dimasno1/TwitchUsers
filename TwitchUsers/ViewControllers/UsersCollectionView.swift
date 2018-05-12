@@ -10,6 +10,21 @@ import UIKit
 
 class UsersCollectionView: UICollectionViewController{
     
+    var user: UserInfo?
+  
+    override init(collectionViewLayout layout: UICollectionViewLayout) {
+        super.init(collectionViewLayout: layout)
+    }
+    
+    convenience init(collectionViewLayout layout: UICollectionViewLayout, user: UserInfo) {
+        self.init(collectionViewLayout: layout)
+        self.user = user
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = .white
@@ -17,14 +32,17 @@ class UsersCollectionView: UICollectionViewController{
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! TwitchUserCell
         cell.layer.cornerRadius = 20
-        cell.nameLabel.text = "Some"
-        cell.backgroundColor = .darkGray
+        guard let currentUser = self.user else { return cell }
+        cell.nameLabel.text = currentUser.name
+        cell.backgroundColor = secondTwitchColor
+        cell.photoFrame.image = currentUser.avatar
+        
         return cell
     }
     

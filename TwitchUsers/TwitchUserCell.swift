@@ -8,14 +8,19 @@
 
 import UIKit
 
+let secondTwitchColor = UIColor(withFromZeroToRed: 31, green: 156, blue: 214)
+
 class TwitchUserCell: UICollectionViewCell{
     
     let photoFrame = UIImageView()
     let nameLabel = UILabel()
     
+    
+    //MARK: Initializition:
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setup()
+        self.setupCell()
     }
     
     convenience init(frame: CGRect, image: UIImage, name: String) {
@@ -24,13 +29,46 @@ class TwitchUserCell: UICollectionViewCell{
         nameLabel.text = name
     }
     
-    func setup(){
-        self.contentView.addSubview(photoFrame)
-        self.contentView.addSubview(nameLabel)
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setupCell(){
+        
+        self.photoFrame.center = self.contentView.center
+        self.contentView.addSubview(photoFrame)
+        self.photoFrame.layer.masksToBounds = true
+        self.photoFrame.layer.shadowOpacity = 1
+        self.photoFrame.layer.borderColor = UIColor.white.cgColor
+        self.photoFrame.layer.borderWidth = 2
+        self.nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.nameLabel.font = font
+        
+        self.getOnScreen(view: self.photoFrame, duration: 1, completion: {
+            self.contentView.addSubview(self.nameLabel)
+            self.nameLabel.leadingAnchor.constraint(equalTo: self.photoFrame.trailingAnchor, constant: 20).isActive = true
+            self.nameLabel.topAnchor.constraint(equalTo: self.photoFrame.topAnchor, constant: 10).isActive = true
+            self.nameLabel.sizeToFit()
+        })
+    }
+    
+    private func getOnScreen(view: UIView, duration: TimeInterval, completion: @escaping ()-> Void){
+        
+        let contentCenter = self.contentView.center
+        let width = self.contentView.frame.size.width / 3
+        let height = width
+        let transformation = CGAffineTransform(translationX: -width + 20, y: 0)
+        let newCenter = contentCenter.applying(transformation)
+        view.center = newCenter
+        
+        DispatchQueue.main.async{
+            UIView.animate(withDuration: duration){
+                view.layer.cornerRadius = 50
+                view.frame.size = CGSize(width: width, height: height)
+                view.center = newCenter
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration, execute: completion)
+    }
 }
+
