@@ -55,6 +55,7 @@
 		529E70B52094E6F6004F9877 = {
 			isa = PBXGroup;
 			children = (
+				523C260320A774100020EAC0 /* README.md */,
 				529E70C02094E6F6004F9877 /* TwitchUsers */,
 				529E70BF2094E6F6004F9877 /* Products */,
 			);
@@ -77,7 +78,6 @@
 				52BC7841209539E60022F4B7 /* TwitchUserCell.swift */,
 				52499FD5209CBF9100F949D1 /* TwitchUserSearcher.swift */,
 				524FF3C8209F38CA005AFCDF /* UserInfoStruct.swift */,
-				523C260320A774100020EAC0 /* README.md */,
 				529E70CA2094E6F7004F9877 /* LaunchScreen.storyboard */,
 				529E70CD2094E6F7004F9877 /* Info.plist */,
 				52BC7840209535B90022F4B7 /* Resources */,
