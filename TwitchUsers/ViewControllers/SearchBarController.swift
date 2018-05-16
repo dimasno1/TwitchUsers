@@ -26,6 +26,7 @@ class SearchBarController: UISearchBar, UISearchBarDelegate, URLSessionDelegate,
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.barStyle = .blackTranslucent
+        self.keyboardAppearance = .dark
         self.showsCancelButton = true
         self.showsScopeBar = true
     }
@@ -53,12 +54,10 @@ class SearchBarController: UISearchBar, UISearchBarDelegate, URLSessionDelegate,
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-        guard let windowOnScreenController = UIApplication.shared.keyWindow?.rootViewController as? SearchViewController else { return }
+        guard let windowOnScreenController = UIApplication.shared.keyWindow?.rootViewController?.childViewControllers[0] as? SearchViewController else { return }
         DispatchQueue.main.async {
             windowOnScreenController.activityIndicator.startAnimating()
         }
-        
         let twitchSearcher = TwitchUserSearcher()
         let name = searchBar.text?.lowercased()
         twitchSearcher.searchForUser(with: name ?? "", delegate: self)
@@ -82,6 +81,8 @@ class SearchBarController: UISearchBar, UISearchBarDelegate, URLSessionDelegate,
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         
         let jsonData = data
+        let currentDate = Date()
+        
         var jsonDictionary = [String: AnyObject]()
         do{
             jsonDictionary = try JSONSerialization.jsonObject(with: jsonData, options: .allowFragments) as! [String: AnyObject]
@@ -93,7 +94,7 @@ class SearchBarController: UISearchBar, UISearchBarDelegate, URLSessionDelegate,
             guard let logoURL = URL(string: logo) else { return }
             let imageData = try Data(contentsOf: logoURL)
             let avatar = UIImage(data: imageData)
-            let user = UserInfo(id: id, name: name, type: type, avatar: avatar ?? nil)
+            let user = UserInfo(id: id, name: name, type: type, avatar: avatar ?? nil, searchingDate: currentDate)
 //            encodeToJSONData(user: user)
             
             self.barDelegate?.didFoundUser(searchBarController: self, user: user)
@@ -106,7 +107,7 @@ class SearchBarController: UISearchBar, UISearchBarDelegate, URLSessionDelegate,
             let json = try encoder.encode(user)
             if let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first{
                 var path = url.path
-                path.append("/lastUserData.raw")
+                path.append("/lastUserData.json")
                 print(path)
                 fileManager.createFile(atPath: path, contents: json, attributes: nil)
             }
@@ -116,11 +117,3 @@ class SearchBarController: UISearchBar, UISearchBarDelegate, URLSessionDelegate,
     }
     
 }
-
-//                Layout for CollectionView
-//                let layout = UICollectionViewFlowLayout()
-//                layout.scrollDirection = .vertical
-//                layout.itemSize = CGSize(width: windowOnScreenController.view.frame.size.width - 20, height: windowOnScreenController.view.frame.size.height / 3)
-//                layout.sectionInset = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
-//                let vcToPresent = UsersCollectionView(collectionViewLayout: layout, user: user)
-//                vcToPresent.collectionView?.backgroundColor = color

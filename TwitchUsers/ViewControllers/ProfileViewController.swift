@@ -21,7 +21,6 @@ class ProfileViewController: UIViewController{
     init(image: UIImage?, name: String, id: Int, type: String) {
         super.init(nibName: nil, bundle: nil)
         self.profileImageView.image = image
-        print("image set")
         nameView = self.setupTextViewWith(text: name, after: profileImageView)
         typeView = self.setupTextViewWith(text: type, after: nameView)
         idView = self.setupTextViewWith(text: String(id), after: typeView)
@@ -76,7 +75,7 @@ class ProfileViewController: UIViewController{
         textView.textColor = .black
         textView.isEditable = false
         textView.text = text
-        textView.font = font
+        textView.font = twitchFont
         textView.sizeToFit()
         self.view.addSubview(textView)
         
@@ -89,6 +88,10 @@ class ProfileViewController: UIViewController{
             textView.frame.origin = profileImageView.frame.origin.applying(transform)
         }
         return textView
+    }
+    
+    override var prefersStatusBarHidden: Bool{
+        return true
     }
     
 }

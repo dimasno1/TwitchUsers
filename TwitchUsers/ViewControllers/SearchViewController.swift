@@ -9,13 +9,14 @@
 import UIKit
 
 let mainTwitchColor = UIColor(withFromZeroToRed: 75, green: 56, blue: 122)
-let font = UIFont(name: "DimitriSwank", size: 35)
+let twitchFont = UIFont(name: "DimitriSwank", size: 35)
 
-class SearchViewController: UIViewController, UISearchBarDelegate, SearchBarControllerDelegate{
+class SearchViewController: UIViewController, SearchBarControllerDelegate{
     
+    let searchHistory = SearchHistory()
     let searchbar = SearchBarController()
     let notificationCenter = NotificationCenter.default
-    let labelTest = UILabel()
+    let mainLabel = UILabel()
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
     
     //MARK: ViewController lifecycle:
@@ -30,8 +31,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate, SearchBarCont
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if labelTest.text != "twitch users"{
-           labelTest.text = "twitch users"
+        if mainLabel.text != "twitch users"{
+           mainLabel.text = "twitch users"
         }
         notificationCenter.addObserver(self, selector: #selector(makeLayout), name: Notification.Name.UIDeviceOrientationDidChange, object: nil)
     }
@@ -44,29 +45,29 @@ class SearchViewController: UIViewController, UISearchBarDelegate, SearchBarCont
     private func setupView(){
         self.view.backgroundColor = mainTwitchColor
         self.view.addSubview(searchbar)
-        self.view.addSubview(labelTest)
+        self.view.addSubview(mainLabel)
         self.view.addSubview(activityIndicator)
-        labelTest.font = font
-        labelTest.text = "twitch users"
-        labelTest.sizeToFit()
+        mainLabel.font = twitchFont
+        mainLabel.text = "twitch users"
+        mainLabel.sizeToFit()
     }
     
-    @objc func makeLayout(notification: Notification){
+    @objc private func makeLayout(notification: Notification?){
         let someSize = self.searchbar.sizeThatFits(self.view.bounds.size)
         let frameOfSafeArea = self.view.safeAreaLayoutGuide.layoutFrame
         searchbar.frame.origin = CGPoint(x: 0, y: frameOfSafeArea.minY)
         self.searchbar.frame.size = someSize
-        labelTest.center = self.view.center
+        mainLabel.center = self.view.center
         let transform = CGAffineTransform(translationX: 0, y: 50)
-        activityIndicator.center = labelTest.center.applying(transform)
+        activityIndicator.center = mainLabel.center.applying(transform)
     }
     
     //MARK: Delegate conforming:
     
     func didFoundUser(searchBarController: SearchBarController, user: UserInfo) {
-     
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
+            self.searchHistory.addUser(user: user)
             let viewControllerToPresent = ProfileViewController(user: user)
             self.present(viewControllerToPresent, animated: true, completion: nil)
         }
@@ -77,9 +78,14 @@ class SearchViewController: UIViewController, UISearchBarDelegate, SearchBarCont
         
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
-            self.labelTest.text = "No such user"
+            self.mainLabel.text = "No such user"
         }
     }
+    
+    override var prefersStatusBarHidden: Bool{
+        return true
+    }
+
 }
 
 //UIColor extensions:

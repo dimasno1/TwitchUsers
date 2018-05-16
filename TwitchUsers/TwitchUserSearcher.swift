@@ -30,10 +30,9 @@ class TwitchUserSearcher {
     
     func searchForUser(with username: String, delegate: URLSessionDataDelegate){
         guard let url = makeURLFromParameters(parameters, username: username) else { return }
-        print(url)
         let session = URLSession(configuration: .default, delegate: delegate, delegateQueue: nil)
         let task = session.dataTask(with: url)
-        task.resume()
+        task.resume()        
     }
    
 }

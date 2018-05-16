@@ -12,6 +12,18 @@ let secondTwitchColor = UIColor(withFromZeroToRed: 31, green: 156, blue: 214)
 
 class TwitchUserCell: UICollectionViewCell{
     
+    static var identifier: String{
+        return String(describing: self)
+    }
+    
+    override var isHighlighted: Bool{
+        didSet{
+            UIView.animate(withDuration: 0.3) {
+                self.contentView.backgroundColor = self.isHighlighted ? secondTwitchColor : nil
+            }
+        }
+    }
+    
     let photoFrame = UIImageView()
     let nameLabel = UILabel()
     
@@ -35,6 +47,7 @@ class TwitchUserCell: UICollectionViewCell{
     
     private func setupCell(){
         
+        self.contentView.layer.cornerRadius = 20
         self.photoFrame.center = self.contentView.center
         self.contentView.addSubview(photoFrame)
         self.photoFrame.layer.masksToBounds = true
@@ -42,7 +55,9 @@ class TwitchUserCell: UICollectionViewCell{
         self.photoFrame.layer.borderColor = UIColor.white.cgColor
         self.photoFrame.layer.borderWidth = 2
         self.nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.nameLabel.font = font
+        self.nameLabel.font = twitchFont
+        
+        UIView.commitAnimations()
         
         self.getOnScreen(view: self.photoFrame, duration: 1, completion: {
             self.contentView.addSubview(self.nameLabel)
@@ -53,7 +68,6 @@ class TwitchUserCell: UICollectionViewCell{
     }
     
     private func getOnScreen(view: UIView, duration: TimeInterval, completion: @escaping ()-> Void){
-        
         let contentCenter = self.contentView.center
         let width = self.contentView.frame.size.width / 3
         let height = width
@@ -63,10 +77,11 @@ class TwitchUserCell: UICollectionViewCell{
         
         DispatchQueue.main.async{
             UIView.animate(withDuration: duration){
-                view.layer.cornerRadius = 50
+                view.layer.cornerRadius = height / 2
                 view.frame.size = CGSize(width: width, height: height)
                 view.center = newCenter
             }
+        
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + duration, execute: completion)
     }

@@ -15,21 +15,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         window?.frame = UIScreen.main.bounds
-        let rootController = SearchViewController()
+        let rootController = TwitchTabBarController()
         window?.rootViewController = rootController
         window?.makeKeyAndVisible()
-       
-//        MARK: Recent User
-//        let jsonDecoder = JSONDecoder()
-//
-//        guard let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return false }
-//        let path = url.appendingPathComponent("lastUserData.raw")
-//        guard let data = try? Data(contentsOf: path) else { return false }
-//        do{
-//            let recentUser = try jsonDecoder.decode(UserInfo.self, from: data)
-//            let profileController = ProfileViewController(user: recentUser)
-//            rootController.present(profileController, animated: false, completion: nil)
-//        }catch{}
+    
+
+        //        MARK: Recent User
+        //        let jsonDecoder = JSONDecoder()
+        //
+        //        guard let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return false }
+        //        let path = url.appendingPathComponent("lastUserData.json")
+        //        guard let data = try? Data(contentsOf: path) else { return false }
+        //        do{
+        //            let recentUser = try jsonDecoder.decode(UserInfo.self, from: data)
+        //            let profileController = ProfileViewController(user: recentUser)
+        //            rootController.present(profileController, animated: false, completion: nil)
+        //        }catch{}
         
         return true
     }
