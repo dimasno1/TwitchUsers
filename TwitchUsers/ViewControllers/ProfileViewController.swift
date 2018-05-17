@@ -34,27 +34,24 @@ class ProfileViewController: UIViewController{
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     //MARK: ViewController lifecycle:
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.view.addSubview(profileImageView)
         self.view.addSubview(closeButton)
-        self.profileImageView.sizeToFit()
-        self.closeButton.sizeToFit()
         
-        closeButton.tintColor = secondTwitchColor
-        closeButton.addTarget(self, action: #selector(closeProfile), for: .touchUpInside)
+        self.setup()
         
         let transform = CGAffineTransform(translationX: 0, y: -120)
         self.profileImageView.center = view.center.applying(transform)
         self.profileImageView.layer.masksToBounds = true
+        
         if let image = profileImageView.image{
             let cornerRadius = image.size.width / 2
             self.profileImageView.layer.cornerRadius = cornerRadius
         }
-        self.view.backgroundColor = mainTwitchColor
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,6 +67,7 @@ class ProfileViewController: UIViewController{
     }
     
     private func setupTextViewWith(text: String, after previousView: UIView?) -> UITextView{
+        
         let textView = UITextView()
         textView.backgroundColor = self.view.backgroundColor
         textView.textColor = .black
@@ -90,8 +88,20 @@ class ProfileViewController: UIViewController{
         return textView
     }
     
+    private func setup(){
+        self.view.backgroundColor = mainTwitchColor
+        closeButton.tintColor = secondTwitchColor
+        closeButton.addTarget(self, action: #selector(closeProfile), for: .touchUpInside)
+        self.profileImageView.sizeToFit()
+        self.closeButton.sizeToFit()
+    }
+    
     override var prefersStatusBarHidden: Bool{
         return true
     }
+    
+}
+
+extension ProfileViewController{
     
 }

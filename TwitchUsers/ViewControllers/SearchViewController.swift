@@ -31,8 +31,8 @@ class SearchViewController: UIViewController, SearchBarControllerDelegate{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if mainLabel.text != "twitch users"{
-           mainLabel.text = "twitch users"
+        if mainLabel.text != commonText{
+           mainLabel.text = commonText
         }
         notificationCenter.addObserver(self, selector: #selector(makeLayout), name: Notification.Name.UIDeviceOrientationDidChange, object: nil)
     }
@@ -48,7 +48,7 @@ class SearchViewController: UIViewController, SearchBarControllerDelegate{
         self.view.addSubview(mainLabel)
         self.view.addSubview(activityIndicator)
         mainLabel.font = twitchFont
-        mainLabel.text = "twitch users"
+        mainLabel.text = commonText
         mainLabel.sizeToFit()
     }
     
@@ -78,15 +78,18 @@ class SearchViewController: UIViewController, SearchBarControllerDelegate{
         
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
-            self.mainLabel.text = "No such user"
+            self.mainLabel.text = self.noSuchUserText
         }
     }
     
     override var prefersStatusBarHidden: Bool{
         return true
     }
-
+    
+    private let noSuchUserText = "No such user"
+    private let commonText = "twitch users"
 }
+
 
 //UIColor extensions:
 extension UIColor{

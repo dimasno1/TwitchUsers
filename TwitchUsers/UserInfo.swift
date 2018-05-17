@@ -13,6 +13,7 @@ class UserInfo: NSObject, Codable {
     
     var id: Int
     var searchingDate: Date
+    var bio: String?
     var name: String
     var type: String
     var avatar: UIImage?
@@ -28,13 +29,13 @@ class UserInfo: NSObject, Codable {
     
     static func == (lhs: UserInfo, rhs: UserInfo) -> Bool {
         return
-                lhs.id == rhs.id &&
+            lhs.id == rhs.id &&
                 lhs.name == rhs.name &&
                 lhs.type == rhs.type
     }
     
     override var hashValue: Int{
-        return id.hashValue ^ name.hashValue ^ type.hashValue &* 192378
+        return id.hashValue ^ name.hashValue ^ type.hashValue & 192378
     }
     
     //MARK: NSObject Hashable & Equatable:
@@ -53,12 +54,13 @@ class UserInfo: NSObject, Codable {
     
     //MARK: Initialization:
     
-    init(id: Int, name: String, type: String, avatar: UIImage?, searchingDate: Date) {
+    init(id: Int, name: String, type: String, avatar: UIImage?, searchingDate: Date, bio: String?) {
         self.id = id
         self.name = name
         self.type = type
         self.avatar = avatar
         self.searchingDate = searchingDate
+        self.bio = bio
     }
     
     required init(from decoder: Decoder) throws {
@@ -66,6 +68,7 @@ class UserInfo: NSObject, Codable {
         id = try container.decode(Int.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         type = try container.decode(String.self, forKey: .type)
+        bio = try container.decode(String.self, forKey: .bio)
         searchingDate = try container.decode(Date.self, forKey: .searchingDate)
         
         
@@ -77,6 +80,7 @@ class UserInfo: NSObject, Codable {
     
     enum CodingKeys: String, CodingKey{
         case id
+        case bio = "twitch_bio"
         case name = "twitch_username"
         case type = "twitch_usertype"
         case avatar = "profile_image"
@@ -90,6 +94,7 @@ class UserInfo: NSObject, Codable {
         try container.encode(name, forKey: .name)
         try container.encode(type, forKey: .type)
         try container.encode(searchingDate, forKey: .searchingDate)
+        try container.encode(bio, forKey: .bio)
         
         if let avatar = avatar{
             let image = NSKeyedArchiver.archivedData(withRootObject: avatar)

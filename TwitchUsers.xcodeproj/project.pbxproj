@@ -56,6 +56,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		527877D920AD9FF700C0E207 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				524B81C720AB43EC004F4C14 /* SearchHistory.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		529E70B52094E6F6004F9877 = {
 			isa = PBXGroup;
 			children = (
@@ -77,12 +85,12 @@
 			isa = PBXGroup;
 			children = (
 				529E70C12094E6F6004F9877 /* AppDelegate.swift */,
+				527877D920AD9FF700C0E207 /* Model */,
 				52F67DDF2098C0240032D121 /* ViewControllers */,
 				5272F026209F26800003AE4A /* Parameters.swift */,
 				52BC7841209539E60022F4B7 /* TwitchUserCell.swift */,
 				52499FD5209CBF9100F949D1 /* TwitchUserSearcher.swift */,
 				524FF3C8209F38CA005AFCDF /* UserInfo.swift */,
-				524B81C720AB43EC004F4C14 /* SearchHistory.swift */,
 				529E70CA2094E6F7004F9877 /* LaunchScreen.storyboard */,
 				529E70CD2094E6F7004F9877 /* Info.plist */,
 				52BC7840209535B90022F4B7 /* Resources */,

@@ -92,14 +92,21 @@ class SearchBarController: UISearchBar, UISearchBarDelegate, URLSessionDelegate,
             guard let type = jsonDictionary["type"] as? String else { return }
             guard let logo = jsonDictionary["logo"] as? String else { return }
             guard let logoURL = URL(string: logo) else { return }
+            var bio: String?
+            if let userBio = jsonDictionary["bio"] as? String{
+                bio = userBio
+            }
+            
             let imageData = try Data(contentsOf: logoURL)
             let avatar = UIImage(data: imageData)
-            let user = UserInfo(id: id, name: name, type: type, avatar: avatar ?? nil, searchingDate: currentDate)
-//            encodeToJSONData(user: user)
+            
+            let user = UserInfo(id: id, name: name, type: type, avatar: avatar ?? nil, searchingDate: currentDate, bio: bio)
+            
+            //            encodeToJSONData(user: user)
             
             self.barDelegate?.didFoundUser(searchBarController: self, user: user)
             
-        }catch{ print("error here")}
+        }catch{ }
     }
     
     private func encodeToJSONData(user: UserInfo){

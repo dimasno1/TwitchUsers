@@ -11,7 +11,6 @@ import UIKit
 class TwitchTabBarController: UITabBarController{
     
     let searchViewController = SearchViewController()
-    
     let resultsViewController: UsersCollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -35,9 +34,6 @@ class TwitchTabBarController: UITabBarController{
         
         searchViewController.tabBarItem = tabBarItemForSearchView
         resultsViewController.tabBarItem = tabBarItemForResultsView
-        
     }
-    
-    
-    
+ 
 }

@@ -10,6 +10,10 @@ import UIKit
 
 class TwitchUserSearcher {
     
+    enum TwitchUserSearcherError: Error{
+        case noBio
+    }
+    
     var parameters = [Parameters.Keys.clientID: Parameters.Values.clientIDValue]
     
     private func makeURLFromParameters(_ parameters: [String: String], username: String) -> URL?{
@@ -30,6 +34,7 @@ class TwitchUserSearcher {
     
     func searchForUser(with username: String, delegate: URLSessionDataDelegate){
         guard let url = makeURLFromParameters(parameters, username: username) else { return }
+        print(url)
         let session = URLSession(configuration: .default, delegate: delegate, delegateQueue: nil)
         let task = session.dataTask(with: url)
         task.resume()        
