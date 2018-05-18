@@ -38,12 +38,8 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
     
     private func setupCell(){
         
-        print(deviceScaleFactor)
-        
         self.contentView.alpha = 0.9
         self.contentView.layer.cornerRadius = 20
-//        self.contentView.layer.borderWidth = 5 / deviceScaleFactor
-//        self.contentView.layer.borderColor = secondTwitchColor.cgColor
         
         self.photoFrame.center = self.contentView.center
         self.photoFrame.layer.masksToBounds = true
@@ -64,6 +60,7 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
         self.contentView.addSubview(bioTextView)
         
         self.getOnScreen(view: self.photoFrame, duration: 1, completion: {
+            
             self.contentView.addSubview(self.nameLabel)
             self.contentView.addSubview(self.bioTextView)
             
@@ -79,7 +76,6 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
     }
     
     private func getOnScreen(view: UIView, duration: TimeInterval, completion: @escaping ()-> Void){
-        
         let contentCenter = self.contentView.center
         let diameter = self.contentView.frame.size.width / 3
         let transformation = CGAffineTransform(translationX: -diameter + 20, y: 0)

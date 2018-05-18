@@ -47,8 +47,8 @@ class SearchBarController: UISearchBar, UISearchBarDelegate {
         }
         let twitchSearcher = TwitchDataService()
         let name = searchBar.text?.lowercased()
-        twitchSearcher.searchForTopVideos(limit: 2, game: "Overwatch", delegate: windowOnScreenController.videoDataHandler)
-//        twitchSearcher.searchForUser(with: name ?? "", delegate: windowOnScreenController.sessionDataHandler)
+//        twitchSearcher.searchForTopVideos(limit: 2, game: "Overwatch", delegate: windowOnScreenController.videoDataHandler)
+        twitchSearcher.searchForUser(with: name ?? "", delegate: windowOnScreenController.userDataHandler)
         searchBar.resignFirstResponder()
     }
 }

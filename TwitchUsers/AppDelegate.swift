@@ -21,8 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let twitchData = TwitchDataService()
         
-//      twitchData.searchForUser(with: "dimasno1", delegate: SearchBarController())
-        
         //        MARK: Recent User
         //        let jsonDecoder = JSONDecoder()
         //
