@@ -11,19 +11,22 @@ import UIKit
 let mainTwitchColor = UIColor(withFromZeroToRed: 75, green: 56, blue: 122)
 let twitchFont = UIFont(name: "DimitriSwank", size: 35)
 
-class SearchViewController: UIViewController, SearchBarControllerDelegate{
+class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoDataHandlerDelegate{
     
-    let searchHistory = SearchHistory()
+    private let searchHistory = SearchHistory()
+    private let mainLabel = UILabel()
+    private let notificationCenter = NotificationCenter.default
+    let userDataHandler = UserDataHandler()
+    let videoDataHandler = VideoDataHandler()
     let searchbar = SearchBarController()
-    let notificationCenter = NotificationCenter.default
-    let mainLabel = UILabel()
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
     
     //MARK: ViewController lifecycle:
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchbar.barDelegate = self
+        userDataHandler.delegate = self
+        videoDataHandler.delegate = self
         searchbar.delegate = searchbar
         self.setupView()
     }
@@ -32,7 +35,7 @@ class SearchViewController: UIViewController, SearchBarControllerDelegate{
         super.viewWillAppear(animated)
         
         if mainLabel.text != commonText{
-           mainLabel.text = commonText
+            mainLabel.text = commonText
         }
         notificationCenter.addObserver(self, selector: #selector(makeLayout), name: Notification.Name.UIDeviceOrientationDidChange, object: nil)
     }
@@ -41,7 +44,7 @@ class SearchViewController: UIViewController, SearchBarControllerDelegate{
         super.viewWillDisappear(animated)
         notificationCenter.removeObserver(self, name: Notification.Name.UIDeviceOrientationDidChange, object: nil)
     }
-
+    
     private func setupView(){
         self.view.backgroundColor = mainTwitchColor
         self.view.addSubview(searchbar)
@@ -64,7 +67,7 @@ class SearchViewController: UIViewController, SearchBarControllerDelegate{
     
     //MARK: Delegate conforming:
     
-    func didFoundUser(searchBarController: SearchBarController, user: UserInfo) {
+    func didFoundUser(sessionDataHandler: UserDataHandler, user: UserInfo) {
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
             self.searchHistory.addUser(user: user)
@@ -73,13 +76,21 @@ class SearchViewController: UIViewController, SearchBarControllerDelegate{
         }
     }
     
-    func didntFoundUser(searchBarController: SearchBarController, error: String) {
+    func didntFoundUser(sessionDataHandler: UserDataHandler, error: String) {
         print(error)
         
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
             self.mainLabel.text = self.noSuchUserText
         }
+    }
+    
+    func didReceivedVideosMeta(videoDataHandler: VideoDataHandler, meta: Any) {
+        print("yo")
+    }
+    
+    func didntReceivedVideosMeta(videoDataHandler: VideoDataHandler, error: String) {
+        print("yo")
     }
     
     override var prefersStatusBarHidden: Bool{
