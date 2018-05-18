@@ -14,7 +14,7 @@ class UsersCollectionView: UICollectionViewController{
     let noUsersLabel = UILabel()
     var users = [UserInfo]()
     
-    //MARK: Initialization
+    //MARK: Initialization:
     
     override init(collectionViewLayout layout: UICollectionViewLayout) {
         super.init(collectionViewLayout: layout)
@@ -35,8 +35,8 @@ class UsersCollectionView: UICollectionViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupParametersOf(label: noUsersLabel)
         self.view.addSubview(noUsersLabel)
-        noUsersLabel.isHidden = true
         collectionView?.backgroundColor = mainTwitchColor
         collectionView?.register(TwitchUserCell.self, forCellWithReuseIdentifier: TwitchUserCell.identifier)
     }
@@ -44,6 +44,7 @@ class UsersCollectionView: UICollectionViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.collectionView?.reloadData()
+        noUsersLabel.isHidden = users.count > 0 ? true : false
     }
     
     override var prefersStatusBarHidden: Bool{
@@ -83,9 +84,6 @@ class UsersCollectionView: UICollectionViewController{
     //MARK: CollectionView Delegate:
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let currentCell = collectionView.cellForItem(at: indexPath) as? TwitchUserCell
-        let userHashValue = currentCell?.hashForUser
-        print(userHashValue ?? "")
         let userForCurrentCell = users[indexPath.row]
         let vc = ProfileViewController(user: userForCurrentCell)
         present(vc, animated: true, completion: nil)

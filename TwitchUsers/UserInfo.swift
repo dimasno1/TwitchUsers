@@ -29,7 +29,7 @@ class UserInfo: NSObject, Codable {
     
     static func == (lhs: UserInfo, rhs: UserInfo) -> Bool {
         return
-            lhs.id == rhs.id &&
+                lhs.id == rhs.id &&
                 lhs.name == rhs.name &&
                 lhs.type == rhs.type
     }

@@ -38,8 +38,12 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
     
     private func setupCell(){
         
+        print(deviceScaleFactor)
+        
         self.contentView.alpha = 0.9
         self.contentView.layer.cornerRadius = 20
+//        self.contentView.layer.borderWidth = 5 / deviceScaleFactor
+//        self.contentView.layer.borderColor = secondTwitchColor.cgColor
         
         self.photoFrame.center = self.contentView.center
         self.photoFrame.layer.masksToBounds = true
@@ -103,6 +107,7 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
             }
         }
     }
-    
+ 
+    private let deviceScaleFactor = UIScreen.main.scale
 }
 

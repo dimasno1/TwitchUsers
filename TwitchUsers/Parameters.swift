@@ -14,6 +14,8 @@ struct Parameters{
         static let scheme = "https"
         static let host = "api.twitch.tv"
         static let path = "/kraken/users/"
+        static let usersPath = "users/"
+        static let videosPath = "videos/"
     }
     
     struct Keys{

@@ -10,11 +10,8 @@ import UIKit
 
 class SearchHistory{
     
-    var usersHistory = Set<UserInfo>(){
-        didSet{
-            print(usersHistory.enumerated())
-        }
-    }
+    var usersHistory = Set<UserInfo>()
+    
     let notificationCenter = NotificationCenter.default
     
     func addUser(user: UserInfo){

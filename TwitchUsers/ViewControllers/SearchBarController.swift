@@ -60,6 +60,7 @@ class SearchBarController: UISearchBar, UISearchBarDelegate, URLSessionDelegate,
         }
         let twitchSearcher = TwitchUserSearcher()
         let name = searchBar.text?.lowercased()
+
         twitchSearcher.searchForUser(with: name ?? "", delegate: self)
         searchBar.resignFirstResponder()
     }
