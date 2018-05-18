@@ -18,8 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootController = TwitchTabBarController()
         window?.rootViewController = rootController
         window?.makeKeyAndVisible()
-    
 
+        let twitchData = TwitchDataService()
+        
+//      twitchData.searchForUser(with: "dimasno1", delegate: SearchBarController())
+        
         //        MARK: Recent User
         //        let jsonDecoder = JSONDecoder()
         //
