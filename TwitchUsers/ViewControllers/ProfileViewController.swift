@@ -41,7 +41,6 @@ class ProfileViewController: UIViewController{
         
         self.view.addSubview(profileImageView)
         self.view.addSubview(closeButton)
-        
         self.setup()
         
         let transform = CGAffineTransform(translationX: 0, y: -120)
