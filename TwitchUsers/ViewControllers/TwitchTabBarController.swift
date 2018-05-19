@@ -18,9 +18,9 @@ class TwitchTabBarController: UITabBarController{
         layout.itemSize = CGSize(width: view.bounds.size.width - 20, height: view.bounds.size.height / 3)
         layout.sectionInset = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
         let controller = UsersCollectionView(collectionViewLayout: layout)
-        
         return controller
     }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -15,30 +15,59 @@ class FewFoundUsersViewController: UIViewController{
     var pageControl = UIPageControl()
     
     override func viewDidLoad() {
+        scrollView.delegate = self
         view.addSubview(scrollView)
         view.addSubview(pageControl)
+        pageControl.sizeToFit()
+        pageControl.center.x = view.center.x
+        pageControl.center.y = view.bounds.maxY - 30
+        scrollView.frame = self.view.bounds
+        scrollView.isScrollEnabled = true
+        scrollView.isPagingEnabled = true
     }
-   
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setup()
+    
+        for controller in controllers{
+            let index =  controllers.index(of: controller)
+            switch index{
+            case 0:
+                controller.view.frame.origin = self.view.frame.origin
+            case 1:
+                controller.view.frame.origin = CGPoint(x:self.view.frame.maxX, y:0)
+            case 2:
+                controller.view.frame.origin = CGPoint(x:self.view.frame.maxX * 2, y:0)
+            default:
+                break
+            }
+            self.scrollView.addSubview(controller.view)
+        }
+    }
+    
+    func prepareForNewUsers(){
+        controllers.removeAll()
+        print(controllers.enumerated())
+        self.setup()
+    }
     
     private func setup(){
         let width = self.view.frame.size.width * CGFloat(controllers.count)
         let height = self.view.frame.size.height
         pageControl.numberOfPages = controllers.count
-        pageControl.sizeToFit()
-        pageControl.center.x = view.center.x
-        pageControl.center.y = view.bounds.maxY - 30
-        scrollView.frame = self.view.bounds
         scrollView.contentSize = CGSize(width: width, height: height)
-        scrollView.isScrollEnabled = true
-        scrollView.isPagingEnabled = true
     }
 }
 
 
 extension FewFoundUsersViewController: UIScrollViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let width = scrollView.contentSize.width
+        let width = scrollView.bounds.width
         let contentOffset = scrollView.contentOffset.x
         let pageNumber = Int(round(contentOffset/width))
         pageControl.currentPage = pageNumber

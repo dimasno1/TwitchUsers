@@ -23,7 +23,6 @@ class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoData
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
     
     //MARK: ViewController lifecycle:
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         userDataHandler.delegate = self
@@ -66,16 +65,29 @@ class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoData
         activityIndicator.center = mainLabel.center.applying(transform)
     }
     
-    //MARK: Delegate conforming:
-    
+    //MARK: UsersDelegate conforming:
     func didFoundUser(sessionDataHandler: UserDataHandler, user: UserInfo) {
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
             self.searchHistory.addUser(user: user)
-            let profileViewController = ProfileViewController(user: user)
-            self.fewFoundUsersController.controllers.append(profileViewController)
-//            self.present(viewControllerToPresent, animated: true, completion: nil)
+            let profileController = ProfileViewController(user: user)
+            self.present(profileController, animated: true, completion: nil)
         }
+    }
+    
+    func didFoundFewUsers(sessionDataHandler: UserDataHandler, users: [UserInfo]) {
+        
+            DispatchQueue.main.async {
+                self.fewFoundUsersController.prepareForNewUsers()
+                self.activityIndicator.stopAnimating()
+                for user in users{
+                    self.searchHistory.addUser(user: user)
+                    let profileViewController = ProfileViewController(user: user)
+                    self.fewFoundUsersController.controllers.append(profileViewController)
+                }
+                self.present(self.fewFoundUsersController, animated: true, completion: nil)
+            }
+        
     }
     
     func didntFoundUser(sessionDataHandler: UserDataHandler, error: String) {
@@ -87,6 +99,7 @@ class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoData
         }
     }
     
+    //MARK: VideosDelegate conforming:
     func didReceivedVideosMeta(videoDataHandler: VideoDataHandler, meta: Any) {
         print("yo")
     }

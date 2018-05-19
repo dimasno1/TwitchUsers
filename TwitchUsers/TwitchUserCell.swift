@@ -18,7 +18,6 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
     var hashForUser: Int?
     
     //MARK: Initializition:
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupCell()

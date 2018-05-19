@@ -15,7 +15,6 @@ class UsersCollectionView: UICollectionViewController{
     var users = [UserInfo]()
     
     //MARK: Initialization:
-    
     override init(collectionViewLayout layout: UICollectionViewLayout) {
         super.init(collectionViewLayout: layout)
         
@@ -32,7 +31,6 @@ class UsersCollectionView: UICollectionViewController{
     
     
     //MARK Controller Lifecycle:
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupParametersOf(label: noUsersLabel)
@@ -62,7 +60,6 @@ class UsersCollectionView: UICollectionViewController{
     }
     
     //MARK: CollectionView DataSource:
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return users.count
     }
@@ -71,7 +68,6 @@ class UsersCollectionView: UICollectionViewController{
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TwitchUserCell.identifier, for: indexPath) as! TwitchUserCell
         cell.layer.cornerRadius = 20
-        
         let user = self.users[indexPath.row]
         
         cell.bioTextView.text = user.bio ?? "No bio provided by user"
@@ -82,7 +78,6 @@ class UsersCollectionView: UICollectionViewController{
     }
     
     //MARK: CollectionView Delegate:
-    
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let userForCurrentCell = users[indexPath.row]
         let vc = ProfileViewController(user: userForCurrentCell)

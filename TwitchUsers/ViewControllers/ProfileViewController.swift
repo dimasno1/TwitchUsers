@@ -17,7 +17,6 @@ class ProfileViewController: UIViewController{
     let closeButton = UIButton(type: UIButtonType.contactAdd)
     
     //MARK: Initialization:
-    
     init(image: UIImage?, name: String, id: Int, type: String) {
         super.init(nibName: nil, bundle: nil)
         self.profileImageView.image = image
@@ -35,7 +34,6 @@ class ProfileViewController: UIViewController{
     }
     
     //MARK: ViewController lifecycle:
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -55,14 +53,18 @@ class ProfileViewController: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let upperRightPoint = CGPoint(x: self.view.frame.maxX, y: 0)
+        let upperRightPoint = CGPoint(x: self.view.bounds.maxX, y: 0)
         let transform = CGAffineTransform(translationX: -50, y: 50)
         closeButton.frame.origin = upperRightPoint.applying(transform)
         closeButton.transform = closeButton.transform.rotated(by: CGFloat.pi/4)
     }
     
     @objc private func closeProfile(){
-        self.dismiss(animated: true, completion: nil)
+        if let controller = UIApplication.shared.keyWindow?.rootViewController?.presentingViewController as? FewFoundUsersViewController{
+            controller.dismiss(animated: true, completion: nil)
+        }else{
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     private func setupTextViewWith(text: String, after previousView: UIView?) -> UITextView{
@@ -98,9 +100,5 @@ class ProfileViewController: UIViewController{
     override var prefersStatusBarHidden: Bool{
         return true
     }
-    
-}
-
-extension ProfileViewController{
     
 }

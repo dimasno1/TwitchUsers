@@ -18,8 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootController = TwitchTabBarController()
         window?.rootViewController = rootController
         window?.makeKeyAndVisible()
-
-        let twitchData = TwitchDataService()
         
         //        MARK: Recent User
         //        let jsonDecoder = JSONDecoder()

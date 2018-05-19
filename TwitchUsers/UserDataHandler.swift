@@ -20,7 +20,6 @@ class UserDataHandler: NSObject, URLSessionDataDelegate {
     weak var delegate: UserDataHandlerDelegate?
     
     //MARK: URLSession delegate conforming:
-    
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
         let HTTPResponce = response as? HTTPURLResponse
         let statusCode = HTTPResponce?.statusCode
@@ -37,37 +36,46 @@ class UserDataHandler: NSObject, URLSessionDataDelegate {
         
         let jsonData = data
         let currentDate = Date()
-    
         var jsonDictionary = [String: AnyObject]()
         do{
             jsonDictionary = try JSONSerialization.jsonObject(with: jsonData, options: .allowFragments) as! [String: AnyObject]
-            
+            guard let usersCount = jsonDictionary["_total"] as? Int else { return }
             guard let users = jsonDictionary["users"] as? NSArray else { return }
             
-            for user in users{
-                
-                guard let foundUser = user as? [String: AnyObject] else { return }
-                guard let id = foundUser["_id"] as? String else { return }
-                guard let newID = Int(id) else { return }
-                guard let name = foundUser["name"] as? String else { return }
-                guard let type = foundUser["type"] as? String else { return }
-                guard let logo = foundUser["logo"] as? String else { return }
-                guard let logoURL = URL(string: logo) else { return }
-                var bio: String?
-                if let userBio = foundUser["bio"] as? String{
-                    bio = userBio
+            if usersCount > 1{
+                var foundUsers = [UserInfo]()
+                for user in users{
+                    guard let foundUser = user as? [String: AnyObject] else { return }
+                    guard let someUser = self.getUserFrom(dictionary: foundUser, date: currentDate) else { return }
+                    foundUsers.append(someUser)
                 }
-                
-                let imageData = try Data(contentsOf: logoURL)
-                let avatar = UIImage(data: imageData)
-                
-                let currentUser = UserInfo(id: newID, name: name, type: type, avatar: avatar ?? nil, searchingDate: currentDate, bio: bio)
-                self.delegate?.didFoundUser(sessionDataHandler: self, user: currentUser)
+                self.delegate?.didFoundFewUsers(sessionDataHandler: self, users: foundUsers)
+            }else{
+                guard let foundUser = users[0] as? [String: AnyObject] else { return }
+                guard let someUser = getUserFrom(dictionary: foundUser, date: currentDate) else { return }
+                self.delegate?.didFoundUser(sessionDataHandler: self, user: someUser)
             }
-            //            encodeToJSONData(user: user)
         }catch{
             
         }
+    }
+    
+    private func getUserFrom(dictionary: [String: AnyObject], date: Date) -> UserInfo? {
+        guard let id = dictionary["_id"] as? String else { return nil}
+        guard let newID = Int(id) else { return nil}
+        guard let name = dictionary["name"] as? String else { return nil}
+        guard let type = dictionary["type"] as? String else { return nil}
+        guard let logo = dictionary["logo"] as? String else { return nil}
+        guard let logoURL = URL(string: logo) else { return nil}
+        var bio: String?
+        if let userBio = dictionary["bio"] as? String{
+            bio = userBio
+        }
+        
+        guard let imageData = try? Data(contentsOf: logoURL) else { return nil }
+        let avatar = UIImage(data: imageData)
+        let currentUser = UserInfo(id: newID, name: name, type: type, avatar: avatar ?? nil, searchingDate: date, bio: bio)
+        return currentUser
     }
     
     private func encodeToJSONData(user: UserInfo){

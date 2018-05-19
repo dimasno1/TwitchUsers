@@ -23,7 +23,6 @@ class SearchBarController: UISearchBar, UISearchBarDelegate {
     }
     
     //MARK: SearchBar delegate conforming:
-    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = nil
         searchBar.resignFirstResponder()

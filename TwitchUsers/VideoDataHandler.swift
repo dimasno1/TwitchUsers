@@ -19,7 +19,6 @@ class VideoDataHandler: NSObject, URLSessionDataDelegate {
     weak var delegate: VideoDataHandlerDelegate?
     
     //MARK: URLSession delegate conforming:
-    
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
         let HTTPResponce = response as? HTTPURLResponse
         let statusCode = HTTPResponce?.statusCode

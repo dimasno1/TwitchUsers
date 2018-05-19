@@ -19,14 +19,12 @@ class UserInfo: NSObject, Codable {
     var avatar: UIImage?
     
     //MARK: CustomStringConvertible:
-    
     override var description: String {
         let hasAvatar = avatar == nil ? "Нет" : "Да"
         return "ID пользователя: \(id)\nИмя: \(name)\nТип: \(type)\nЕсть аватарка?: \(hasAvatar)\nБыл найден: \(searchingDate) "
     }
     
     //MARK: Hashable & Equatable
-    
     static func == (lhs: UserInfo, rhs: UserInfo) -> Bool {
         return
                 lhs.id == rhs.id &&
@@ -37,9 +35,8 @@ class UserInfo: NSObject, Codable {
     override var hashValue: Int{
         return id.hashValue ^ name.hashValue ^ type.hashValue & 192378
     }
-    
+
     //MARK: NSObject Hashable & Equatable:
-    
     override func isEqual(_ object: Any?) -> Bool {
         let lhs = self
         if let rhs = object as? UserInfo {
@@ -53,7 +50,6 @@ class UserInfo: NSObject, Codable {
     }
     
     //MARK: Initialization:
-    
     init(id: Int, name: String, type: String, avatar: UIImage?, searchingDate: Date, bio: String?) {
         self.id = id
         self.name = name
@@ -77,7 +73,6 @@ class UserInfo: NSObject, Codable {
     }
     
     //MARK: Codable:
-    
     enum CodingKeys: String, CodingKey{
         case id
         case bio = "twitch_bio"
