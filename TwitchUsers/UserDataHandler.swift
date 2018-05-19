@@ -11,6 +11,7 @@ import UIKit
 protocol UserDataHandlerDelegate: AnyObject{
     
     func didFoundUser(sessionDataHandler: UserDataHandler, user: UserInfo)
+    func didFoundFewUsers(sessionDataHandler: UserDataHandler, users: [UserInfo])
     func didntFoundUser(sessionDataHandler: UserDataHandler, error: String)
 }
 
@@ -40,7 +41,7 @@ class UserDataHandler: NSObject, URLSessionDataDelegate {
         var jsonDictionary = [String: AnyObject]()
         do{
             jsonDictionary = try JSONSerialization.jsonObject(with: jsonData, options: .allowFragments) as! [String: AnyObject]
-            print(jsonDictionary)
+            
             guard let users = jsonDictionary["users"] as? NSArray else { return }
             
             for user in users{

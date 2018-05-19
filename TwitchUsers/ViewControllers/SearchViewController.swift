@@ -19,6 +19,7 @@ class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoData
     let userDataHandler = UserDataHandler()
     let videoDataHandler = VideoDataHandler()
     let searchbar = SearchBarController()
+    let fewFoundUsersController = FewFoundUsersViewController()
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
     
     //MARK: ViewController lifecycle:
@@ -71,8 +72,9 @@ class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoData
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
             self.searchHistory.addUser(user: user)
-            let viewControllerToPresent = ProfileViewController(user: user)
-            self.present(viewControllerToPresent, animated: true, completion: nil)
+            let profileViewController = ProfileViewController(user: user)
+            self.fewFoundUsersController.controllers.append(profileViewController)
+//            self.present(viewControllerToPresent, animated: true, completion: nil)
         }
     }
     

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		52224F5720A04B04001CE8AB /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52224F5620A04B04001CE8AB /* ProfileViewController.swift */; };
+		5248F32C20B0898E00EAB202 /* FewFoundUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5248F32B20B0898E00EAB202 /* FewFoundUsersViewController.swift */; };
 		52499FD6209CBF9100F949D1 /* TwitchDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52499FD5209CBF9100F949D1 /* TwitchDataService.swift */; };
 		524A6AAF20AF1A9C0087A7FC /* UserDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A6AAE20AF1A9C0087A7FC /* UserDataHandler.swift */; };
 		524A6AB120AF27EA0087A7FC /* VideoDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A6AB020AF27EA0087A7FC /* VideoDataHandler.swift */; };
@@ -28,6 +29,7 @@
 /* Begin PBXFileReference section */
 		52224F5620A04B04001CE8AB /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		523C260320A774100020EAC0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		5248F32B20B0898E00EAB202 /* FewFoundUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FewFoundUsersViewController.swift; sourceTree = "<group>"; };
 		52499FD5209CBF9100F949D1 /* TwitchDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchDataService.swift; sourceTree = "<group>"; };
 		524A6AAE20AF1A9C0087A7FC /* UserDataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataHandler.swift; sourceTree = "<group>"; };
 		524A6AB020AF27EA0087A7FC /* VideoDataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDataHandler.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				529E70C32094E6F6004F9877 /* SearchViewController.swift */,
 				528C5BA520A874CF004C9A61 /* TwitchTabBarController.swift */,
 				52224F5620A04B04001CE8AB /* ProfileViewController.swift */,
+				5248F32B20B0898E00EAB202 /* FewFoundUsersViewController.swift */,
 				52BC783C2095164C0022F4B7 /* UsersCollectionView.swift */,
 			);
 			path = ViewControllers;
@@ -202,6 +205,7 @@
 				524A6AB120AF27EA0087A7FC /* VideoDataHandler.swift in Sources */,
 				52BC783D2095164C0022F4B7 /* UsersCollectionView.swift in Sources */,
 				52BC783B209503770022F4B7 /* SearchBarController.swift in Sources */,
+				5248F32C20B0898E00EAB202 /* FewFoundUsersViewController.swift in Sources */,
 				52499FD6209CBF9100F949D1 /* TwitchDataService.swift in Sources */,
 				52224F5720A04B04001CE8AB /* ProfileViewController.swift in Sources */,
 				529E70C22094E6F6004F9877 /* AppDelegate.swift in Sources */,
