@@ -10,12 +10,6 @@ import UIKit
 
 class ProfileViewController: UIViewController{
     
-    var profileImageView = UIImageView()
-    var nameView =  UITextView()
-    var typeView = UITextView()
-    var idView = UITextView()
-    let closeButton = UIButton(type: UIButtonType.contactAdd)
-    
     //MARK: Initialization:
     init(image: UIImage?, name: String, id: Int, type: String) {
         super.init(nibName: nil, bundle: nil)
@@ -100,5 +94,11 @@ class ProfileViewController: UIViewController{
     override var prefersStatusBarHidden: Bool{
         return true
     }
+    
+    var profileImageView = UIImageView()
+    var nameView =  UITextView()
+    var typeView = UITextView()
+    var idView = UITextView()
+    private let closeButton = UIButton(type: UIButtonType.contactAdd)
     
 }

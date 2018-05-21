@@ -14,6 +14,15 @@ class FewFoundUsersViewController: UIViewController{
     let scrollView = UIScrollView()
     var pageControl = UIPageControl()
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        print("INITED FEWFOUNDUSERS")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     override func viewDidLoad() {
         scrollView.delegate = self
         view.addSubview(scrollView)
@@ -52,7 +61,6 @@ class FewFoundUsersViewController: UIViewController{
     
     func prepareForNewUsers(){
         controllers.removeAll()
-        print(controllers.enumerated())
         self.setup()
     }
     

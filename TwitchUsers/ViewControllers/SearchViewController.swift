@@ -13,15 +13,6 @@ let twitchFont = UIFont(name: "DimitriSwank", size: 35)
 
 class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoDataHandlerDelegate{
     
-    private let searchHistory = SearchHistory()
-    private let mainLabel = UILabel()
-    private let notificationCenter = NotificationCenter.default
-    let userDataHandler = UserDataHandler()
-    let videoDataHandler = VideoDataHandler()
-    let searchbar = SearchBarController()
-    let fewFoundUsersController = FewFoundUsersViewController()
-    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
-    
     //MARK: ViewController lifecycle:
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,6 +105,14 @@ class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoData
     
     private let noSuchUserText = "No such user"
     private let commonText = "twitch users"
+    private let searchHistory = SearchHistory()
+    private let mainLabel = UILabel()
+    private let notificationCenter = NotificationCenter.default
+    lazy var fewFoundUsersController = FewFoundUsersViewController()
+    let userDataHandler = UserDataHandler()
+    let videoDataHandler = VideoDataHandler()
+    let searchbar = SearchBarController()
+    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
 }
 
 
