@@ -1,0 +1,6 @@
+module Pods_TwitchUsers {
+  umbrella header "Pods-TwitchUsers-umbrella.h"
+
+  export *
+  module * { export * }
+}

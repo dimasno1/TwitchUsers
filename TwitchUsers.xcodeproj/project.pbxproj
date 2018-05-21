@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		124A0803958A54CBC25B667D /* libPods-TwitchUsers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D15740759A113F686BA5637 /* libPods-TwitchUsers.a */; };
 		52224F5720A04B04001CE8AB /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52224F5620A04B04001CE8AB /* ProfileViewController.swift */; };
 		5248F32C20B0898E00EAB202 /* FewFoundUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5248F32B20B0898E00EAB202 /* FewFoundUsersViewController.swift */; };
 		52499FD6209CBF9100F949D1 /* TwitchDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52499FD5209CBF9100F949D1 /* TwitchDataService.swift */; };
@@ -27,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D15740759A113F686BA5637 /* libPods-TwitchUsers.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TwitchUsers.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4010F0FABA4046469F5C97EF /* Pods-TwitchUsers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitchUsers.release.xcconfig"; path = "Pods/Target Support Files/Pods-TwitchUsers/Pods-TwitchUsers.release.xcconfig"; sourceTree = "<group>"; };
 		52224F5620A04B04001CE8AB /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		523C260320A774100020EAC0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		5248F32B20B0898E00EAB202 /* FewFoundUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FewFoundUsersViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +50,7 @@
 		52BC783C2095164C0022F4B7 /* UsersCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersCollectionView.swift; sourceTree = "<group>"; };
 		52BC783E2095330F0022F4B7 /* twitch.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = twitch.ttf; sourceTree = "<group>"; };
 		52BC7841209539E60022F4B7 /* TwitchUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchUserCell.swift; sourceTree = "<group>"; };
+		590210200A3D8BB077C020D8 /* Pods-TwitchUsers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitchUsers.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TwitchUsers/Pods-TwitchUsers.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				124A0803958A54CBC25B667D /* libPods-TwitchUsers.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +89,8 @@
 				523C260320A774100020EAC0 /* README.md */,
 				529E70C02094E6F6004F9877 /* TwitchUsers */,
 				529E70BF2094E6F6004F9877 /* Products */,
+				58BA21E0F67073590B7443F6 /* Pods */,
+				7349576D75354AA0C50292BC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -134,6 +141,23 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		58BA21E0F67073590B7443F6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				590210200A3D8BB077C020D8 /* Pods-TwitchUsers.debug.xcconfig */,
+				4010F0FABA4046469F5C97EF /* Pods-TwitchUsers.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		7349576D75354AA0C50292BC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0D15740759A113F686BA5637 /* libPods-TwitchUsers.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -141,6 +165,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 529E70D02094E6F7004F9877 /* Build configuration list for PBXNativeTarget "TwitchUsers" */;
 			buildPhases = (
+				955D420BB2B8E3B5B70826E1 /* [CP] Check Pods Manifest.lock */,
 				529E70BA2094E6F6004F9877 /* Sources */,
 				529E70BB2094E6F6004F9877 /* Frameworks */,
 				529E70BC2094E6F6004F9877 /* Resources */,
@@ -200,6 +225,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		955D420BB2B8E3B5B70826E1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TwitchUsers-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		529E70BA2094E6F6004F9877 /* Sources */ = {
@@ -352,11 +398,13 @@
 		};
 		529E70D12094E6F7004F9877 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 590210200A3D8BB077C020D8 /* Pods-TwitchUsers.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P99EM85EA2;
 				INFOPLIST_FILE = TwitchUsers/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -370,11 +418,13 @@
 		};
 		529E70D22094E6F7004F9877 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4010F0FABA4046469F5C97EF /* Pods-TwitchUsers.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P99EM85EA2;
 				INFOPLIST_FILE = TwitchUsers/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
