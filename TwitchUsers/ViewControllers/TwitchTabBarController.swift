@@ -27,10 +27,7 @@ class TwitchTabBarController: UITabBarController{
     let searchViewController = SearchViewController()
     let resultsViewController: UsersCollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        let view = UIScreen.main
-        layout.itemSize = CGSize(width: view.bounds.size.width - 20, height: view.bounds.size.height / 3)
-        layout.sectionInset = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
+//        layout.scrollDirection = .vertical
         let controller = UsersCollectionView(collectionViewLayout: layout)
         return controller
     }()

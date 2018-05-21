@@ -53,7 +53,9 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
         self.bioTextView.layer.cornerRadius = 10
         self.bioTextView.translatesAutoresizingMaskIntoConstraints = false
         self.bioTextView.alpha = 0.7
+        self.bioTextView.backgroundColor = .clear
         self.bioTextView.delegate = self
+        self.bioTextView.textAlignment = .left
         
         self.contentView.addSubview(photoFrame)
         self.contentView.addSubview(bioTextView)

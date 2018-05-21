@@ -10,10 +10,6 @@ import UIKit
 
 class UsersCollectionView: UICollectionViewController{
     
-    let notificationCenter = NotificationCenter.default
-    let noUsersLabel = UILabel()
-    var users = [UserInfo]()
-    
     //MARK: Initialization:
     override init(collectionViewLayout layout: UICollectionViewLayout) {
         super.init(collectionViewLayout: layout)
@@ -45,20 +41,6 @@ class UsersCollectionView: UICollectionViewController{
         noUsersLabel.isHidden = users.count > 0 ? true : false
     }
     
-    override var prefersStatusBarHidden: Bool{
-        return true
-    }
-    
-    private func setupParametersOf(label: UILabel){
-        label.font = twitchFont
-        label.text = "Try to search for user"
-        let labelSize = label.sizeThatFits(view.bounds.size)
-        label.frame.size = labelSize.applying(CGAffineTransform(scaleX: 0.8, y: 0.8))
-        label.adjustsFontSizeToFitWidth = true
-        label.center = self.view.center
-        label.isHidden = false
-    }
-    
     //MARK: CollectionView DataSource:
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return users.count
@@ -87,5 +69,41 @@ class UsersCollectionView: UICollectionViewController{
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }
+    
+    override var prefersStatusBarHidden: Bool{
+        return true
+    }
+    
+    private func setupParametersOf(label: UILabel){
+        label.font = twitchFont
+        label.text = "Try to search for user"
+        let labelSize = label.sizeThatFits(view.bounds.size)
+        label.frame.size = labelSize.applying(CGAffineTransform(scaleX: 0.8, y: 0.8))
+        label.adjustsFontSizeToFitWidth = true
+        label.center = self.view.center
+        label.isHidden = false
+    }
+    
+    let notificationCenter = NotificationCenter.default
+    let noUsersLabel = UILabel()
+    var users = [UserInfo]()
+}
+
+
+extension UsersCollectionView: UICollectionViewDelegateFlowLayout{
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = self.view.bounds.size.width - 20
+        let height = self.view.bounds.size.height / 3
+        let itemSize = CGSize(width: width, height: height)
+        return itemSize
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        let inset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        return inset
+    }
+    
+    
     
 }

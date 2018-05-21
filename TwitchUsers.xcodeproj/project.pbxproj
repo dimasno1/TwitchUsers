@@ -60,6 +60,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		524CACA520B31376001E87F0 /* DataService */ = {
+			isa = PBXGroup;
+			children = (
+				52499FD5209CBF9100F949D1 /* TwitchDataService.swift */,
+				524A6AAE20AF1A9C0087A7FC /* UserDataHandler.swift */,
+				524A6AB020AF27EA0087A7FC /* VideoDataHandler.swift */,
+			);
+			path = DataService;
+			sourceTree = "<group>";
+		};
 		527877D920AD9FF700C0E207 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -92,10 +102,8 @@
 				52F67DDF2098C0240032D121 /* ViewControllers */,
 				52BC7841209539E60022F4B7 /* TwitchUserCell.swift */,
 				52BC783A209503770022F4B7 /* SearchBarController.swift */,
-				52499FD5209CBF9100F949D1 /* TwitchDataService.swift */,
 				524FF3C8209F38CA005AFCDF /* UserInfo.swift */,
-				524A6AAE20AF1A9C0087A7FC /* UserDataHandler.swift */,
-				524A6AB020AF27EA0087A7FC /* VideoDataHandler.swift */,
+				524CACA520B31376001E87F0 /* DataService */,
 				527877D920AD9FF700C0E207 /* Model */,
 				529E70CA2094E6F7004F9877 /* LaunchScreen.storyboard */,
 				529E70CD2094E6F7004F9877 /* Info.plist */,

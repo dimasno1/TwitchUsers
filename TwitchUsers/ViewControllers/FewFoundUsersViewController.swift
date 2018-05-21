@@ -64,6 +64,12 @@ class FewFoundUsersViewController: UIViewController{
         self.setup()
     }
     
+    func addAsChildViewContoller(profileViewController: ProfileViewController) {
+        self.addChildViewController(profileViewController)
+        profileViewController.willMove(toParentViewController: self)
+        self.view.addSubview(profileViewController.view)
+    }
+    
     private func setup(){
         let width = self.view.frame.size.width * CGFloat(controllers.count)
         let height = self.view.frame.size.height

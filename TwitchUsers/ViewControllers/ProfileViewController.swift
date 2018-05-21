@@ -56,8 +56,10 @@ class ProfileViewController: UIViewController{
     @objc private func closeProfile(){
         if let controller = UIApplication.shared.keyWindow?.rootViewController?.presentingViewController as? FewFoundUsersViewController{
             controller.dismiss(animated: true, completion: nil)
+            print("yo")
         }else{
             self.dismiss(animated: true, completion: nil)
+            print("yo")
         }
     }
     
