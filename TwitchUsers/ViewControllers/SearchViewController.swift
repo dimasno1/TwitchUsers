@@ -74,11 +74,10 @@ class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoData
                 for user in users{
                     self.searchHistory.addUser(user: user)
                     let profileViewController = ProfileViewController(user: user)
-                    self.fewFoundUsersController.controllers.append(profileViewController)
+                    self.fewFoundUsersController.addAsChildViewContoller(profileViewController: profileViewController)
                 }
                 self.present(self.fewFoundUsersController, animated: true, completion: nil)
             }
-        
     }
     
     func didntFoundUser(sessionDataHandler: UserDataHandler, error: String) {

@@ -27,7 +27,6 @@ class TwitchTabBarController: UITabBarController{
     let searchViewController = SearchViewController()
     let resultsViewController: UsersCollectionView = {
         let layout = UICollectionViewFlowLayout()
-//        layout.scrollDirection = .vertical
         let controller = UsersCollectionView(collectionViewLayout: layout)
         return controller
     }()

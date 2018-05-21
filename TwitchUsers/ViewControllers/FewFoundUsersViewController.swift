@@ -10,13 +10,8 @@ import UIKit
 
 class FewFoundUsersViewController: UIViewController{
     
-    var controllers = [ProfileViewController]()
-    let scrollView = UIScrollView()
-    var pageControl = UIPageControl()
-    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        print("INITED FEWFOUNDUSERS")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -42,40 +37,28 @@ class FewFoundUsersViewController: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setup()
-    
-        for controller in controllers{
-            let index =  controllers.index(of: controller)
-            switch index{
-            case 0:
-                controller.view.frame.origin = self.view.frame.origin
-            case 1:
-                controller.view.frame.origin = CGPoint(x:self.view.frame.maxX, y:0)
-            case 2:
-                controller.view.frame.origin = CGPoint(x:self.view.frame.maxX * 2, y:0)
-            default:
-                break
-            }
-            self.scrollView.addSubview(controller.view)
-        }
     }
     
     func prepareForNewUsers(){
-        controllers.removeAll()
         self.setup()
     }
     
     func addAsChildViewContoller(profileViewController: ProfileViewController) {
         self.addChildViewController(profileViewController)
         profileViewController.willMove(toParentViewController: self)
-        self.view.addSubview(profileViewController.view)
+        self.scrollView.addSubview(profileViewController.view)
+        profileViewController.didMove(toParentViewController: self)
     }
     
     private func setup(){
-        let width = self.view.frame.size.width * CGFloat(controllers.count)
+        let width = self.view.frame.size.width * CGFloat(childViewControllers.count)
         let height = self.view.frame.size.height
-        pageControl.numberOfPages = controllers.count
+        pageControl.numberOfPages = childViewControllers.count
         scrollView.contentSize = CGSize(width: width, height: height)
     }
+    
+    private let scrollView = UIScrollView()
+    private var pageControl = UIPageControl()
 }
 
 
