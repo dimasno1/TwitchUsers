@@ -4,3 +4,5 @@
 *.swp
 *~.nib
 *.xcuserstate
+project.xcworkspace/
+xcuserdata/
