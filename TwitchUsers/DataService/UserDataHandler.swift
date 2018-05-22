@@ -35,26 +35,27 @@ class UserDataHandler: NSObject, URLSessionDataDelegate {
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         
         let jsonData = data
-        
-        print(jsonData)
         guard let users = try? JSONDecoder().decode(Users.self, from: jsonData) else {
             self.delegate?.didntFoundUser(sessionDataHandler: self, error: "No users found")
             return
         }
-        let usersCount = users.usersMeta.count
         
-        if usersCount > 1{
-            self.delegate?.didFoundFewUsers(sessionDataHandler: self, users: users.usersMeta)
-        }else if usersCount == 1{
+        let usersCount = users.usersMeta.count
+        switch usersCount{
+        case 1:
             let user = users.usersMeta[0]
             self.delegate?.didFoundUser(sessionDataHandler: self, user: user)
-        }else{
+        case 1...:
+             self.delegate?.didFoundFewUsers(sessionDataHandler: self, users: users.usersMeta)
+        default:
             self.delegate?.didntFoundUser(sessionDataHandler: self, error: "No users found")
         }
     }
     
     private func encodeToJSONData(user: UserMeta){
         do{
+            let fileManager = FileManager.default
+            let encoder = JSONEncoder.init()
             let json = try encoder.encode(user)
             if let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first{
                 var path = url.path
@@ -66,7 +67,4 @@ class UserDataHandler: NSObject, URLSessionDataDelegate {
             print("Oops ... unable to create file")
         }
     }
-    
-    private let fileManager = FileManager.default
-    private let encoder = JSONEncoder.init()
 }

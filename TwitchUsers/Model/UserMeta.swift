@@ -9,13 +9,6 @@
 import UIKit
 
 class UserMeta: NSObject, Codable {
-    
-    var name: String
-    var type: String
-    var id: String
-    var logoURL: String
-    var bio: String?
-    var avatar: UIImage?
 
     //MARK: CustomStringConvertible:
     override var description: String {
@@ -69,4 +62,10 @@ class UserMeta: NSObject, Codable {
         self.avatar = UIImage(data: logoData)
     }
     
+    var name: String
+    var type: String
+    var id: String
+    var logoURL: String
+    var bio: String?
+    var avatar: UIImage?
 }
