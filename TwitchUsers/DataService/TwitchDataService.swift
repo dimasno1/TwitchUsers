@@ -11,7 +11,6 @@ import UIKit
 class TwitchDataService {
     
     private func makeURLFromParameters(_ parameters: [String: String], appendingPath: String) -> URL? {
-        
         var components = URLComponents()
         components.scheme = URLComponent.scheme
         components.host = URLComponent.host
@@ -30,7 +29,6 @@ class TwitchDataService {
     }
     
     func searchForTopVideos(limit: Int, game: String, delegate: URLSessionDataDelegate) {
-        
         let videoParameters = [Key.limit: String(limit), Key.game: game]
         guard let videosUrl = makeURLFromParameters(videoParameters, appendingPath: URLComponent.videosPath) else { return }
         let videoSession = URLSession(configuration: .default, delegate: delegate, delegateQueue: nil)
@@ -45,7 +43,6 @@ class TwitchDataService {
     }
     
     func searchForUser(with username: String, delegate: URLSessionDataDelegate) {
-        
         let userParameters = [Key.login: username]
         guard let usersUrl = makeURLFromParameters(userParameters, appendingPath: URLComponent.usersPath) else { return }
         let usersSession = URLSession(configuration: .default, delegate: delegate, delegateQueue: nil)

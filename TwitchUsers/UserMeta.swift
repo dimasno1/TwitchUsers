@@ -9,7 +9,7 @@
 import UIKit
 
 
-class UserInfo: NSObject, Codable {
+class UserMeta: NSObject, Codable {
     
     var id: Int
     var searchingDate: Date
@@ -17,6 +17,7 @@ class UserInfo: NSObject, Codable {
     var name: String
     var type: String
     var avatar: UIImage?
+    var logoURL: String?
     
     //MARK: CustomStringConvertible:
     override var description: String {
@@ -25,7 +26,7 @@ class UserInfo: NSObject, Codable {
     }
     
     //MARK: Hashable & Equatable
-    static func == (lhs: UserInfo, rhs: UserInfo) -> Bool {
+    static func == (lhs: UserMeta, rhs: UserMeta) -> Bool {
         return
                 lhs.id == rhs.id &&
                 lhs.name == rhs.name &&
@@ -39,7 +40,7 @@ class UserInfo: NSObject, Codable {
     //MARK: NSObject Hashable & Equatable:
     override func isEqual(_ object: Any?) -> Bool {
         let lhs = self
-        if let rhs = object as? UserInfo {
+        if let rhs = object as? UserMeta {
             return lhs == rhs
         }
         return false
@@ -67,18 +68,17 @@ class UserInfo: NSObject, Codable {
         bio = try container.decode(String.self, forKey: .bio)
         searchingDate = try container.decode(Date.self, forKey: .searchingDate)
         
-        
-        let imageData = try container.decode(Data.self, forKey: .avatar)
+        let imageData = try container.decode(Data.self, forKey: .logoURL)
         avatar = NSKeyedUnarchiver.unarchiveObject(with: imageData) as? UIImage ?? nil
     }
     
     //MARK: Codable:
     enum CodingKeys: String, CodingKey{
-        case id
-        case bio = "twitch_bio"
-        case name = "twitch_username"
-        case type = "twitch_usertype"
-        case avatar = "profile_image"
+        case id = "_id"
+        case bio = "bio"
+        case name = "name"
+        case type = "type"
+        case logoURL = "logo"
         case searchingDate = "searching_date"
     }
     
@@ -93,7 +93,7 @@ class UserInfo: NSObject, Codable {
         
         if let avatar = avatar{
             let image = NSKeyedArchiver.archivedData(withRootObject: avatar)
-            try container.encode(image, forKey: .avatar)
+            try container.encode(image, forKey: .logoURL)
         }
     }
 }

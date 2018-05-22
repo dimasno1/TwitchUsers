@@ -20,9 +20,10 @@ class VideoDataHandler: NSObject, URLSessionDataDelegate {
     
     //MARK: URLSession delegate conforming:
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
+        
         let HTTPResponce = response as? HTTPURLResponse
         let statusCode = HTTPResponce?.statusCode
-        
+
         if statusCode != 200{
             self.delegate?.didntReceivedVideosMeta(videoDataHandler: self, error: "Error searching user: received \(statusCode ?? 0) status code")
             completionHandler(.cancel)

@@ -10,8 +10,8 @@ import UIKit
 
 protocol UserDataHandlerDelegate: AnyObject{
     
-    func didFoundUser(sessionDataHandler: UserDataHandler, user: UserInfo)
-    func didFoundFewUsers(sessionDataHandler: UserDataHandler, users: [UserInfo])
+    func didFoundUser(sessionDataHandler: UserDataHandler, user: UserMeta)
+    func didFoundFewUsers(sessionDataHandler: UserDataHandler, users: [UserMeta])
     func didntFoundUser(sessionDataHandler: UserDataHandler, error: String)
 }
 
@@ -35,50 +35,36 @@ class UserDataHandler: NSObject, URLSessionDataDelegate {
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         
         let jsonData = data
-        let currentDate = Date()
-        var jsonDictionary = [String: AnyObject]()
-        do{
-            jsonDictionary = try JSONSerialization.jsonObject(with: jsonData, options: .allowFragments) as! [String: AnyObject]
-            guard let usersCount = jsonDictionary["_total"] as? Int else { return }
-            guard let users = jsonDictionary["users"] as? NSArray else { return }
-            
-            if usersCount > 1{
-                var foundUsers = [UserInfo]()
-                for user in users{
-                    guard let foundUser = user as? [String: AnyObject] else { return }
-                    guard let someUser = self.getUserFrom(dictionary: foundUser, date: currentDate) else { return }
-                    foundUsers.append(someUser)
-                }
-                self.delegate?.didFoundFewUsers(sessionDataHandler: self, users: foundUsers)
-            }else{
-                guard let foundUser = users[0] as? [String: AnyObject] else { return }
-                guard let someUser = getUserFrom(dictionary: foundUser, date: currentDate) else { return }
-                self.delegate?.didFoundUser(sessionDataHandler: self, user: someUser)
-            }
-        }catch{
-            
-        }
-    }
-    
-    private func getUserFrom(dictionary: [String: AnyObject], date: Date) -> UserInfo? {
-        guard let id = dictionary["_id"] as? String else { return nil}
-        guard let newID = Int(id) else { return nil}
-        guard let name = dictionary["name"] as? String else { return nil}
-        guard let type = dictionary["type"] as? String else { return nil}
-        guard let logo = dictionary["logo"] as? String else { return nil}
-        guard let logoURL = URL(string: logo) else { return nil}
-        var bio: String?
-        if let userBio = dictionary["bio"] as? String{
-            bio = userBio
-        }
         
-        guard let imageData = try? Data(contentsOf: logoURL) else { return nil }
-        let avatar = UIImage(data: imageData)
-        let currentUser = UserInfo(id: newID, name: name, type: type, avatar: avatar ?? nil, searchingDate: date, bio: bio)
-        return currentUser
+        print(jsonData)
+        guard let users = try? JSONDecoder().decode(Users.self, from: jsonData) else {
+            self.delegate?.didntFoundUser(sessionDataHandler: self, error: "No users found")
+            return
+        }
+        let usersCount = users.usersMeta.count
+        print(users.usersMeta[0].avatar, users.usersMeta[0].bio, users.usersMeta[0].id, users.usersMeta[0].logoURL, users.usersMeta[0].name, users.usersMeta[0].type)
+
+                    if usersCount > 1{
+        //                var foundUsers = [UserMeta]()
+        //                for user in users{
+        //                    guard let foundUser = user as? [String: AnyObject] else { return }
+        //                    guard let someUser = self.getUserFrom(dictionary: foundUser, date: currentDate) else { return }
+        //                    foundUsers.append(someUser)
+        //                }
+        //                self.delegate?.didFoundFewUsers(sessionDataHandler: self, users: foundUsers)
+        //            }else if usersCount == 1{
+        //                guard let foundUser = users[0] as? [String: AnyObject] else { return }
+        //                guard let someUser = getUserFrom(dictionary: foundUser, date: currentDate) else { return }
+        //                self.delegate?.didFoundUser(sessionDataHandler: self, user: someUser)
+        //            }else{
+        //                self.delegate?.didntFoundUser(sessionDataHandler: self, error: "No users found")
+        //            }
+        //        }catch{
+        //
+        //        }
     }
     
-    private func encodeToJSONData(user: UserInfo){
+    private func encodeToJSONData(user: UserMeta){
         do{
             let json = try encoder.encode(user)
             if let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first{

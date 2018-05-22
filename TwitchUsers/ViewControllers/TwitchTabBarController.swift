@@ -25,9 +25,9 @@ class TwitchTabBarController: UITabBarController{
     }
     
     let searchViewController = SearchViewController()
-    let resultsViewController: UsersCollectionView = {
+    let resultsViewController: HistoryOfSearchCollectionViewController = {
         let layout = UICollectionViewFlowLayout()
-        let controller = UsersCollectionView(collectionViewLayout: layout)
+        let controller = HistoryOfSearchCollectionViewController(collectionViewLayout: layout)
         return controller
     }()
  

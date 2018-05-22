@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UsersCollectionView: UICollectionViewController{
+class HistoryOfSearchCollectionViewController: UICollectionViewController{
     
     //MARK: Initialization:
     override init(collectionViewLayout layout: UICollectionViewLayout) {
@@ -16,7 +16,7 @@ class UsersCollectionView: UICollectionViewController{
         
         //MARK: Subscribe for notifications:
         notificationCenter.addObserver(forName: Notification.Name(rawValue: "AddedUser"), object: nil, queue: nil, using: {(notification) in
-            guard let userInfo = notification.userInfo, let user = userInfo["user"] as? UserInfo else { return }
+            guard let userInfo = notification.userInfo, let user = userInfo["user"] as? UserMeta else { return }
             self.users.append(user)
         })
     }
@@ -86,11 +86,11 @@ class UsersCollectionView: UICollectionViewController{
     
     let notificationCenter = NotificationCenter.default
     let noUsersLabel = UILabel()
-    var users = [UserInfo]()
+    var users = [UserMeta]()
 }
 
-
-extension UsersCollectionView: UICollectionViewDelegateFlowLayout{
+//FlowLayoutDelegate:
+extension HistoryOfSearchCollectionViewController: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = self.view.bounds.size.width - 20
@@ -103,7 +103,5 @@ extension UsersCollectionView: UICollectionViewDelegateFlowLayout{
         let inset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         return inset
     }
-    
-    
     
 }

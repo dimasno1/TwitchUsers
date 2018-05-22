@@ -15,81 +15,92 @@ class ProfileViewController: UIViewController{
     init(image: UIImage?, name: String, id: Int, type: String) {
         super.init(nibName: nil, bundle: nil)
         self.profileImageView.image = image
-        nameView = self.setupTextViewWith(text: name, after: profileImageView)
-        typeView = self.setupTextViewWith(text: type, after: nameView)
-        idView = self.setupTextViewWith(text: String(id), after: typeView)
+        nameView = self.setupTextViewWith(text: name)
+        typeView = self.setupTextViewWith(text: type)
+        idView = self.setupTextViewWith(text: String(id))
+        setup()
     }
     
-    convenience init(user: UserInfo) {
+    convenience init(user: UserMeta) {
         self.init(image: user.avatar ?? nil, name: user.name, id: user.id, type: user.type)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
     //MARK: ViewController lifecycle:
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.view.addSubview(profileImageView)
-        self.view.addSubview(closeButton)
-        self.setup()
-        
-        let transform = CGAffineTransform(translationX: 0, y: -120)
-        self.profileImageView.center = view.center.applying(transform)
-        self.profileImageView.layer.masksToBounds = true
-        
-        if let image = profileImageView.image{
-            let cornerRadius = image.size.width / 2
-            self.profileImageView.layer.cornerRadius = cornerRadius
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let upperRightPoint = CGPoint(x: self.view.bounds.maxX, y: 0)
-        let transform = CGAffineTransform(translationX: -50, y: 50)
-        closeButton.frame.origin = upperRightPoint.applying(transform)
-        closeButton.transform = closeButton.transform.rotated(by: CGFloat.pi/4)
+        closeButton.isHidden = parent != nil ? true : false
     }
     
     @objc private func closeProfile(){
-        removeThisContollerFromParentViewController(isChild: parent != nil)
         self.dismiss(animated: true, completion: nil)
     }
     
-    private func setupTextViewWith(text: String, after previousView: UIView?) -> UITextView{
+    private func setup(){
+        view.addSubviews(stackView, profileImageView, closeButton)
+        view.backgroundColor = mainTwitchColor
+        setupStackView(stackView: stackView, with: [nameView, idView, typeView])
+        makeConstraits()
         
+        profileImageView.layer.masksToBounds = true
+        if let image = profileImageView.image{
+            let cornerRadius = image.size.width / 2
+            profileImageView.layer.cornerRadius = cornerRadius
+        }
+        
+        closeButton.transform = closeButton.transform.rotated(by: CGFloat.pi/4)
+        closeButton.tintColor = secondTwitchColor
+        closeButton.addTarget(self, action: #selector(closeProfile), for: .touchUpInside)
+    }
+    
+    private func makeConstraits() {
+        
+        profileImageView.snp.makeConstraints { make in
+            make.top.equalTo(view).offset(20 * scaleFactor)
+            make.centerX.equalTo(view)
+        }
+        
+        stackView.snp.makeConstraints { make in
+            make.top.equalTo(profileImageView.snp.bottom).offset(5 * scaleFactor)
+            make.left.equalTo(profileImageView)
+            make.right.equalTo(profileImageView)
+            make.height.equalTo(view.bounds.height / 3)
+        }
+        
+        closeButton.snp.makeConstraints { make in
+            make.right.equalTo(view).offset(-10)
+            make.top.equalTo(view).offset(10)
+        }
+    }
+    
+    private func setupTextViewWith(text: String) -> UITextView{
         let textView = UITextView()
         textView.backgroundColor = self.view.backgroundColor
         textView.textColor = .black
         textView.isEditable = false
+        textView.textAlignment = .center
         textView.text = text
         textView.font = twitchFont
-        textView.sizeToFit()
-        self.view.addSubview(textView)
-        
-        let width = textView.frame.size.width
-        let transform = CGAffineTransform(translationX: 0, y: 20)
-        
-        if let previousView = previousView, let superview = textView.superview{
-            textView.frame.origin = CGPoint(x: superview.center.x - width/2, y: previousView.frame.maxY.advanced(by: 10))
-        }else{
-            textView.frame.origin = profileImageView.frame.origin.applying(transform)
-        }
         return textView
     }
     
-    private func setup(){
-        self.view.backgroundColor = mainTwitchColor
-        closeButton.tintColor = secondTwitchColor
-        closeButton.addTarget(self, action: #selector(closeProfile), for: .touchUpInside)
-        self.profileImageView.sizeToFit()
-        self.closeButton.sizeToFit()
+    private func setupStackView(stackView: UIStackView, with arrangedSubviews: [UIView]) {
+        stackView.addArrangedSubviews(views: arrangedSubviews)
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+        stackView.spacing = 5
+        stackView.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    private func removeThisContollerFromParentViewController(isChild: Bool) {
+    func removeThisContollerFromParentViewController(isChild: Bool) {
         if isChild{
             self.willMove(toParentViewController: nil)
             self.view.removeFromSuperview()
@@ -97,14 +108,36 @@ class ProfileViewController: UIViewController{
         }
     }
     
+    deinit {
+        removeThisContollerFromParentViewController(isChild: parent != nil)
+        print("deinited")
+    }
+    
     override var prefersStatusBarHidden: Bool{
         return true
     }
     
+    var stackView = UIStackView()
     var profileImageView = UIImageView()
     var nameView =  UITextView()
     var typeView = UITextView()
     var idView = UITextView()
+    private let scaleFactor = UIScreen.main.scale
     private let closeButton = UIButton(type: UIButtonType.contactAdd)
-    
+}
+
+
+//Extensions:
+extension UIStackView {
+    func addArrangedSubviews(views: [UIView]) {
+        for view in views{
+            self.addArrangedSubview(view)
+        }
+    }
+}
+
+extension UIView {
+    func addSubviews(_ views: UIView...) {
+        views.forEach(addSubview(_:))
+    }
 }

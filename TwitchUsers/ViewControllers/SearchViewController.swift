@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 let mainTwitchColor = UIColor(withFromZeroToRed: 75, green: 56, blue: 122)
 let twitchFont = UIFont(name: "DimitriSwank", size: 35)
@@ -24,40 +25,43 @@ class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoData
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         if mainLabel.text != commonText{
             mainLabel.text = commonText
         }
-        notificationCenter.addObserver(self, selector: #selector(makeLayout), name: Notification.Name.UIDeviceOrientationDidChange, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        notificationCenter.removeObserver(self, name: Notification.Name.UIDeviceOrientationDidChange, object: nil)
     }
     
     private func setupView(){
         self.view.backgroundColor = mainTwitchColor
-        self.view.addSubview(searchbar)
-        self.view.addSubview(mainLabel)
-        self.view.addSubview(activityIndicator)
+        self.view.addSubviews(searchbar, mainLabel, activityIndicator)
         mainLabel.font = twitchFont
         mainLabel.text = commonText
         mainLabel.sizeToFit()
+        makeConstraits()
     }
     
-    @objc private func makeLayout(notification: Notification?){
-        let someSize = self.searchbar.sizeThatFits(self.view.bounds.size)
-        let frameOfSafeArea = self.view.safeAreaLayoutGuide.layoutFrame
-        searchbar.frame.origin = CGPoint(x: 0, y: frameOfSafeArea.minY)
-        self.searchbar.frame.size = someSize
-        mainLabel.center = self.view.center
-        let transform = CGAffineTransform(translationX: 0, y: 50)
-        activityIndicator.center = mainLabel.center.applying(transform)
+    private func makeConstraits() {
+        searchbar.snp.makeConstraints { make in
+            make.top.equalTo(view)
+            make.left.equalTo(view)
+            make.right.equalTo(view)
+        }
+        
+        mainLabel.snp.makeConstraints { make in
+            make.center.equalTo(view)
+        }
+        
+        activityIndicator.snp.makeConstraints { make in
+            make.centerX.equalTo(view)
+            make.centerY.equalTo(mainLabel.snp.bottom).offset(30)
+        }
     }
     
     //MARK: UsersDelegate conforming:
-    func didFoundUser(sessionDataHandler: UserDataHandler, user: UserInfo) {
+    func didFoundUser(sessionDataHandler: UserDataHandler, user: UserMeta) {
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
             self.searchHistory.addUser(user: user)
@@ -66,23 +70,21 @@ class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoData
         }
     }
     
-    func didFoundFewUsers(sessionDataHandler: UserDataHandler, users: [UserInfo]) {
-        
-            DispatchQueue.main.async {
-                self.fewFoundUsersController.prepareForNewUsers()
-                self.activityIndicator.stopAnimating()
-                for user in users{
-                    self.searchHistory.addUser(user: user)
-                    let profileViewController = ProfileViewController(user: user)
-                    self.fewFoundUsersController.addAsChildViewContoller(profileViewController: profileViewController)
-                }
-                self.present(self.fewFoundUsersController, animated: true, completion: nil)
+    func didFoundFewUsers(sessionDataHandler: UserDataHandler, users: [UserMeta]) {
+        DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
+            let fewFoundUsersController = UsersScrollViewController()
+            for user in users{
+                self.searchHistory.addUser(user: user)
+                let profileViewController = ProfileViewController(user: user)
+                fewFoundUsersController.addAsChildViewContoller(profileViewController: profileViewController)
             }
+            self.present(fewFoundUsersController, animated: true, completion: nil)
+        }
     }
     
     func didntFoundUser(sessionDataHandler: UserDataHandler, error: String) {
         print(error)
-        
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
             self.mainLabel.text = self.noSuchUserText
@@ -104,12 +106,12 @@ class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoData
     
     private let noSuchUserText = "No such user"
     private let commonText = "twitch users"
-    private let searchHistory = SearchHistory()
     private let mainLabel = UILabel()
     private let notificationCenter = NotificationCenter.default
-    lazy var fewFoundUsersController = FewFoundUsersViewController()
-    let userDataHandler = UserDataHandler()
-    let videoDataHandler = VideoDataHandler()
+    lazy var userDataHandler = UserDataHandler()
+    lazy var videoDataHandler = VideoDataHandler()
+    private lazy var searchHistory = SearchHistory()
+   
     let searchbar = SearchBarController()
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
 }
