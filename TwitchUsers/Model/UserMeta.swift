@@ -48,15 +48,6 @@ class UserMeta: NSObject, Codable {
         return self.hashValue
     }
     
-    init(id: String, name: String, type: String, logoURL: String, bio: String?, avatar: UIImage?) {
-        self.id = id
-        self.name = name
-        self.type = type
-        self.logoURL = logoURL
-        self.bio = bio
-        self.avatar = avatar
-    }
-    
     enum CodingKeys: String, CodingKey {
         case id = "_id"
         case type = "type"
