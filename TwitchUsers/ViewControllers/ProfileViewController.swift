@@ -12,12 +12,12 @@ import SnapKit
 class ProfileViewController: UIViewController{
     
     //MARK: Initialization:
-    init(image: UIImage?, name: String, id: Int, type: String) {
+    init(image: UIImage?, name: String, id: String, type: String) {
         super.init(nibName: nil, bundle: nil)
         self.profileImageView.image = image
         nameView = self.setupTextViewWith(text: name)
         typeView = self.setupTextViewWith(text: type)
-        idView = self.setupTextViewWith(text: String(id))
+        idView = self.setupTextViewWith(text: id)
         setup()
     }
     

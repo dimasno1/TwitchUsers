@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewUsersMeta: NSObject, Decodable {
+class UserMeta: NSObject, Codable {
     
     var name: String
     var type: String
@@ -24,7 +24,7 @@ class NewUsersMeta: NSObject, Decodable {
     }
     
     //MARK: Hashable & Equatable
-    static func == (lhs: NewUsersMeta, rhs: NewUsersMeta) -> Bool {
+    static func == (lhs: UserMeta, rhs: UserMeta) -> Bool {
         return
             lhs.id == rhs.id &&
                 lhs.name == rhs.name &&
@@ -38,7 +38,7 @@ class NewUsersMeta: NSObject, Decodable {
     //MARK: NSObject Hashable & Equatable:
     override func isEqual(_ object: Any?) -> Bool {
         let lhs = self
-        if let rhs = object as? NewUsersMeta {
+        if let rhs = object as? UserMeta {
             return lhs == rhs
         }
         return false

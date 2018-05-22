@@ -42,26 +42,15 @@ class UserDataHandler: NSObject, URLSessionDataDelegate {
             return
         }
         let usersCount = users.usersMeta.count
-        print(users.usersMeta[0].avatar, users.usersMeta[0].bio, users.usersMeta[0].id, users.usersMeta[0].logoURL, users.usersMeta[0].name, users.usersMeta[0].type)
-
-                    if usersCount > 1{
-        //                var foundUsers = [UserMeta]()
-        //                for user in users{
-        //                    guard let foundUser = user as? [String: AnyObject] else { return }
-        //                    guard let someUser = self.getUserFrom(dictionary: foundUser, date: currentDate) else { return }
-        //                    foundUsers.append(someUser)
-        //                }
-        //                self.delegate?.didFoundFewUsers(sessionDataHandler: self, users: foundUsers)
-        //            }else if usersCount == 1{
-        //                guard let foundUser = users[0] as? [String: AnyObject] else { return }
-        //                guard let someUser = getUserFrom(dictionary: foundUser, date: currentDate) else { return }
-        //                self.delegate?.didFoundUser(sessionDataHandler: self, user: someUser)
-        //            }else{
-        //                self.delegate?.didntFoundUser(sessionDataHandler: self, error: "No users found")
-        //            }
-        //        }catch{
-        //
-        //        }
+        
+        if usersCount > 1{
+            self.delegate?.didFoundFewUsers(sessionDataHandler: self, users: users.usersMeta)
+        }else if usersCount == 1{
+            let user = users.usersMeta[0]
+            self.delegate?.didFoundUser(sessionDataHandler: self, user: user)
+        }else{
+            self.delegate?.didntFoundUser(sessionDataHandler: self, error: "No users found")
+        }
     }
     
     private func encodeToJSONData(user: UserMeta){

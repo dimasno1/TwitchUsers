@@ -53,7 +53,7 @@ class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoData
         mainLabel.snp.makeConstraints { make in
             make.center.equalTo(view)
         }
-        
+
         activityIndicator.snp.makeConstraints { make in
             make.centerX.equalTo(view)
             make.centerY.equalTo(mainLabel.snp.bottom).offset(30)

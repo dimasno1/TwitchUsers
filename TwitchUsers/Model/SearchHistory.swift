@@ -19,7 +19,6 @@ class SearchHistory{
             usersHistory.insert(user)
             let addNotification = Notification(name: Notification.Name(rawValue: "AddedUser"), object: self, userInfo:
                 ["user": user,
-                 "searchDate": user.searchingDate,
                  "numberOfUsers": usersHistory.count
                 ])
             notificationCenter.post(addNotification)

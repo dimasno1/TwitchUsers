@@ -12,11 +12,6 @@ let secondTwitchColor = UIColor(withFromZeroToRed: 31, green: 156, blue: 214)
 
 class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
     
-    let photoFrame = UIImageView()
-    let nameLabel = UILabel()
-    let bioTextView = UITextView()
-    var hashForUser: Int?
-    
     //MARK: Initializition:
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -55,6 +50,7 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
         self.bioTextView.alpha = 0.7
         self.bioTextView.backgroundColor = .clear
         self.bioTextView.delegate = self
+        self.bioTextView.isEditable = false
         self.bioTextView.textAlignment = .left
         
         self.contentView.addSubview(photoFrame)
@@ -106,5 +102,9 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
     }
  
     private let deviceScaleFactor = UIScreen.main.scale
+    let photoFrame = UIImageView()
+    let nameLabel = UILabel()
+    let bioTextView = UITextView()
+    var hashForUser: Int?
 }
 

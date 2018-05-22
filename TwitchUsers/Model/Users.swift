@@ -10,12 +10,10 @@ import UIKit
 
 struct Users: Decodable {
     let total: Int
-    let usersMeta: [NewUsersMeta]
+    let usersMeta: [UserMeta]
     
     enum CodingKeys: String, CodingKey {
         case total = "_total"
         case usersMeta = "users"
     }
-    
-   
 }
