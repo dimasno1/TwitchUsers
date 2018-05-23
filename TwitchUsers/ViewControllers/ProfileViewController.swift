@@ -49,6 +49,8 @@ class ProfileViewController: UIViewController{
         setupStackView(stackView: stackView, with: [nameView, idView, typeView])
         makeConstraits()
         
+        profileImageView.layer.borderWidth = 5
+        profileImageView.layer.borderColor = UIColor.lightGray.cgColor
         profileImageView.layer.masksToBounds = true
         if let image = profileImageView.image{
             let cornerRadius = image.size.width / 2
@@ -63,15 +65,15 @@ class ProfileViewController: UIViewController{
     private func makeConstraits() {
         
         profileImageView.snp.makeConstraints { make in
-            make.top.equalTo(view).offset(20 * scaleFactor)
+            make.top.equalTo(view).offset(20)
             make.centerX.equalTo(view)
         }
         
         stackView.snp.makeConstraints { make in
-            make.top.equalTo(profileImageView.snp.bottom).offset(5 * scaleFactor)
+            make.top.equalTo(profileImageView.snp.bottom).offset(5)
             make.left.equalTo(profileImageView)
             make.right.equalTo(profileImageView)
-            make.height.equalTo(view.bounds.height / 3)
+            make.bottom.equalTo(view).offset(-10)
         }
         
         closeButton.snp.makeConstraints { make in
@@ -110,7 +112,6 @@ class ProfileViewController: UIViewController{
     
     deinit {
         removeThisContollerFromParentViewController(isChild: parent != nil)
-        print("deinited")
     }
     
     override var prefersStatusBarHidden: Bool{

@@ -35,14 +35,7 @@ class VideoDataHandler: NSObject, URLSessionDataDelegate {
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         print(data)
         
-        let jsonData = data
-        var jsonDictionary = [String: AnyObject]()
-        do{
-            jsonDictionary = try JSONSerialization.jsonObject(with: jsonData, options: .allowFragments) as! [String: AnyObject]
-            print(jsonDictionary)
-            
-        }catch{
-            
-        }
+//        let jsonData = data
+   
     }
 }

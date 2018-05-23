@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 let secondTwitchColor = UIColor(withFromZeroToRed: 31, green: 156, blue: 214)
 
@@ -22,10 +23,9 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
         super.prepareForReuse()
         photoFrame.image = nil
         nameLabel.text = nil
-        hashForUser = nil
         bioTextView.text = nil
     }
- 
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -38,7 +38,7 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
         self.photoFrame.center = self.contentView.center
         self.photoFrame.layer.masksToBounds = true
         self.photoFrame.layer.shadowOpacity = 1
-        self.photoFrame.layer.borderColor = UIColor.white.cgColor
+        self.photoFrame.layer.borderColor = UIColor.lightGray.cgColor
         self.photoFrame.layer.borderWidth = 2
         
         self.nameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -52,27 +52,32 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
         self.bioTextView.delegate = self
         self.bioTextView.isEditable = false
         self.bioTextView.textAlignment = .left
-        
+      
         self.contentView.addSubview(photoFrame)
-        self.contentView.addSubview(bioTextView)
         
-        self.getOnScreen(view: self.photoFrame, duration: 1, completion: {
-            
+        self.getOnScreen(view: self.photoFrame, duration: 1, completion: { _ in
             self.contentView.addSubview(self.nameLabel)
             self.contentView.addSubview(self.bioTextView)
-            
-            self.nameLabel.leadingAnchor.constraint(equalTo: self.photoFrame.trailingAnchor, constant: 20).isActive = true
-            self.nameLabel.topAnchor.constraint(equalTo: self.photoFrame.topAnchor, constant: 10).isActive = true
-            self.nameLabel.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -10).isActive = true
-            
-            self.bioTextView.leftAnchor.constraint(equalTo: self.photoFrame.rightAnchor, constant: 20).isActive = true
-            self.bioTextView.topAnchor.constraint(equalTo: self.nameLabel.bottomAnchor, constant: 5).isActive = true
-            self.bioTextView.bottomAnchor.constraint(equalTo: self.photoFrame.bottomAnchor, constant: 20).isActive = true
-            self.bioTextView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -10).isActive = true
+            self.makeConstraits()
         })
     }
     
-    private func getOnScreen(view: UIView, duration: TimeInterval, completion: @escaping ()-> Void){
+    private func makeConstraits() {
+        nameLabel.snp.makeConstraints { make in
+            make.left.equalTo(photoFrame.snp.right).offset(20)
+            make.top.equalTo(photoFrame.snp.top).offset(10)
+            make.right.equalTo(contentView.snp.right).offset(-10)
+        }
+        
+        bioTextView.snp.makeConstraints { make in
+            make.left.equalTo(photoFrame.snp.right).offset(20)
+            make.top.equalTo(nameLabel.snp.bottom).offset(5)
+            make.bottom.equalTo(photoFrame.snp.bottom).offset(20)
+            make.right.equalTo(contentView.snp.right).offset(-10)
+        }
+    }
+    
+    private func getOnScreen(view: UIView, duration: TimeInterval, completion: ((Bool)-> Void)?){
         let contentCenter = self.contentView.center
         let diameter = self.contentView.frame.size.width / 3
         let transformation = CGAffineTransform(translationX: -diameter + 20, y: 0)
@@ -80,13 +85,12 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
         view.center = newCenter
         
         DispatchQueue.main.async{
-            UIView.animate(withDuration: duration){
-                view.layer.cornerRadius = diameter / 2
-                view.frame.size = CGSize(width: diameter, height: diameter)
-                view.center = newCenter
-            }
+            UIView.animate(withDuration: duration,
+                           animations: { view.layer.cornerRadius = diameter / 2
+                                        view.frame.size = CGSize(width: diameter, height: diameter)
+                                        view.center = newCenter },
+                           completion: completion)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + duration, execute: completion)
     }
     
     static var identifier: String{
@@ -100,11 +104,9 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
             }
         }
     }
- 
-    private let deviceScaleFactor = UIScreen.main.scale
+    
     let photoFrame = UIImageView()
     let nameLabel = UILabel()
     let bioTextView = UITextView()
-    var hashForUser: Int?
 }
 

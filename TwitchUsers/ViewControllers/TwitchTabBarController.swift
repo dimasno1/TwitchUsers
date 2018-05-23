@@ -24,8 +24,8 @@ class TwitchTabBarController: UITabBarController{
         resultsViewController.tabBarItem = tabBarItemForResultsView
     }
     
-    let searchViewController = SearchViewController()
-    let resultsViewController: HistoryOfSearchCollectionViewController = {
+    private let searchViewController = SearchViewController()
+    private lazy var resultsViewController: HistoryOfSearchCollectionViewController = {
         let layout = UICollectionViewFlowLayout()
         let controller = HistoryOfSearchCollectionViewController(collectionViewLayout: layout)
         return controller

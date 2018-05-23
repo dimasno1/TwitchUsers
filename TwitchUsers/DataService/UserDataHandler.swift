@@ -40,12 +40,11 @@ class UserDataHandler: NSObject, URLSessionDataDelegate {
             return
         }
         
-        let usersCount = users.usersMeta.count
-        switch usersCount{
+        switch users.usersMeta.count {
         case 1:
             let user = users.usersMeta[0]
             self.delegate?.didFoundUser(sessionDataHandler: self, user: user)
-        case 1...:
+        case 1 ... Int.max:
              self.delegate?.didFoundFewUsers(sessionDataHandler: self, users: users.usersMeta)
         default:
             self.delegate?.didntFoundUser(sessionDataHandler: self, error: "No users found")

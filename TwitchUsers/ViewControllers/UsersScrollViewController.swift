@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class UsersScrollViewController: UIViewController{
-    
+
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
@@ -48,6 +48,10 @@ class UsersScrollViewController: UIViewController{
         pageControl.sizeToFit()
         pageControl.center.x = view.center.x
         pageControl.center.y = view.bounds.maxY - 30
+        self.modalPresentationStyle = .overCurrentContext
+        self.modalTransitionStyle = .coverVertical
+        self.view.layer.shadowOpacity = 1.0
+        self.view.layer.shadowRadius = 20
     }
     
     private func prepareForAppearing() {
@@ -58,7 +62,8 @@ class UsersScrollViewController: UIViewController{
         
         for controller in childViewControllers {
             guard let index = childViewControllers.index(of: controller) else { return }
-            controller.view.frame.origin = CGPoint(x: CGFloat(index) * view.frame.size.width, y: 0)
+            let originForChildController = CGPoint(x: CGFloat(index) * view.frame.size.width, y: 0)
+            controller.view.frame.origin = originForChildController
         }
     }
     
@@ -70,12 +75,15 @@ class UsersScrollViewController: UIViewController{
         }
         
         switch gestureRecognizer.state {
-        case .ended, .began, .cancelled:
-            if self.view.bounds.origin.y.magnitude >= self.view.frame.size.height / 3{
-                let queue = DispatchQueue.global(qos: .userInteractive)
-                UIView.animate(withDuration: 1) { self.view.bounds.origin.y = -UIScreen.main.bounds.height }
-                queue.asyncAfter(deadline: .now(), execute: { self.dismiss(animated: true, completion: nil) })
-            }else{
+        case .ended, .failed, .cancelled:
+            let shouldScrollDown = self.view.bounds.origin.y.magnitude >= self.view.frame.size.height / 3
+            if shouldScrollDown {
+                UIView.animate(
+                    withDuration: 1,
+                    animations: { self.view.bounds.origin.y = -UIScreen.main.bounds.height },
+                    completion: { _ in self.dismiss(animated: false, completion: nil) }
+                )
+            } else {
                 UIView.animate(withDuration: 1) { self.view.bounds.origin.y = 0 }
             }
         default:

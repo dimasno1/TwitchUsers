@@ -29,11 +29,7 @@ class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoData
             mainLabel.text = commonText
         }
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
+ 
     private func setupView(){
         self.view.backgroundColor = mainTwitchColor
         self.view.addSubviews(searchbar, mainLabel, activityIndicator)
@@ -49,7 +45,7 @@ class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoData
             make.left.equalTo(view)
             make.right.equalTo(view)
         }
-        
+ 
         mainLabel.snp.makeConstraints { make in
             make.center.equalTo(view)
         }
@@ -73,13 +69,13 @@ class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoData
     func didFoundFewUsers(sessionDataHandler: UserDataHandler, users: [UserMeta]) {
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
-            let fewFoundUsersController = UsersScrollViewController()
+            let usersViewController = UsersScrollViewController()
             for user in users{
                 self.searchHistory.addUser(user: user)
                 let profileViewController = ProfileViewController(user: user)
-                fewFoundUsersController.addAsChildViewContoller(profileViewController: profileViewController)
+                usersViewController.addAsChildViewContoller(profileViewController: profileViewController)
             }
-            self.present(fewFoundUsersController, animated: true, completion: nil)
+            self.present(usersViewController, animated: true, completion: nil)
         }
     }
     
