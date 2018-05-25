@@ -10,22 +10,24 @@ import UIKit
 
 class SearchHistory{
     
-    var usersHistory = Set<UserMeta>()
+    var usersHistory = Set<Meta>()
     
     let notificationCenter = NotificationCenter.default
     
-    func addUser(user: UserMeta){
+    func addUser(user: Meta){
         if !usersHistory.contains(user){
             usersHistory.insert(user)
-            let addNotification = Notification(name: Notification.Name(rawValue: "AddedUser"), object: self, userInfo:
-                ["user": user,
-                 "numberOfUsers": usersHistory.count
+            let addNotification = Notification(name: Notification.Name(rawValue: "AddedUser"),
+                                               object: self,
+                                               userInfo:[
+                                                "user": user,
+                                                "numberOfUsers": usersHistory.count
                 ])
             notificationCenter.post(addNotification)
         }
     }
     
-    func removeUser(user: UserMeta){
+    func removeUser(user: Meta){
         if usersHistory.contains(user){
             usersHistory.remove(user)
             let removeNotification = Notification(name: Notification.Name(rawValue: "RemovedUser"), object: self, userInfo: ["user": user])

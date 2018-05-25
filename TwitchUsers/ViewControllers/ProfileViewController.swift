@@ -21,7 +21,7 @@ class ProfileViewController: UIViewController{
         setup()
     }
     
-    convenience init(user: UserMeta) {
+    convenience init(user: Meta) {
         self.init(image: user.avatar ?? nil, name: user.name, id: user.id, type: user.type)
     }
     

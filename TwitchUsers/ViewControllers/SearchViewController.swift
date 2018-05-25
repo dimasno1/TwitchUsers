@@ -12,7 +12,7 @@ import SnapKit
 let mainTwitchColor = UIColor(withFromZeroToRed: 75, green: 56, blue: 122)
 let twitchFont = UIFont(name: "DimitriSwank", size: 35)
 
-class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoDataHandlerDelegate{
+class SearchViewController: UIViewController, UserMetaHandlerDelegate, VideoDataHandlerDelegate{
     
     //MARK: ViewController lifecycle:
     override func viewDidLoad() {
@@ -57,7 +57,7 @@ class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoData
     }
     
     //MARK: UsersDelegate conforming:
-    func didFoundUser(sessionDataHandler: UserDataHandler, user: UserMeta) {
+    func didReceivedUserMeta(sessionDataHandler: UserMetaHandler, user: Meta) {
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
             self.searchHistory.addUser(user: user)
@@ -66,11 +66,11 @@ class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoData
         }
     }
     
-    func didFoundFewUsers(sessionDataHandler: UserDataHandler, users: [UserMeta]) {
+    func didReceiveUsersMeta(sessionDataHandler: UserMetaHandler, meta: [Meta]) {
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
             let usersViewController = UsersScrollViewController()
-            for user in users{
+            for user in meta{
                 self.searchHistory.addUser(user: user)
                 let profileViewController = ProfileViewController(user: user)
                 usersViewController.addAsChildViewContoller(profileViewController: profileViewController)
@@ -79,7 +79,7 @@ class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoData
         }
     }
     
-    func didntFoundUser(sessionDataHandler: UserDataHandler, error: String) {
+    func didntFoundUser(sessionDataHandler: UserMetaHandler, error: String) {
         print(error)
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
@@ -88,11 +88,11 @@ class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoData
     }
     
     //MARK: VideosDelegate conforming:
-    func didReceivedVideosMeta(videoDataHandler: VideoDataHandler, meta: Any) {
+    func didReceivedVideosMeta(videoDataHandler: VideoMetaHandler, meta: Any) {
         print("yo")
     }
     
-    func didntReceivedVideosMeta(videoDataHandler: VideoDataHandler, error: String) {
+    func didntReceivedVideosMeta(videoDataHandler: VideoMetaHandler, error: String) {
         print("yo")
     }
     
@@ -104,8 +104,8 @@ class SearchViewController: UIViewController, UserDataHandlerDelegate, VideoData
     private let commonText = "twitch users"
     private let mainLabel = UILabel()
     private let notificationCenter = NotificationCenter.default
-    lazy var userDataHandler = UserDataHandler()
-    lazy var videoDataHandler = VideoDataHandler()
+    lazy var userDataHandler = UserMetaHandler()
+    lazy var videoDataHandler = VideoMetaHandler()
     private lazy var searchHistory = SearchHistory()
    
     let searchbar = SearchBarController()

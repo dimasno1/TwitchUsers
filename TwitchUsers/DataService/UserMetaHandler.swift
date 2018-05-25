@@ -8,16 +8,16 @@
 
 import UIKit
 
-protocol UserDataHandlerDelegate: AnyObject{
+protocol UserMetaHandlerDelegate: AnyObject{
     
-    func didFoundUser(sessionDataHandler: UserDataHandler, user: UserMeta)
-    func didFoundFewUsers(sessionDataHandler: UserDataHandler, users: [UserMeta])
-    func didntFoundUser(sessionDataHandler: UserDataHandler, error: String)
+    func didReceivedUserMeta(sessionDataHandler: UserMetaHandler, user: Meta)
+    func didReceiveUsersMeta(sessionDataHandler: UserMetaHandler, meta: [Meta])
+    func didntFoundUser(sessionDataHandler: UserMetaHandler, error: String)
 }
 
-class UserDataHandler: NSObject, URLSessionDataDelegate {
+class UserMetaHandler: NSObject, URLSessionDataDelegate {
     
-    weak var delegate: UserDataHandlerDelegate?
+    weak var delegate: UserMetaHandlerDelegate?
     
     //MARK: URLSession delegate conforming:
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
@@ -40,25 +40,25 @@ class UserDataHandler: NSObject, URLSessionDataDelegate {
             return
         }
         
-        switch users.usersMeta.count {
+        switch users.meta.count {
         case 1:
-            let user = users.usersMeta[0]
-            self.delegate?.didFoundUser(sessionDataHandler: self, user: user)
+            let user = users.meta[0]
+            self.delegate?.didReceivedUserMeta(sessionDataHandler: self, user: user)
         case 1 ... Int.max:
-             self.delegate?.didFoundFewUsers(sessionDataHandler: self, users: users.usersMeta)
+             self.delegate?.didReceiveUsersMeta(sessionDataHandler: self, meta: users.meta)
         default:
             self.delegate?.didntFoundUser(sessionDataHandler: self, error: "No users found")
         }
     }
     
-    private func encodeToJSONData(user: UserMeta){
+    private func encodeToJSONData(users: Users){
         do{
             let fileManager = FileManager.default
             let encoder = JSONEncoder.init()
-            let json = try encoder.encode(user)
+            let json = try encoder.encode(users)
             if let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first{
                 var path = url.path
-                path.append("/lastUserData.json")
+                path.append("/users.json")
                 print(path)
                 fileManager.createFile(atPath: path, contents: json, attributes: nil)
             }

@@ -16,7 +16,7 @@ class HistoryOfSearchCollectionViewController: UICollectionViewController{
         
         //MARK: Subscribe for notifications:
         notificationCenter.addObserver(forName: Notification.Name(rawValue: "AddedUser"), object: nil, queue: nil, using: {(notification) in
-            guard let userInfo = notification.userInfo, let user = userInfo["user"] as? UserMeta else { return }
+            guard let userInfo = notification.userInfo, let user = userInfo["user"] as? Meta else { return }
             self.users.append(user)
         })
     }
@@ -25,14 +25,18 @@ class HistoryOfSearchCollectionViewController: UICollectionViewController{
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     //MARK Controller Lifecycle:
     override func viewDidLoad() {
         super.viewDidLoad()
         setupParametersOf(label: noUsersLabel)
         self.view.addSubview(noUsersLabel)
         collectionView?.backgroundColor = mainTwitchColor
+        collectionView?.alwaysBounceVertical = true
         collectionView?.register(TwitchUserCell.self, forCellWithReuseIdentifier: TwitchUserCell.identifier)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,6 +59,7 @@ class HistoryOfSearchCollectionViewController: UICollectionViewController{
         cell.bioTextView.text = user.bio ?? "No bio provided by user"
         cell.photoFrame.image = user.avatar
         cell.nameLabel.text = user.name
+        cell.animate()
         
         return cell
     }
@@ -86,7 +91,7 @@ class HistoryOfSearchCollectionViewController: UICollectionViewController{
     
     let notificationCenter = NotificationCenter.default
     let noUsersLabel = UILabel()
-    var users = [UserMeta]()
+    var users = [Meta]()
 }
 
 //FlowLayoutDelegate:
@@ -95,13 +100,11 @@ extension HistoryOfSearchCollectionViewController: UICollectionViewDelegateFlowL
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = self.view.bounds.size.width - 20
         let height = self.view.bounds.size.height / 3
-        let itemSize = CGSize(width: width, height: height)
-        return itemSize
+        return CGSize(width: width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let inset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        return inset
+        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
 }

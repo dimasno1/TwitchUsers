@@ -13,7 +13,6 @@ let secondTwitchColor = UIColor(withFromZeroToRed: 31, green: 156, blue: 214)
 
 class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
     
-    //MARK: Initializition:
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupCell()
@@ -30,67 +29,61 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
         super.init(coder: aDecoder)
     }
     
-    private func setupCell(){
+    func animate() {
+        photoFrame.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+        stackView.alpha = 0
+        UIView.animate(withDuration: 1) {
+            self.photoFrame.transform = .identity
+            self.stackView.alpha = 1
+        }
+    }
+    
+    private func setupCell() {
         
-        self.contentView.alpha = 0.9
-        self.contentView.layer.cornerRadius = 20
-        
-        self.photoFrame.center = self.contentView.center
         self.photoFrame.layer.masksToBounds = true
         self.photoFrame.layer.shadowOpacity = 1
         self.photoFrame.layer.borderColor = UIColor.lightGray.cgColor
         self.photoFrame.layer.borderWidth = 2
         
-        self.nameLabel.translatesAutoresizingMaskIntoConstraints = false
         self.nameLabel.font = twitchFont
         self.nameLabel.adjustsFontSizeToFitWidth = true
         
         self.bioTextView.layer.cornerRadius = 10
-        self.bioTextView.translatesAutoresizingMaskIntoConstraints = false
         self.bioTextView.alpha = 0.7
         self.bioTextView.backgroundColor = .clear
         self.bioTextView.delegate = self
         self.bioTextView.isEditable = false
         self.bioTextView.textAlignment = .left
-      
-        self.contentView.addSubview(photoFrame)
         
-        self.getOnScreen(view: self.photoFrame, duration: 1, completion: { _ in
-            self.contentView.addSubview(self.nameLabel)
-            self.contentView.addSubview(self.bioTextView)
-            self.makeConstraits()
-        })
+        self.contentView.alpha = 0.9
+        self.contentView.layer.cornerRadius = 20
+        
+        contentView.addSubview(photoFrame)
+        photoFrame.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.5)
+            make.width.equalTo(photoFrame.snp.height)
+            make.left.equalToSuperview().offset(30)
+        }
+        
+        stackView.spacing = 0
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        
+        contentView.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.7)
+            make.left.equalTo(photoFrame.snp.right).offset(30)
+            make.right.equalToSuperview().offset(-30)
+        }
     }
     
-    private func makeConstraits() {
-        nameLabel.snp.makeConstraints { make in
-            make.left.equalTo(photoFrame.snp.right).offset(20)
-            make.top.equalTo(photoFrame.snp.top).offset(10)
-            make.right.equalTo(contentView.snp.right).offset(-10)
-        }
-        
-        bioTextView.snp.makeConstraints { make in
-            make.left.equalTo(photoFrame.snp.right).offset(20)
-            make.top.equalTo(nameLabel.snp.bottom).offset(5)
-            make.bottom.equalTo(photoFrame.snp.bottom).offset(20)
-            make.right.equalTo(contentView.snp.right).offset(-10)
-        }
-    }
-    
-    private func getOnScreen(view: UIView, duration: TimeInterval, completion: ((Bool)-> Void)?){
-        let contentCenter = self.contentView.center
-        let diameter = self.contentView.frame.size.width / 3
-        let transformation = CGAffineTransform(translationX: -diameter + 20, y: 0)
-        let newCenter = contentCenter.applying(transformation)
-        view.center = newCenter
-        
-        DispatchQueue.main.async{
-            UIView.animate(withDuration: duration,
-                           animations: { view.layer.cornerRadius = diameter / 2
-                                        view.frame.size = CGSize(width: diameter, height: diameter)
-                                        view.center = newCenter },
-                           completion: completion)
-        }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        photoFrame.setNeedsLayout()
+        photoFrame.layoutIfNeeded()
+        photoFrame.layer.cornerRadius = photoFrame.bounds.width / 2
     }
     
     static var identifier: String{
@@ -108,5 +101,6 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
     let photoFrame = UIImageView()
     let nameLabel = UILabel()
     let bioTextView = UITextView()
+    private lazy var stackView = UIStackView(arrangedSubviews: [nameLabel, bioTextView])
 }
 

@@ -8,12 +8,12 @@
 
 import UIKit
 
-struct Users: Decodable {
+struct Users: Codable {
     let total: Int
-    let usersMeta: [UserMeta]
+    let meta: [Meta]
     
     enum CodingKeys: String, CodingKey {
         case total = "_total"
-        case usersMeta = "users"
+        case meta = "users"
     }
 }

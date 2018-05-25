@@ -10,11 +10,11 @@ import UIKit
 
 protocol VideoDataHandlerDelegate: AnyObject{
     
-    func didReceivedVideosMeta(videoDataHandler: VideoDataHandler, meta: Any)
-    func didntReceivedVideosMeta(videoDataHandler: VideoDataHandler, error: String)
+    func didReceivedVideosMeta(videoDataHandler: VideoMetaHandler, meta: Any)
+    func didntReceivedVideosMeta(videoDataHandler: VideoMetaHandler, error: String)
 }
 
-class VideoDataHandler: NSObject, URLSessionDataDelegate {
+class VideoMetaHandler: NSObject, URLSessionDataDelegate {
     
     weak var delegate: VideoDataHandlerDelegate?
     
