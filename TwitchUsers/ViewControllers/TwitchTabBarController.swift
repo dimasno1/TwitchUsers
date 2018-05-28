@@ -14,14 +14,17 @@ class TwitchTabBarController: UITabBarController{
         super.viewDidLoad()
 
         let tabBarItemForSearchView = UITabBarItem(tabBarSystemItem: .search, tag: 0)
-        tabBarItemForSearchView.badgeColor = .red
         let tabBarItemForResultsView = UITabBarItem(tabBarSystemItem: .history, tag: 1)
-        
-        self.setViewControllers([searchViewController, resultsViewController], animated: true)
-        self.tabBar.barStyle = .black
         
         searchViewController.tabBarItem = tabBarItemForSearchView
         resultsViewController.tabBarItem = tabBarItemForResultsView
+        setup()
+    }
+    
+    private func setup() {
+        tabBar.barStyle = .black
+        tabBar.tintColor = secondTwitchColor
+        setViewControllers([searchViewController, resultsViewController], animated: true)
     }
     
     private let searchViewController = SearchViewController()

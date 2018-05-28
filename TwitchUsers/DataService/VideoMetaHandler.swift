@@ -34,8 +34,5 @@ class VideoMetaHandler: NSObject, URLSessionDataDelegate {
     
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         print(data)
-        
-//        let jsonData = data
-   
     }
 }

@@ -8,16 +8,15 @@
 
 import UIKit
 
-class SearchHistory{
+class SearchHistory {
     
     var usersHistory = Set<Meta>()
-    
     let notificationCenter = NotificationCenter.default
     
     func addUser(user: Meta){
         if !usersHistory.contains(user){
             usersHistory.insert(user)
-            let addNotification = Notification(name: Notification.Name(rawValue: "AddedUser"),
+            let addNotification = Notification(name: .searchHistoryAdd,
                                                object: self,
                                                userInfo:[
                                                 "user": user,
@@ -30,9 +29,14 @@ class SearchHistory{
     func removeUser(user: Meta){
         if usersHistory.contains(user){
             usersHistory.remove(user)
-            let removeNotification = Notification(name: Notification.Name(rawValue: "RemovedUser"), object: self, userInfo: ["user": user])
+            let removeNotification = Notification(name: .searchHistoryRemove, object: self, userInfo: ["user": user])
             notificationCenter.post(removeNotification)
         }
     }
     
+}
+
+extension Notification.Name {
+    static let searchHistoryRemove = Notification.Name.init("remove")
+    static let searchHistoryAdd = Notification.Name.init("add")
 }

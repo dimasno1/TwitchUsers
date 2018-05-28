@@ -8,21 +8,23 @@
 
 import UIKit
 
-class SearchBarController: UISearchBar, UISearchBarDelegate {
+class MainSearchBar: UISearchBar {
    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.barStyle = .blackTranslucent
-        self.keyboardAppearance = .dark
-        self.showsCancelButton = true
-        self.showsScopeBar = true
+        barStyle = .blackTranslucent
+        tintColor = secondTwitchColor
+        keyboardAppearance = .dark
+        showsCancelButton = true
+        showsScopeBar = true
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    //MARK: SearchBar delegate conforming:
+}
+
+extension MainSearchBar: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = nil
         searchBar.resignFirstResponder()
@@ -42,11 +44,11 @@ class SearchBarController: UISearchBar, UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let windowOnScreenController = UIApplication.shared.keyWindow?.rootViewController?.childViewControllers[0] as? SearchViewController else { return }
         DispatchQueue.main.async {
-            windowOnScreenController.activityIndicator.startAnimating()
+            windowOnScreenController.startActivityIndicatorAnimation()
         }
         let twitchSearcher = TwitchDataService()
-        let name = searchBar.text?.lowercased()
-        twitchSearcher.searchForUser(with: name ?? "", delegate: windowOnScreenController.userDataHandler)
+        let names = searchBar.text?.lowercased().replacingOccurrences(of: " ", with: "")
+        twitchSearcher.searchForUser(with: names ?? "", delegate: windowOnScreenController.downloadedDataHandler.userDataHandler)
         searchBar.resignFirstResponder()
     }
 }

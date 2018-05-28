@@ -7,42 +7,48 @@
 //
 
 import UIKit
+import SnapKit
 
 class HistoryOfSearchCollectionViewController: UICollectionViewController{
     
-    //MARK: Initialization:
+    enum State {
+        case empty
+        case nonEmpty
+    }
+    
+    enum EditingState {
+        case editing
+        case standart
+    }
+    
     override init(collectionViewLayout layout: UICollectionViewLayout) {
         super.init(collectionViewLayout: layout)
-        
-        //MARK: Subscribe for notifications:
-        notificationCenter.addObserver(forName: Notification.Name(rawValue: "AddedUser"), object: nil, queue: nil, using: {(notification) in
-            guard let userInfo = notification.userInfo, let user = userInfo["user"] as? Meta else { return }
-            self.users.append(user)
-        })
+        subsribeForNotifications()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
     //MARK Controller Lifecycle:
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupParametersOf(label: noUsersLabel)
-        self.view.addSubview(noUsersLabel)
-        collectionView?.backgroundColor = mainTwitchColor
-        collectionView?.alwaysBounceVertical = true
-        collectionView?.register(TwitchUserCell.self, forCellWithReuseIdentifier: TwitchUserCell.identifier)
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+        view.addSubview(noUsersLabel)
+        view.addSubview(editButton)
+        setup()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.collectionView?.reloadData()
+        editButton.isHidden = state == .nonEmpty ? false : true
         noUsersLabel.isHidden = users.count > 0 ? true : false
+        guard let cells = collectionView?.visibleCells as? [TwitchUserCell] else { return }
+        cells.forEach{cell in cell.animate()}
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        mode == .editing ? switchEditingState() : nil
     }
     
     //MARK: CollectionView DataSource:
@@ -51,11 +57,10 @@ class HistoryOfSearchCollectionViewController: UICollectionViewController{
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TwitchUserCell.identifier, for: indexPath) as! TwitchUserCell
-        cell.layer.cornerRadius = 20
         let user = self.users[indexPath.row]
         
+        cell.layer.cornerRadius = 20
         cell.bioTextView.text = user.bio ?? "No bio provided by user"
         cell.photoFrame.image = user.avatar
         cell.nameLabel.text = user.name
@@ -75,13 +80,21 @@ class HistoryOfSearchCollectionViewController: UICollectionViewController{
         return true
     }
     
-    override var prefersStatusBarHidden: Bool{
-        return true
+    @objc func switchEditingState() {
+        guard let cells = collectionView?.visibleCells as? [TwitchUserCell] else { return }
+        mode = mode == .editing ? .standart : .editing
+        switch mode {
+        case .editing:
+            cells.forEach {$0.animateForCurrentState(state: .editing)}
+        case .standart:
+            cells.forEach {$0.animateForCurrentState(state: .identity)}
+        }
     }
     
     private func setupParametersOf(label: UILabel){
         label.font = twitchFont
         label.text = "Try to search for user"
+        label.textColor = .gray
         let labelSize = label.sizeThatFits(view.bounds.size)
         label.frame.size = labelSize.applying(CGAffineTransform(scaleX: 0.8, y: 0.8))
         label.adjustsFontSizeToFitWidth = true
@@ -89,10 +102,53 @@ class HistoryOfSearchCollectionViewController: UICollectionViewController{
         label.isHidden = false
     }
     
-    let notificationCenter = NotificationCenter.default
-    let noUsersLabel = UILabel()
+    private func makeConstraits() {
+        editButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(20)
+            make.left.equalToSuperview().offset(20)
+        }
+    }
+    
+    private func setup() {
+        makeConstraits()
+        setupParametersOf(label: noUsersLabel)
+        editButton.setTitle("Edit", for: .normal)
+        editButton.isHidden = true
+        editButton.addTarget(self, action: #selector(switchEditingState), for: .touchUpInside)
+        collectionView?.backgroundColor = mainTwitchColor
+        collectionView?.alwaysBounceVertical = true
+        collectionView?.register(TwitchUserCell.self, forCellWithReuseIdentifier: TwitchUserCell.identifier)
+    }
+    
+    private func subsribeForNotifications() {
+        notificationCenter.addObserver(forName: .searchHistoryAdd, object: nil, queue: nil, using: {(notification) in
+            guard let userInfo = notification.userInfo, let user = userInfo["user"] as? Meta else { return }
+            self.collectionView?.performBatchUpdates({
+                self.users.append(user)
+                let index = IndexPath(item: self.users.count - 1, section: 0)
+                self.collectionView?.insertItems(at: [index])
+            }, completion: nil)
+            self.state = .nonEmpty
+        })
+        notificationCenter.addObserver(forName: .searchHistoryRemove, object: nil, queue: nil, using: { (notification) in
+            guard let userInfo = notification.userInfo, let user = userInfo["user"] as? Meta else { return }
+            if self.users.contains(user) {
+                guard let removingUserIndex = self.users.index(of: user) else { return }
+                self.users.remove(at: removingUserIndex)
+                self.state = self.users.count < 1 ? .empty : .nonEmpty
+                self.collectionView?.reloadData()
+            }
+        })
+    }
+    
     var users = [Meta]()
+    private var state: State = .empty
+    private var mode: EditingState = .standart
+    private let noUsersLabel = UILabel()
+    private let notificationCenter = NotificationCenter.default
+    private let editButton = UIButton(type: UIButtonType.system)
 }
+
 
 //FlowLayoutDelegate:
 extension HistoryOfSearchCollectionViewController: UICollectionViewDelegateFlowLayout{
@@ -106,5 +162,5 @@ extension HistoryOfSearchCollectionViewController: UICollectionViewDelegateFlowL
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
-    
 }
+

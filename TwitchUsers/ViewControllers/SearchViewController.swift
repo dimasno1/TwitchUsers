@@ -12,14 +12,11 @@ import SnapKit
 let mainTwitchColor = UIColor(withFromZeroToRed: 75, green: 56, blue: 122)
 let twitchFont = UIFont(name: "DimitriSwank", size: 35)
 
-class SearchViewController: UIViewController, UserMetaHandlerDelegate, VideoDataHandlerDelegate{
+class SearchViewController: UIViewController {
     
-    //MARK: ViewController lifecycle:
     override func viewDidLoad() {
         super.viewDidLoad()
-        userDataHandler.delegate = self
-        videoDataHandler.delegate = self
-        searchbar.delegate = searchbar
+        searchBar.delegate = searchBar
         self.setupView()
     }
     
@@ -29,87 +26,54 @@ class SearchViewController: UIViewController, UserMetaHandlerDelegate, VideoData
             mainLabel.text = commonText
         }
     }
- 
-    private func setupView(){
+    
+    private func setupView() {
         self.view.backgroundColor = mainTwitchColor
-        self.view.addSubviews(searchbar, mainLabel, activityIndicator)
+        self.view.addSubviews(searchBar, mainLabel, activityIndicator)
         mainLabel.font = twitchFont
+        mainLabel.textColor = .gray
         mainLabel.text = commonText
         mainLabel.sizeToFit()
         makeConstraits()
     }
     
     private func makeConstraits() {
-        searchbar.snp.makeConstraints { make in
+        searchBar.snp.makeConstraints { make in
             make.top.equalTo(view)
             make.left.equalTo(view)
             make.right.equalTo(view)
         }
- 
         mainLabel.snp.makeConstraints { make in
             make.center.equalTo(view)
         }
-
         activityIndicator.snp.makeConstraints { make in
             make.centerX.equalTo(view)
             make.centerY.equalTo(mainLabel.snp.bottom).offset(30)
         }
     }
     
-    //MARK: UsersDelegate conforming:
-    func didReceivedUserMeta(sessionDataHandler: UserMetaHandler, user: Meta) {
-        DispatchQueue.main.async {
-            self.activityIndicator.stopAnimating()
-            self.searchHistory.addUser(user: user)
-            let profileController = ProfileViewController(user: user)
-            self.present(profileController, animated: true, completion: nil)
-        }
+    func startActivityIndicatorAnimation() {
+        activityIndicator.startAnimating()
+    }
+   
+    func stopActivityIndicatorAnimation() {
+        activityIndicator.stopAnimating()
+    }
+    func setLabelToNotFound() {
+        mainLabel.text = noSuchUserText
     }
     
-    func didReceiveUsersMeta(sessionDataHandler: UserMetaHandler, meta: [Meta]) {
-        DispatchQueue.main.async {
-            self.activityIndicator.stopAnimating()
-            let usersViewController = UsersScrollViewController()
-            for user in meta{
-                self.searchHistory.addUser(user: user)
-                let profileViewController = ProfileViewController(user: user)
-                usersViewController.addAsChildViewContoller(profileViewController: profileViewController)
-            }
-            self.present(usersViewController, animated: true, completion: nil)
-        }
-    }
-    
-    func didntFoundUser(sessionDataHandler: UserMetaHandler, error: String) {
-        print(error)
-        DispatchQueue.main.async {
-            self.activityIndicator.stopAnimating()
-            self.mainLabel.text = self.noSuchUserText
-        }
-    }
-    
-    //MARK: VideosDelegate conforming:
-    func didReceivedVideosMeta(videoDataHandler: VideoMetaHandler, meta: Any) {
-        print("yo")
-    }
-    
-    func didntReceivedVideosMeta(videoDataHandler: VideoMetaHandler, error: String) {
-        print("yo")
-    }
-    
-    override var prefersStatusBarHidden: Bool{
-        return true
+    func updateHistory(with userMeta: Meta) {
+        searchHistory.addUser(user: userMeta)
     }
     
     private let noSuchUserText = "No such user"
     private let commonText = "twitch users"
     private let mainLabel = UILabel()
-    private let notificationCenter = NotificationCenter.default
-    lazy var userDataHandler = UserMetaHandler()
-    lazy var videoDataHandler = VideoMetaHandler()
     private lazy var searchHistory = SearchHistory()
-   
-    let searchbar = SearchBarController()
-    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+    lazy var downloadedDataHandler = DownloadedDataHandler(caller: self)
+    private let searchBar = MainSearchBar()
+    private let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
 }
 
 

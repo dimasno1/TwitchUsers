@@ -18,7 +18,6 @@ class ProfileViewController: UIViewController{
         nameView = self.setupTextViewWith(text: name)
         typeView = self.setupTextViewWith(text: type)
         idView = self.setupTextViewWith(text: id)
-        setup()
     }
     
     convenience init(user: Meta) {
@@ -36,6 +35,7 @@ class ProfileViewController: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setup()
         closeButton.isHidden = parent != nil ? true : false
     }
     
@@ -63,19 +63,17 @@ class ProfileViewController: UIViewController{
     }
     
     private func makeConstraits() {
-        
         profileImageView.snp.makeConstraints { make in
-            make.top.equalTo(view).offset(20)
-            make.centerX.equalTo(view)
+            make.top.equalToSuperview().offset(Contstant.topOffset)
+            make.left.equalToSuperview().offset(Contstant.sideOffset)
         }
         
         stackView.snp.makeConstraints { make in
-            make.top.equalTo(profileImageView.snp.bottom).offset(5)
+            make.top.equalTo(profileImageView.snp.bottom).offset(20)
             make.left.equalTo(profileImageView)
             make.right.equalTo(profileImageView)
-            make.bottom.equalTo(view).offset(-10)
+            make.bottom.equalTo(view).offset(-20)
         }
-        
         closeButton.snp.makeConstraints { make in
             make.right.equalTo(view).offset(-10)
             make.top.equalTo(view).offset(10)
@@ -114,15 +112,12 @@ class ProfileViewController: UIViewController{
         removeThisContollerFromParentViewController(isChild: parent != nil)
     }
     
-    override var prefersStatusBarHidden: Bool{
-        return true
-    }
-    
     var stackView = UIStackView()
     var profileImageView = UIImageView()
     var nameView =  UITextView()
     var typeView = UITextView()
     var idView = UITextView()
+//    var bioTextView = U
     private let scaleFactor = UIScreen.main.scale
     private let closeButton = UIButton(type: UIButtonType.contactAdd)
 }
@@ -140,5 +135,13 @@ extension UIStackView {
 extension UIView {
     func addSubviews(_ views: UIView...) {
         views.forEach(addSubview(_:))
+    }
+}
+
+extension ProfileViewController {
+    struct Contstant {
+        static let topOffset: CGFloat = 20
+        static let sideOffset: CGFloat = 10
+        static let someOffset: CGFloat = 20
     }
 }

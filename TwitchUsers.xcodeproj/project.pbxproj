@@ -16,16 +16,19 @@
 		524B81C820AB43EC004F4C14 /* SearchHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524B81C720AB43EC004F4C14 /* SearchHistory.swift */; };
 		5276964120B4893700B1CD81 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5276964020B4893700B1CD81 /* Users.swift */; };
 		5276964320B48F0F00B1CD81 /* Meta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5276964220B48F0F00B1CD81 /* Meta.swift */; };
+		5289CA8C20BC48D700268F2B /* removeButton2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5289CA8A20BC48D700268F2B /* removeButton2.png */; };
+		5289CA8D20BC48D700268F2B /* removeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 5289CA8B20BC48D700268F2B /* removeButton.png */; };
 		528C5BA620A874CF004C9A61 /* TwitchTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528C5BA520A874CF004C9A61 /* TwitchTabBarController.swift */; };
 		529E70C22094E6F6004F9877 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529E70C12094E6F6004F9877 /* AppDelegate.swift */; };
 		529E70C42094E6F6004F9877 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529E70C32094E6F6004F9877 /* SearchViewController.swift */; };
 		529E70C92094E6F7004F9877 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 529E70C82094E6F7004F9877 /* Assets.xcassets */; };
 		529E70CC2094E6F7004F9877 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 529E70CA2094E6F7004F9877 /* LaunchScreen.storyboard */; };
 		529F67DB20978C0300B31C4B /* pitt.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 529F67DA20978C0300B31C4B /* pitt.jpg */; };
-		52BC783B209503770022F4B7 /* SearchBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BC783A209503770022F4B7 /* SearchBarController.swift */; };
+		52BC783B209503770022F4B7 /* MainSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BC783A209503770022F4B7 /* MainSearchBar.swift */; };
 		52BC783D2095164C0022F4B7 /* HistoryOfSearchCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BC783C2095164C0022F4B7 /* HistoryOfSearchCollectionViewController.swift */; };
 		52BC783F209533BA0022F4B7 /* twitch.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52BC783E2095330F0022F4B7 /* twitch.ttf */; };
 		52BC7842209539E60022F4B7 /* TwitchUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BC7841209539E60022F4B7 /* TwitchUserCell.swift */; };
+		52DE61BD20BCA3A2001FCDA6 /* DownloadedDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DE61BC20BCA3A2001FCDA6 /* DownloadedDataHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +43,8 @@
 		524B81C720AB43EC004F4C14 /* SearchHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistory.swift; sourceTree = "<group>"; };
 		5276964020B4893700B1CD81 /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		5276964220B48F0F00B1CD81 /* Meta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meta.swift; sourceTree = "<group>"; };
+		5289CA8A20BC48D700268F2B /* removeButton2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = removeButton2.png; sourceTree = "<group>"; };
+		5289CA8B20BC48D700268F2B /* removeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = removeButton.png; sourceTree = "<group>"; };
 		528C5BA520A874CF004C9A61 /* TwitchTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchTabBarController.swift; sourceTree = "<group>"; };
 		529E70BE2094E6F6004F9877 /* TwitchUsers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitchUsers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		529E70C12094E6F6004F9877 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -48,10 +53,11 @@
 		529E70CB2094E6F7004F9877 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		529E70CD2094E6F7004F9877 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		529F67DA20978C0300B31C4B /* pitt.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pitt.jpg; sourceTree = "<group>"; };
-		52BC783A209503770022F4B7 /* SearchBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarController.swift; sourceTree = "<group>"; };
+		52BC783A209503770022F4B7 /* MainSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSearchBar.swift; sourceTree = "<group>"; };
 		52BC783C2095164C0022F4B7 /* HistoryOfSearchCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryOfSearchCollectionViewController.swift; sourceTree = "<group>"; };
 		52BC783E2095330F0022F4B7 /* twitch.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = twitch.ttf; sourceTree = "<group>"; };
 		52BC7841209539E60022F4B7 /* TwitchUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchUserCell.swift; sourceTree = "<group>"; };
+		52DE61BC20BCA3A2001FCDA6 /* DownloadedDataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedDataHandler.swift; sourceTree = "<group>"; };
 		590210200A3D8BB077C020D8 /* Pods-TwitchUsers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitchUsers.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TwitchUsers/Pods-TwitchUsers.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -70,6 +76,7 @@
 		524CACA520B31376001E87F0 /* DataService */ = {
 			isa = PBXGroup;
 			children = (
+				52DE61BC20BCA3A2001FCDA6 /* DownloadedDataHandler.swift */,
 				52499FD5209CBF9100F949D1 /* TwitchDataService.swift */,
 				524A6AAE20AF1A9C0087A7FC /* UserMetaHandler.swift */,
 				524A6AB020AF27EA0087A7FC /* VideoMetaHandler.swift */,
@@ -112,7 +119,7 @@
 				529E70C12094E6F6004F9877 /* AppDelegate.swift */,
 				52F67DDF2098C0240032D121 /* ViewControllers */,
 				52BC7841209539E60022F4B7 /* TwitchUserCell.swift */,
-				52BC783A209503770022F4B7 /* SearchBarController.swift */,
+				52BC783A209503770022F4B7 /* MainSearchBar.swift */,
 				524CACA520B31376001E87F0 /* DataService */,
 				527877D920AD9FF700C0E207 /* Model */,
 				529E70CA2094E6F7004F9877 /* LaunchScreen.storyboard */,
@@ -125,6 +132,8 @@
 		52BC7840209535B90022F4B7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5289CA8B20BC48D700268F2B /* removeButton.png */,
+				5289CA8A20BC48D700268F2B /* removeButton2.png */,
 				529F67DA20978C0300B31C4B /* pitt.jpg */,
 				529E70C82094E6F7004F9877 /* Assets.xcassets */,
 				52BC783E2095330F0022F4B7 /* twitch.ttf */,
@@ -135,8 +144,8 @@
 		52F67DDF2098C0240032D121 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				529E70C32094E6F6004F9877 /* SearchViewController.swift */,
 				528C5BA520A874CF004C9A61 /* TwitchTabBarController.swift */,
+				529E70C32094E6F6004F9877 /* SearchViewController.swift */,
 				52224F5620A04B04001CE8AB /* ProfileViewController.swift */,
 				5248F32B20B0898E00EAB202 /* UsersScrollViewController.swift */,
 				52BC783C2095164C0022F4B7 /* HistoryOfSearchCollectionViewController.swift */,
@@ -221,7 +230,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				52BC783F209533BA0022F4B7 /* twitch.ttf in Resources */,
+				5289CA8C20BC48D700268F2B /* removeButton2.png in Resources */,
 				529F67DB20978C0300B31C4B /* pitt.jpg in Resources */,
+				5289CA8D20BC48D700268F2B /* removeButton.png in Resources */,
 				529E70CC2094E6F7004F9877 /* LaunchScreen.storyboard in Resources */,
 				529E70C92094E6F7004F9877 /* Assets.xcassets in Resources */,
 			);
@@ -259,10 +270,11 @@
 				529E70C42094E6F6004F9877 /* SearchViewController.swift in Sources */,
 				528C5BA620A874CF004C9A61 /* TwitchTabBarController.swift in Sources */,
 				52BC7842209539E60022F4B7 /* TwitchUserCell.swift in Sources */,
+				52DE61BD20BCA3A2001FCDA6 /* DownloadedDataHandler.swift in Sources */,
 				524A6AB120AF27EA0087A7FC /* VideoMetaHandler.swift in Sources */,
 				52BC783D2095164C0022F4B7 /* HistoryOfSearchCollectionViewController.swift in Sources */,
 				5276964120B4893700B1CD81 /* Users.swift in Sources */,
-				52BC783B209503770022F4B7 /* SearchBarController.swift in Sources */,
+				52BC783B209503770022F4B7 /* MainSearchBar.swift in Sources */,
 				5248F32C20B0898E00EAB202 /* UsersScrollViewController.swift in Sources */,
 				52499FD6209CBF9100F949D1 /* TwitchDataService.swift in Sources */,
 				52224F5720A04B04001CE8AB /* ProfileViewController.swift in Sources */,
@@ -440,6 +452,80 @@
 			};
 			name = Release;
 		};
+		52DECEC220B9917D0074F278 /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Test;
+		};
+		52DECEC320B9917D0074F278 /* Test */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4010F0FABA4046469F5C97EF /* Pods-TwitchUsers.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P99EM85EA2;
+				INFOPLIST_FILE = TwitchUsers/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dimas.TwitchUsers;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Test;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -448,6 +534,7 @@
 			buildConfigurations = (
 				529E70CE2094E6F7004F9877 /* Debug */,
 				529E70CF2094E6F7004F9877 /* Release */,
+				52DECEC220B9917D0074F278 /* Test */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -457,6 +544,7 @@
 			buildConfigurations = (
 				529E70D12094E6F7004F9877 /* Debug */,
 				529E70D22094E6F7004F9877 /* Release */,
+				52DECEC320B9917D0074F278 /* Test */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

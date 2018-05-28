@@ -10,14 +10,6 @@ import UIKit
 import SnapKit
 
 class UsersScrollViewController: UIViewController{
-
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
     
     override func viewDidLoad() {
         let recognizer = UIPanGestureRecognizer(target: self, action: #selector(dismissControllerWith(gestureRecognizer:)))
@@ -43,22 +35,33 @@ class UsersScrollViewController: UIViewController{
         scrollView.isScrollEnabled = true
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
-        scrollView.frame = self.view.bounds
+        scrollView.frame = view.bounds
         view.addSubviews(scrollView, pageControl)
         pageControl.sizeToFit()
-        pageControl.center.x = view.center.x
-        pageControl.center.y = view.bounds.maxY - 30
+       
+        pageControl.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalTo(view.snp.bottom).offset(-20)
+        }
+        
         self.modalPresentationStyle = .overCurrentContext
         self.modalTransitionStyle = .coverVertical
         self.view.layer.shadowOpacity = 1.0
         self.view.layer.shadowRadius = 20
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        prepareForAppearing()
+    }
+    
     private func prepareForAppearing() {
-        let width = self.view.frame.size.width * CGFloat(childViewControllers.count)
-        let height = self.view.frame.size.height
+        let width = self.view.bounds.size.width * CGFloat(childViewControllers.count)
+        let height = self.view.bounds.size.height
+        
         pageControl.numberOfPages = childViewControllers.count
         scrollView.contentSize = CGSize(width: width, height: height)
+        scrollView.frame.size = view.bounds.size
         
         for controller in childViewControllers {
             guard let index = childViewControllers.index(of: controller) else { return }
@@ -90,10 +93,6 @@ class UsersScrollViewController: UIViewController{
             break
         }
         gestureRecognizer.setTranslation(CGPoint.zero, in: self.view)
-    }
-    
-    override var prefersStatusBarHidden: Bool{
-        return true
     }
     
     private let scrollView = UIScrollView()

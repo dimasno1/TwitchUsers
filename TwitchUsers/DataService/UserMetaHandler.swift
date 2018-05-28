@@ -33,9 +33,7 @@ class UserMetaHandler: NSObject, URLSessionDataDelegate {
     }
     
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-        
-        let jsonData = data
-        guard let users = try? JSONDecoder().decode(Users.self, from: jsonData) else {
+        guard let users = try? JSONDecoder().decode(Users.self, from: data) else {
             self.delegate?.didntFoundUser(sessionDataHandler: self, error: "No users found")
             return
         }
