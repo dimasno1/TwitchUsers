@@ -36,7 +36,7 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
         nameLabel.text = nil
         bioTextView.text = nil
     }
-    
+  
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -44,10 +44,20 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
     func animate() {
         photoFrame.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
         textStackView.alpha = 0
-        UIView.animate(withDuration: 1) {
-            self.photoFrame.transform = .identity
-            self.textStackView.alpha = 1
-        }
+        UIView.animate(withDuration: 1,
+                       animations:
+            { [weak photoFrame, textStackView] in
+                photoFrame?.transform = .identity
+                textStackView.alpha = 1
+                photoFrame?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+                photoFrame?.transform = .identity
+                photoFrame?.layer.transform = CATransform3DMakeRotation(CGFloat.pi, 1, 0, 0)
+            },
+                       completion: { _ in
+                        UIView.animate(withDuration: 0.5) {
+                            self.photoFrame.layer.transform = CATransform3DIdentity
+                        }
+        })
     }
     
     func animateForCurrentState(state: State) {
@@ -103,7 +113,7 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
         textStackView.axis = .vertical
         textStackView.alignment = .fill
         textStackView.distribution = .fillEqually
-
+        
         contentView.addSubview(fullStackView)
         
         fullStackView.snp.makeConstraints { make in
@@ -120,7 +130,7 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
         }
         removeButton.isHidden = true
     }
-
+    
     static var identifier: String{
         return String(describing: self)
     }

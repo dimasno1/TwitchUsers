@@ -8,15 +8,50 @@
 
 import UIKit
 
+typealias TwitchDataServiceDelegate =  UserMetaHandlerDelegate & VideoDataHandlerDelegate
+
 class TwitchDataService {
+    
+    weak var delegate: TwitchDataServiceDelegate? {
+        didSet {
+            userDataHandler.delegate = delegate
+            videoDataHandler.delegate = delegate
+        }
+    }
+    
+//    func searchForTopVideos(limit: Int, game: String) {
+//        let videoParameters = [Key.limit: String(limit), Key.game: game]
+//        guard let videosUrl = makeURLFromParameters(videoParameters, appendingPath: URLComponent.videosPath) else { return }
+//        let videoSession = URLSession(configuration: .default, delegate: videoDataHandler, delegateQueue: nil)
+//        var videoRequest = URLRequest(url: videosUrl)
+//
+//        videoRequest.addValue(Value.acceptHeader, forHTTPHeaderField: Key.acceptHeader)
+//        videoRequest.addValue(Value.clientID, forHTTPHeaderField: Key.cliendIDHeader)
+//
+//        let task = videoSession.dataTask(with: videoRequest)
+//
+//        task.resume()
+//    }
+    
+    func searchForUser(with username: String) {
+        let userParameters = [Key.login: username]
+        guard let usersUrl = makeURLFromParameters(userParameters, appendingPath: URLComponent.usersPath) else { return }
+        
+        session = URLSession(configuration: .default, delegate: userDataHandler, delegateQueue: .main)
+        var usersRequest = URLRequest(url: usersUrl)
+
+        usersRequest.addValue(Value.acceptHeader, forHTTPHeaderField: Key.acceptHeader)
+        usersRequest.addValue(Value.clientID, forHTTPHeaderField: Key.cliendIDHeader)
+        let task = session.dataTask(with: usersRequest)
+        task.resume()
+    }
     
     private func makeURLFromParameters(_ parameters: [String: String], appendingPath: String) -> URL? {
         var components = URLComponents()
+        var queryItems = [URLQueryItem]()
         components.scheme = URLComponent.scheme
         components.host = URLComponent.host
         components.path = URLComponent.path + appendingPath
-        
-        var queryItems = [URLQueryItem]()
         
         for (key, value) in parameters {
             let item = URLQueryItem(name: key, value: value)
@@ -28,31 +63,9 @@ class TwitchDataService {
         return url
     }
     
-    func searchForTopVideos(limit: Int, game: String, delegate: URLSessionDataDelegate) {
-        let videoParameters = [Key.limit: String(limit), Key.game: game]
-        guard let videosUrl = makeURLFromParameters(videoParameters, appendingPath: URLComponent.videosPath) else { return }
-        let videoSession = URLSession(configuration: .default, delegate: delegate, delegateQueue: nil)
-        var videoRequest = URLRequest(url: videosUrl)
-        
-        videoRequest.addValue(Value.acceptHeader, forHTTPHeaderField: Key.acceptHeader)
-        videoRequest.addValue(Value.clientID, forHTTPHeaderField: Key.cliendIDHeader)
-        
-        let task = videoSession.dataTask(with: videoRequest)
-        print(videosUrl)
-        task.resume()
-    }
-    
-    func searchForUser(with username: String, delegate: URLSessionDataDelegate) {
-        let userParameters = [Key.login: username]
-        guard let usersUrl = makeURLFromParameters(userParameters, appendingPath: URLComponent.usersPath) else { return }
-        let usersSession = URLSession(configuration: .default, delegate: delegate, delegateQueue: nil)
-        var usersRequest = URLRequest(url: usersUrl)
-        
-        usersRequest.addValue(Value.acceptHeader, forHTTPHeaderField: Key.acceptHeader)
-        usersRequest.addValue(Value.clientID, forHTTPHeaderField: Key.cliendIDHeader)
-        let task = usersSession.dataTask(with: usersRequest)
-        task.resume()
-    }
+    private var session = URLSession()
+    private let userDataHandler = UserMetaHandler()
+    private let videoDataHandler = VideoMetaHandler()
 }
 
 extension TwitchDataService {
@@ -79,3 +92,4 @@ extension TwitchDataService {
         static let clientID = "2rlbcgxs8jy2nradngk1pcu1bmwv89"
     }
 }
+

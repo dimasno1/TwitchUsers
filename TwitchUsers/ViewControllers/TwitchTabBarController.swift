@@ -17,20 +17,20 @@ class TwitchTabBarController: UITabBarController{
         let tabBarItemForResultsView = UITabBarItem(tabBarSystemItem: .history, tag: 1)
         
         searchViewController.tabBarItem = tabBarItemForSearchView
-        resultsViewController.tabBarItem = tabBarItemForResultsView
+        historyListController.tabBarItem = tabBarItemForResultsView
         setup()
     }
     
     private func setup() {
         tabBar.barStyle = .black
         tabBar.tintColor = secondTwitchColor
-        setViewControllers([searchViewController, resultsViewController], animated: true)
+        setViewControllers([searchViewController, historyListController], animated: true)
     }
     
     private let searchViewController = SearchViewController()
-    private lazy var resultsViewController: HistoryOfSearchCollectionViewController = {
+    private lazy var historyListController: HistoryListController = {
         let layout = UICollectionViewFlowLayout()
-        let controller = HistoryOfSearchCollectionViewController(collectionViewLayout: layout)
+        let controller = HistoryListController(collectionViewLayout: layout)
         return controller
     }()
  

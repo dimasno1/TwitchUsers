@@ -9,7 +9,9 @@
 import UIKit
 import SnapKit
 
-class HistoryOfSearchCollectionViewController: UICollectionViewController{
+class HistoryListController: UICollectionViewController{
+    
+    var users = [Meta]()
     
     enum State {
         case empty
@@ -141,7 +143,6 @@ class HistoryOfSearchCollectionViewController: UICollectionViewController{
         })
     }
     
-    var users = [Meta]()
     private var state: State = .empty
     private var mode: EditingState = .standart
     private let noUsersLabel = UILabel()
@@ -151,7 +152,7 @@ class HistoryOfSearchCollectionViewController: UICollectionViewController{
 
 
 //FlowLayoutDelegate:
-extension HistoryOfSearchCollectionViewController: UICollectionViewDelegateFlowLayout{
+extension HistoryListController: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = self.view.bounds.size.width - 20

@@ -16,7 +16,7 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.delegate = searchBar
+        searchBar.delegate = self
         self.setupView()
     }
     
@@ -27,6 +27,21 @@ class SearchViewController: UIViewController {
         }
     }
     
+    func startActivityIndicatorAnimation() {
+        activityIndicator.startAnimating()
+    }
+    
+    func stopActivityIndicatorAnimation() {
+        activityIndicator.stopAnimating()
+    }
+    func setLabelToNotFound() {
+        mainLabel.text = noSuchUserText
+    }
+    
+    func updateHistory(with userMeta: Meta) {
+        SearchHistory.addUser(user: userMeta)
+    }
+    
     private func setupView() {
         self.view.backgroundColor = mainTwitchColor
         self.view.addSubviews(searchBar, mainLabel, activityIndicator)
@@ -35,6 +50,8 @@ class SearchViewController: UIViewController {
         mainLabel.text = commonText
         mainLabel.sizeToFit()
         makeConstraits()
+        
+        twitchDataService.delegate = self
     }
     
     private func makeConstraits() {
@@ -52,30 +69,16 @@ class SearchViewController: UIViewController {
         }
     }
     
-    func startActivityIndicatorAnimation() {
-        activityIndicator.startAnimating()
-    }
-   
-    func stopActivityIndicatorAnimation() {
-        activityIndicator.stopAnimating()
-    }
-    func setLabelToNotFound() {
-        mainLabel.text = noSuchUserText
-    }
-    
-    func updateHistory(with userMeta: Meta) {
-        searchHistory.addUser(user: userMeta)
-    }
-    
     private let noSuchUserText = "No such user"
     private let commonText = "twitch users"
     private let mainLabel = UILabel()
-    private lazy var searchHistory = SearchHistory()
-    lazy var downloadedDataHandler = DownloadedDataHandler(caller: self)
     private let searchBar = MainSearchBar()
     private let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+    private var profileController = ProfileViewController()
+    private var usersViewController = UsersScrollViewController()
+    private let twitchDataService = TwitchDataService()
+    private var alertController = UIAlertController()
 }
-
 
 //UIColor extensions:
 extension UIColor{
@@ -84,5 +87,62 @@ extension UIColor{
         let newGreen = green/255
         let newBlue = blue/255
         self.init(red: newRed, green: newGreen, blue: newBlue, alpha: 1)
+    }
+}
+
+extension SearchViewController: UISearchBarDelegate {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = nil
+        searchBar.resignFirstResponder()
+    }
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        return true
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.becomeFirstResponder()
+    }
+    
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        return true
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.startActivityIndicatorAnimation()
+        
+        let names = searchBar.text?.lowercased().replacingOccurrences(of: " ", with: "")
+        twitchDataService.searchForUser(with: names ?? "")
+        searchBar.resignFirstResponder()
+    }
+}
+
+extension SearchViewController: TwitchDataServiceDelegate {
+  
+    func didReceiveUsersMeta(sessionDataHandler: UserMetaHandler, meta: [Meta]) {
+        self.stopActivityIndicatorAnimation()
+        usersViewController = UsersScrollViewController()
+        for user in meta{
+            self.updateHistory(with: user)
+            self.profileController = ProfileViewController(user: user)
+            usersViewController.addAsChildViewContoller(profileViewController: self.profileController)
+        }
+        self.present(usersViewController, animated: true, completion: nil)
+    }
+    
+    func didntFindUser(sessionDataHandler: UserMetaHandler, error: String) {
+        self.stopActivityIndicatorAnimation()
+        alertController = UIAlertController(title: "Error", message: "No such user was found", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(action)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    //MARK: VideosDelegate conforming:
+    func didReceivedVideosMeta(videoDataHandler: VideoMetaHandler, meta: Any) {
+        
+    }
+    
+    func didntReceivedVideosMeta(videoDataHandler: VideoMetaHandler, error: String) {
+        
     }
 }

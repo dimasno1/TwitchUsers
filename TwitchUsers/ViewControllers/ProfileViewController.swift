@@ -11,7 +11,18 @@ import SnapKit
 
 class ProfileViewController: UIViewController{
     
+    var stackView = UIStackView()
+    var profileImageView = UIImageView()
+    var nameView =  UITextView()
+    var typeView = UITextView()
+    var idView = UITextView()
+    
+    
     //MARK: Initialization:
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     init(image: UIImage?, name: String, id: String, type: String) {
         super.init(nibName: nil, bundle: nil)
         self.profileImageView.image = image
@@ -112,12 +123,6 @@ class ProfileViewController: UIViewController{
         removeThisContollerFromParentViewController(isChild: parent != nil)
     }
     
-    var stackView = UIStackView()
-    var profileImageView = UIImageView()
-    var nameView =  UITextView()
-    var typeView = UITextView()
-    var idView = UITextView()
-//    var bioTextView = U
     private let scaleFactor = UIScreen.main.scale
     private let closeButton = UIButton(type: UIButtonType.contactAdd)
 }
