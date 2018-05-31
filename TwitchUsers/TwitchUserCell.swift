@@ -13,6 +13,11 @@ let secondTwitchColor = UIColor(withFromZeroToRed: 31, green: 156, blue: 214)
 
 class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
     
+    let photoFrame = UIImageView()
+    let nameLabel = UILabel()
+    let bioTextView = UITextView()
+    let removeButton = UIButton()
+    
     enum State {
         case editing
         case identity
@@ -35,6 +40,7 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
         photoFrame.image = nil
         nameLabel.text = nil
         bioTextView.text = nil
+        removeButton.imageView?.image = nil
     }
   
     required init?(coder aDecoder: NSCoder) {
@@ -143,10 +149,6 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
         }
     }
     
-    let photoFrame = UIImageView()
-    let nameLabel = UILabel()
-    let bioTextView = UITextView()
-    let removeButton = UIButton()
     private lazy var textStackView = UIStackView(arrangedSubviews: [nameLabel, bioTextView])
     private lazy var fullStackView = UIStackView(arrangedSubviews: [textStackView, removeButton])
 }
