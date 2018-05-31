@@ -19,19 +19,18 @@ class TwitchDataService {
         }
     }
     
-//    func searchForTopVideos(limit: Int, game: String) {
-//        let videoParameters = [Key.limit: String(limit), Key.game: game]
-//        guard let videosUrl = makeURLFromParameters(videoParameters, appendingPath: URLComponent.videosPath) else { return }
-//        let videoSession = URLSession(configuration: .default, delegate: videoDataHandler, delegateQueue: nil)
-//        var videoRequest = URLRequest(url: videosUrl)
-//
-//        videoRequest.addValue(Value.acceptHeader, forHTTPHeaderField: Key.acceptHeader)
-//        videoRequest.addValue(Value.clientID, forHTTPHeaderField: Key.cliendIDHeader)
-//
-//        let task = videoSession.dataTask(with: videoRequest)
-//
-//        task.resume()
-//    }
+    func searchForTopVideos(limit: Int, game: String) {
+        let videoParameters = [Key.limit: String(limit), Key.game: game]
+        guard let videosUrl = makeURLFromParameters(videoParameters, appendingPath: URLComponent.videosPath) else { return }
+        let videoSession = URLSession(configuration: .default, delegate: videoDataHandler, delegateQueue: nil)
+        var videoRequest = URLRequest(url: videosUrl)
+
+        videoRequest.addValue(Value.acceptHeader, forHTTPHeaderField: Key.acceptHeader)
+        videoRequest.addValue(Value.clientID, forHTTPHeaderField: Key.cliendIDHeader)
+
+        let task = videoSession.dataTask(with: videoRequest)
+        task.resume()
+    }
     
     func searchForUser(with username: String) {
         let userParameters = [Key.login: username]

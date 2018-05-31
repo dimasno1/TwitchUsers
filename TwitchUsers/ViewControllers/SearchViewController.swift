@@ -14,6 +14,18 @@ let twitchFont = UIFont(name: "DimitriSwank", size: 35)
 
 class SearchViewController: UIViewController {
     
+    func startActivityIndicatorAnimation() {
+        activityIndicator.startAnimating()
+    }
+    
+    func stopActivityIndicatorAnimation() {
+        activityIndicator.stopAnimating()
+    }
+    
+    func updateHistory(with userMeta: Meta) {
+        SearchHistory.addUser(user: userMeta)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
@@ -27,19 +39,8 @@ class SearchViewController: UIViewController {
         }
     }
     
-    func startActivityIndicatorAnimation() {
-        activityIndicator.startAnimating()
-    }
-    
-    func stopActivityIndicatorAnimation() {
-        activityIndicator.stopAnimating()
-    }
-    func setLabelToNotFound() {
-        mainLabel.text = noSuchUserText
-    }
-    
-    func updateHistory(with userMeta: Meta) {
-        SearchHistory.addUser(user: userMeta)
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
     
     private func setupView() {
@@ -50,7 +51,7 @@ class SearchViewController: UIViewController {
         mainLabel.text = commonText
         mainLabel.sizeToFit()
         makeConstraits()
-        
+        searchBar.placeholder = "write username here..."
         twitchDataService.delegate = self
     }
     
@@ -69,15 +70,14 @@ class SearchViewController: UIViewController {
         }
     }
     
-    private let noSuchUserText = "No such user"
     private let commonText = "twitch users"
     private let mainLabel = UILabel()
     private let searchBar = MainSearchBar()
     private let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
     private var profileController = ProfileViewController()
-    private var usersViewController = UsersScrollViewController()
+    private var usersViewController = UsersPageViewController()
     private let twitchDataService = TwitchDataService()
-    private var alertController = UIAlertController()
+    private var alertController = TwitchAlertController()
 }
 
 //UIColor extensions:
@@ -109,7 +109,7 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.startActivityIndicatorAnimation()
-        
+    
         let names = searchBar.text?.lowercased().replacingOccurrences(of: " ", with: "")
         twitchDataService.searchForUser(with: names ?? "")
         searchBar.resignFirstResponder()
@@ -117,10 +117,10 @@ extension SearchViewController: UISearchBarDelegate {
 }
 
 extension SearchViewController: TwitchDataServiceDelegate {
-  
+    
     func didReceiveUsersMeta(sessionDataHandler: UserMetaHandler, meta: [Meta]) {
         self.stopActivityIndicatorAnimation()
-        usersViewController = UsersScrollViewController()
+        usersViewController = UsersPageViewController()
         for user in meta{
             self.updateHistory(with: user)
             self.profileController = ProfileViewController(user: user)
@@ -131,10 +131,23 @@ extension SearchViewController: TwitchDataServiceDelegate {
     
     func didntFindUser(sessionDataHandler: UserMetaHandler, error: String) {
         self.stopActivityIndicatorAnimation()
-        alertController = UIAlertController(title: "Error", message: "No such user was found", preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertController.addAction(action)
-        self.present(alertController, animated: true, completion: nil)
+        let image = UIImage(named: "fish.jpg")
+        alertController = TwitchAlertController(title: "No such user", message: "Try again", backgroundImage: image)
+        
+        let actionthree = TwitchAlertAction(alertTitle: "Retry",
+                                            style: .common,
+                                            handler:
+                                                    {
+                                                        self.searchBar.becomeFirstResponder()
+                                                        self.dismiss(animated: true, completion: nil)
+                                                        self.searchBar.delegate?.searchBarSearchButtonClicked?(self.searchBar)
+                                                    }
+        )
+        
+        let actionfour = TwitchAlertAction(alertTitle: "Close", style: .destructive, handler: { self.dismiss(animated: true, completion: nil)})
+        
+        alertController.addActions(actionthree, actionfour)
+        present(alertController, animated: true, completion: nil)
     }
     
     //MARK: VideosDelegate conforming:

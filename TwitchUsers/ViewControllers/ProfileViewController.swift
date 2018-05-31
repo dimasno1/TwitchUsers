@@ -54,6 +54,14 @@ class ProfileViewController: UIViewController{
         self.dismiss(animated: true, completion: nil)
     }
     
+    func removeThisContollerFromParentViewController(isChild: Bool) {
+        if isChild{
+            self.willMove(toParentViewController: nil)
+            self.view.removeFromSuperview()
+            self.removeFromParentViewController()
+        }
+    }
+    
     private func setup(){
         view.addSubviews(stackView, profileImageView, closeButton)
         view.backgroundColor = mainTwitchColor
@@ -76,7 +84,8 @@ class ProfileViewController: UIViewController{
     private func makeConstraits() {
         profileImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Contstant.topOffset)
-            make.left.equalToSuperview().offset(Contstant.sideOffset)
+            make.centerX.equalToSuperview()
+            
         }
         
         stackView.snp.makeConstraints { make in
@@ -109,14 +118,6 @@ class ProfileViewController: UIViewController{
         stackView.distribution = .fillEqually
         stackView.spacing = 5
         stackView.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    func removeThisContollerFromParentViewController(isChild: Bool) {
-        if isChild{
-            self.willMove(toParentViewController: nil)
-            self.view.removeFromSuperview()
-            self.removeFromParentViewController()
-        }
     }
     
     deinit {

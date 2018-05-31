@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class UsersScrollViewController: UIViewController{
+class UsersPageViewController: UIViewController{
     
     override func viewDidLoad() {
         let recognizer = UIPanGestureRecognizer(target: self, action: #selector(dismissControllerWith(gestureRecognizer:)))
@@ -82,12 +82,12 @@ class UsersScrollViewController: UIViewController{
             let shouldScrollDown = self.view.bounds.origin.y.magnitude >= self.view.frame.size.height / 3
             if shouldScrollDown {
                 UIView.animate(
-                    withDuration: 1,
+                    withDuration: 0.5,
                     animations: { self.view.bounds.origin.y = -UIScreen.main.bounds.height },
                     completion: { _ in self.dismiss(animated: false, completion: nil) }
                 )
             } else {
-                UIView.animate(withDuration: 1) { self.view.bounds.origin.y = 0 }
+                UIView.animate(withDuration: 0.8) { self.view.bounds.origin.y = 0 }
             }
         default:
             break
@@ -100,7 +100,7 @@ class UsersScrollViewController: UIViewController{
 }
 
 
-extension UsersScrollViewController: UIScrollViewDelegate{
+extension UsersPageViewController: UIScrollViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let width = scrollView.bounds.width
         let contentOffset = scrollView.contentOffset.x
