@@ -133,9 +133,9 @@ extension SearchViewController: TwitchDataServiceDelegate {
         self.stopActivityIndicatorAnimation()
         let image = UIImage(named: "fish.jpg")
         alertController = TwitchAlertController(title: "No such user", message: "Try again", backgroundImage: image)
-        
-        let actionthree = TwitchAlertAction(alertTitle: "Retry",
-                                            style: .common,
+    
+        let retryAction = TwitchAlertAction(alertTitle: "Retry",
+                                            style: .white,
                                             handler:
                                                     {
                                                         self.searchBar.becomeFirstResponder()
@@ -144,9 +144,9 @@ extension SearchViewController: TwitchDataServiceDelegate {
                                                     }
         )
         
-        let actionfour = TwitchAlertAction(alertTitle: "Close", style: .destructive, handler: { self.dismiss(animated: true, completion: nil)})
+        let closeAction = TwitchAlertAction(alertTitle: "Close", style: .destructive, handler: { self.dismiss(animated: true, completion: nil)})
         
-        alertController.addActions(actionthree, actionfour)
+        alertController.addActions(retryAction, closeAction)
         present(alertController, animated: true, completion: nil)
     }
     

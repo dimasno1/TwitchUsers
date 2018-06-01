@@ -20,7 +20,6 @@
 		5273FBC820C0685400A3C95E /* fish.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5273FBC720C0685400A3C95E /* fish.jpg */; };
 		5276964120B4893700B1CD81 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5276964020B4893700B1CD81 /* Users.swift */; };
 		5276964320B48F0F00B1CD81 /* Meta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5276964220B48F0F00B1CD81 /* Meta.swift */; };
-		5289CA8C20BC48D700268F2B /* removeButton2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5289CA8A20BC48D700268F2B /* removeButton2.png */; };
 		5289CA8D20BC48D700268F2B /* removeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 5289CA8B20BC48D700268F2B /* removeButton.png */; };
 		528C5BA620A874CF004C9A61 /* TwitchTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528C5BA520A874CF004C9A61 /* TwitchTabBarController.swift */; };
 		529E70C22094E6F6004F9877 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529E70C12094E6F6004F9877 /* AppDelegate.swift */; };
@@ -49,7 +48,6 @@
 		5273FBC720C0685400A3C95E /* fish.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fish.jpg; sourceTree = "<group>"; };
 		5276964020B4893700B1CD81 /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		5276964220B48F0F00B1CD81 /* Meta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meta.swift; sourceTree = "<group>"; };
-		5289CA8A20BC48D700268F2B /* removeButton2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = removeButton2.png; sourceTree = "<group>"; };
 		5289CA8B20BC48D700268F2B /* removeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = removeButton.png; sourceTree = "<group>"; };
 		528C5BA520A874CF004C9A61 /* TwitchTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchTabBarController.swift; sourceTree = "<group>"; };
 		529E70BE2094E6F6004F9877 /* TwitchUsers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitchUsers.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,6 +75,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5204067A20C156AA0007A567 /* HistoryListController */ = {
+			isa = PBXGroup;
+			children = (
+				52BC783C2095164C0022F4B7 /* HistoryListController.swift */,
+				52BC7841209539E60022F4B7 /* TwitchUserCell.swift */,
+			);
+			path = HistoryListController;
+			sourceTree = "<group>";
+		};
 		5210266520C001E7002D6A3C /* TwitchAlertController */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,7 +138,6 @@
 			children = (
 				529E70C12094E6F6004F9877 /* AppDelegate.swift */,
 				52F67DDF2098C0240032D121 /* ViewControllers */,
-				52BC7841209539E60022F4B7 /* TwitchUserCell.swift */,
 				52BC783A209503770022F4B7 /* MainSearchBar.swift */,
 				524CACA520B31376001E87F0 /* DataService */,
 				527877D920AD9FF700C0E207 /* Model */,
@@ -145,11 +151,10 @@
 		52BC7840209535B90022F4B7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				52BC783E2095330F0022F4B7 /* twitch.ttf */,
 				5273FBC720C0685400A3C95E /* fish.jpg */,
 				5289CA8B20BC48D700268F2B /* removeButton.png */,
-				5289CA8A20BC48D700268F2B /* removeButton2.png */,
 				529E70C82094E6F7004F9877 /* Assets.xcassets */,
-				52BC783E2095330F0022F4B7 /* twitch.ttf */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -158,11 +163,11 @@
 			isa = PBXGroup;
 			children = (
 				5210266520C001E7002D6A3C /* TwitchAlertController */,
+				5204067A20C156AA0007A567 /* HistoryListController */,
 				528C5BA520A874CF004C9A61 /* TwitchTabBarController.swift */,
 				529E70C32094E6F6004F9877 /* SearchViewController.swift */,
 				52224F5620A04B04001CE8AB /* ProfileViewController.swift */,
 				5248F32B20B0898E00EAB202 /* UsersPageViewController.swift */,
-				52BC783C2095164C0022F4B7 /* HistoryListController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -244,7 +249,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				52BC783F209533BA0022F4B7 /* twitch.ttf in Resources */,
-				5289CA8C20BC48D700268F2B /* removeButton2.png in Resources */,
 				5289CA8D20BC48D700268F2B /* removeButton.png in Resources */,
 				529E70CC2094E6F7004F9877 /* LaunchScreen.storyboard in Resources */,
 				5273FBC820C0685400A3C95E /* fish.jpg in Resources */,
