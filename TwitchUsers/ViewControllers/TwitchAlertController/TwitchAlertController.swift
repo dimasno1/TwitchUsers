@@ -142,7 +142,6 @@ class TwitchAlertController: UIViewController {
         actionForSender.executeHandler()
     }
     
-    private var handler: (() -> Void)?
     private var alertView = UIView()
     private var backgroundImageView = UIImageView()
     private let titleLabel = UILabel()

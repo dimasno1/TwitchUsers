@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		124A0803958A54CBC25B667D /* libPods-TwitchUsers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D15740759A113F686BA5637 /* libPods-TwitchUsers.a */; };
+		5204067920C13E600007A567 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5204067820C13E600007A567 /* AlertView.swift */; };
 		5210266220BFFD13002D6A3C /* TwitchAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5210266120BFFD13002D6A3C /* TwitchAlertController.swift */; };
 		5210266420C001DF002D6A3C /* TwitchAlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5210266320C001DF002D6A3C /* TwitchAlertAction.swift */; };
 		52224F5720A04B04001CE8AB /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52224F5620A04B04001CE8AB /* ProfileViewController.swift */; };
@@ -16,7 +17,6 @@
 		524A6AAF20AF1A9C0087A7FC /* UserMetaHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A6AAE20AF1A9C0087A7FC /* UserMetaHandler.swift */; };
 		524A6AB120AF27EA0087A7FC /* VideoMetaHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A6AB020AF27EA0087A7FC /* VideoMetaHandler.swift */; };
 		524B81C820AB43EC004F4C14 /* SearchHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524B81C720AB43EC004F4C14 /* SearchHistory.swift */; };
-		5273FBC620C0650300A3C95E /* funnyOrc.png in Resources */ = {isa = PBXBuildFile; fileRef = 5273FBC520C0650300A3C95E /* funnyOrc.png */; };
 		5273FBC820C0685400A3C95E /* fish.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5273FBC720C0685400A3C95E /* fish.jpg */; };
 		5276964120B4893700B1CD81 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5276964020B4893700B1CD81 /* Users.swift */; };
 		5276964320B48F0F00B1CD81 /* Meta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5276964220B48F0F00B1CD81 /* Meta.swift */; };
@@ -36,6 +36,7 @@
 /* Begin PBXFileReference section */
 		0D15740759A113F686BA5637 /* libPods-TwitchUsers.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TwitchUsers.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4010F0FABA4046469F5C97EF /* Pods-TwitchUsers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitchUsers.release.xcconfig"; path = "Pods/Target Support Files/Pods-TwitchUsers/Pods-TwitchUsers.release.xcconfig"; sourceTree = "<group>"; };
+		5204067820C13E600007A567 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		5210266120BFFD13002D6A3C /* TwitchAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchAlertController.swift; sourceTree = "<group>"; };
 		5210266320C001DF002D6A3C /* TwitchAlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchAlertAction.swift; sourceTree = "<group>"; };
 		52224F5620A04B04001CE8AB /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -45,7 +46,6 @@
 		524A6AAE20AF1A9C0087A7FC /* UserMetaHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMetaHandler.swift; sourceTree = "<group>"; };
 		524A6AB020AF27EA0087A7FC /* VideoMetaHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMetaHandler.swift; sourceTree = "<group>"; };
 		524B81C720AB43EC004F4C14 /* SearchHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistory.swift; sourceTree = "<group>"; };
-		5273FBC520C0650300A3C95E /* funnyOrc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = funnyOrc.png; sourceTree = "<group>"; };
 		5273FBC720C0685400A3C95E /* fish.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fish.jpg; sourceTree = "<group>"; };
 		5276964020B4893700B1CD81 /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		5276964220B48F0F00B1CD81 /* Meta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meta.swift; sourceTree = "<group>"; };
@@ -82,6 +82,7 @@
 			children = (
 				5210266120BFFD13002D6A3C /* TwitchAlertController.swift */,
 				5210266320C001DF002D6A3C /* TwitchAlertAction.swift */,
+				5204067820C13E600007A567 /* AlertView.swift */,
 			);
 			path = TwitchAlertController;
 			sourceTree = "<group>";
@@ -145,7 +146,6 @@
 			isa = PBXGroup;
 			children = (
 				5273FBC720C0685400A3C95E /* fish.jpg */,
-				5273FBC520C0650300A3C95E /* funnyOrc.png */,
 				5289CA8B20BC48D700268F2B /* removeButton.png */,
 				5289CA8A20BC48D700268F2B /* removeButton2.png */,
 				529E70C82094E6F7004F9877 /* Assets.xcassets */,
@@ -249,7 +249,6 @@
 				529E70CC2094E6F7004F9877 /* LaunchScreen.storyboard in Resources */,
 				5273FBC820C0685400A3C95E /* fish.jpg in Resources */,
 				529E70C92094E6F7004F9877 /* Assets.xcassets in Resources */,
-				5273FBC620C0650300A3C95E /* funnyOrc.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +296,7 @@
 				529E70C22094E6F6004F9877 /* AppDelegate.swift in Sources */,
 				5276964320B48F0F00B1CD81 /* Meta.swift in Sources */,
 				524A6AAF20AF1A9C0087A7FC /* UserMetaHandler.swift in Sources */,
+				5204067920C13E600007A567 /* AlertView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
