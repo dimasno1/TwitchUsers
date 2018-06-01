@@ -129,7 +129,7 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
             make.right.equalToSuperview().offset(-30)
         }
         
-        removeButton.setImage(UIImage(named: "removeButton2.png"), for: .normal)
+        removeButton.setImage(UIImage(named: "removeButton.png"), for: .normal)
         removeButton.snp.makeConstraints { make in
             make.height.equalTo(photoFrame).multipliedBy(0.3)
             make.width.equalTo(removeButton.snp.height)

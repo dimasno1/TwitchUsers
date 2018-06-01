@@ -21,6 +21,11 @@ class TwitchAlertController: UIViewController {
         actions.forEach { twitchAlertActions.append($0) }
     }
     
+    override func viewWillLayoutSubviews() {
+        alertView?.setNeedsLayout()
+        alertView?.layoutIfNeeded()
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -39,7 +44,7 @@ class TwitchAlertController: UIViewController {
         self.init(nibName: nil, bundle: nil)
         self.titleLabel.text = title ?? "Title"
         self.messageLabel.text = message ?? "Message"
-        self.backgroundImageView.image = backgroundImage
+        self.backgroundImage = backgroundImage
     }
     
     override func viewDidLoad() {
@@ -50,74 +55,24 @@ class TwitchAlertController: UIViewController {
     private func setup() {
         
         view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
-        view.addSubview(alertView)
         
         titleLabel.adjustsFontSizeToFitWidth = true
-        titleLabel.layer.shadowOffset = CGSize(width: 9, height: 9)
-        titleLabel.layer.shadowRadius = 12
-        titleLabel.layer.shadowOpacity = 1
         titleLabel.textAlignment = .center
         
         messageLabel.adjustsFontSizeToFitWidth = true
-        messageLabel.layer.shadowOffset = CGSize(width: 9, height: 9)
-        messageLabel.layer.shadowRadius = 12
-        messageLabel.layer.shadowOpacity = 1
         messageLabel.textAlignment = .center
-        
-        alertView.center = view.center
-        alertView.backgroundColor = mainTwitchColor
-        alertView.layer.cornerRadius = 30
-        alertView.bounds.size = CGSize(width: 200, height: 300)
         
         buttonsStackView.axis = .vertical
         buttonsStackView.distribution = .fillEqually
         buttonsStackView.layer.masksToBounds = true
         
-        backgroundImageView.contentMode = .scaleAspectFill
-        backgroundImageView.layer.cornerRadius = 30
-        backgroundImageView.clipsToBounds = true
-        
         actionButtons = makeButtonsFromActions(array: twitchAlertActions)
         buttonsStackView.addArrangedSubviews(views: actionButtons)
         
-        if (backgroundImageView.image != nil){
-            alertView.addSubview(backgroundImageView)
-        }
+        alertView = AlertView(titleView: titleLabel, messageView: messageLabel, buttonsStack: buttonsStackView, backgroundImage: backgroundImage)
         
-        alertView.addSubviews(titleLabel, messageLabel)
-    
-        if  !buttonsStackView.arrangedSubviews.isEmpty {
-            alertView.addSubview(buttonsStackView)
-        }
-        
-        backgroundImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-        }
-        
-        titleLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(30)
-            make.bottom.equalTo(titleLabel.snp.top).offset(20)
-            make.left.equalToSuperview().offset(10)
-            make.right.equalToSuperview().offset(-10)
-        }
-        
-        messageLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(5)
-            make.bottom.equalTo(messageLabel.snp.top).offset(20)
-            make.centerX.equalToSuperview()
-            make.left.equalToSuperview().offset(10)
-            make.right.equalToSuperview().offset(-10)
-        }
-        
-        buttonsStackView.snp.makeConstraints { make in
-            make.top.equalTo(messageLabel.snp.bottom).offset(10)
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.bottom.equalToSuperview()
+        if alertView != nil {
+            view.addSubview(alertView!)
         }
     }
     
@@ -142,9 +97,8 @@ class TwitchAlertController: UIViewController {
         actionForSender.executeHandler()
     }
     
-    private var handler: (() -> Void)?
-    private var alertView = UIView()
-    private var backgroundImageView = UIImageView()
+    private var alertView: AlertView?
+    private var backgroundImage: UIImage?
     private let titleLabel = UILabel()
     private let messageLabel = UILabel()
     private let buttonsStackView = UIStackView()

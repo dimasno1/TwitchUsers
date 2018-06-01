@@ -33,6 +33,7 @@ extension TwitchAlertAction {
         
         case destructive
         case common
+        case white
         
         func color() -> UIColor{
             switch self {
@@ -40,6 +41,8 @@ extension TwitchAlertAction {
                 return UIColor.red
             case .common:
                 return UIColor.lightGray
+            case .white:
+                return UIColor.white
             }
         }
     }
