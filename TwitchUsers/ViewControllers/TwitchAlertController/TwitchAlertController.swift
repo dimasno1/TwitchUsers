@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SnapKit
 
 class TwitchAlertController: UIViewController {
     
@@ -22,8 +21,8 @@ class TwitchAlertController: UIViewController {
     }
     
     override func viewWillLayoutSubviews() {
-        alertView?.setNeedsLayout()
-        alertView?.layoutIfNeeded()
+        alertView?.center = view.center
+        alertView?.bounds.size = CGSize(width: 200, height: 300)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -37,10 +36,10 @@ class TwitchAlertController: UIViewController {
     }
     
     convenience init(title: String?, message: String?) {
-        self.init(title: title, message: message, backgroundImage: nil)
+        self.init(title: title, message: message, with : nil)
     }
     
-    convenience init(title: String?, message: String?, backgroundImage: UIImage?) {
+    convenience init(title: String?, message: String?, with backgroundImage: UIImage?) {
         self.init(nibName: nil, bundle: nil)
         self.titleLabel.text = title ?? "Title"
         self.messageLabel.text = message ?? "Message"
@@ -53,7 +52,6 @@ class TwitchAlertController: UIViewController {
     }
     
     private func setup() {
-        
         view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
         
         titleLabel.adjustsFontSizeToFitWidth = true

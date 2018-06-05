@@ -18,10 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootController = TwitchTabBarController()
         window?.rootViewController = rootController
         window?.makeKeyAndVisible()
-
+    
         return true
     }
-    
 }
 
 

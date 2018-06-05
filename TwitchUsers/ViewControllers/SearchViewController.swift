@@ -25,7 +25,7 @@ class SearchViewController: UIViewController {
     func updateHistory(with userMeta: Meta) {
         SearchHistory.addUser(user: userMeta)
     }
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
@@ -37,6 +37,7 @@ class SearchViewController: UIViewController {
         if mainLabel.text != commonText{
             mainLabel.text = commonText
         }
+        restoreHistory()
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -52,7 +53,7 @@ class SearchViewController: UIViewController {
         mainLabel.sizeToFit()
         makeConstraits()
         searchBar.placeholder = "write username here..."
-        twitchDataService.delegate = self
+        twitchNetworkDataService.delegate = self
     }
     
     private func makeConstraits() {
@@ -70,14 +71,19 @@ class SearchViewController: UIViewController {
         }
     }
     
+    private func restoreHistory() {
+        storageService.readFromDisk(forCheck: false)
+    }
+    
     private let commonText = "twitch users"
     private let mainLabel = UILabel()
     private let searchBar = MainSearchBar()
     private let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
     private var profileController = ProfileViewController()
     private var usersViewController = UsersPageViewController()
-    private let twitchDataService = TwitchDataService()
+    private let twitchNetworkDataService = TwitchDataService()
     private var alertController = TwitchAlertController()
+    private var storageService = StorageService()
 }
 
 //UIColor extensions:
@@ -109,9 +115,9 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.startActivityIndicatorAnimation()
-    
+        
         let names = searchBar.text?.lowercased().replacingOccurrences(of: " ", with: "")
-        twitchDataService.searchForUser(with: names ?? "")
+        twitchNetworkDataService.searchForUser(with: names ?? "")
         searchBar.resignFirstResponder()
     }
 }
@@ -127,12 +133,15 @@ extension SearchViewController: TwitchDataServiceDelegate {
             usersViewController.addAsChildViewContoller(profileViewController: self.profileController)
         }
         self.present(usersViewController, animated: true, completion: nil)
+    
+        storageService = StorageService(userMeta: SearchHistory.historyOfSearch)
+        storageService.saveToDisk()
     }
     
     func didntFindUser(sessionDataHandler: UserMetaHandler, error: String) {
         self.stopActivityIndicatorAnimation()
         let image = UIImage(named: "fish.jpg")
-        alertController = TwitchAlertController(title: "No such user", message: "Try again", backgroundImage: image)
+        alertController = TwitchAlertController(title: "No such user", message: "Try again", with: image)
     
         let retryAction = TwitchAlertAction(alertTitle: "Retry",
                                             style: .white,
@@ -141,10 +150,8 @@ extension SearchViewController: TwitchDataServiceDelegate {
                                                         self.searchBar.becomeFirstResponder()
                                                         self.dismiss(animated: true, completion: nil)
                                                         self.searchBar.delegate?.searchBarSearchButtonClicked?(self.searchBar)
-                                                    }
-        )
-        
-        let closeAction = TwitchAlertAction(alertTitle: "Close", style: .destructive, handler: { self.dismiss(animated: true, completion: nil)})
+                                                    })
+        let closeAction = TwitchAlertAction(alertTitle: "Cancel", style: .destructive, handler: { self.dismiss(animated: true, completion: nil) })
         
         alertController.addActions(retryAction, closeAction)
         present(alertController, animated: true, completion: nil)

@@ -28,6 +28,10 @@ class HistoryListController: UICollectionViewController{
         subsribeForNotifications()
     }
     
+    deinit {
+        notificationCenter.removeObserver(self)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -123,7 +127,8 @@ class HistoryListController: UICollectionViewController{
     }
     
     private func subsribeForNotifications() {
-        notificationCenter.addObserver(forName: .searchHistoryAdd, object: nil, queue: nil, using: {(notification) in
+        
+        tokens.append(notificationCenter.addObserver(forName: .searchHistoryAdd, object: nil, queue: nil, using: {(notification) in
             guard let userInfo = notification.userInfo, let user = userInfo["user"] as? Meta else { return }
             self.collectionView?.performBatchUpdates({
                 self.users.append(user)
@@ -131,8 +136,9 @@ class HistoryListController: UICollectionViewController{
                 self.collectionView?.insertItems(at: [index])
             }, completion: nil)
             self.state = .nonEmpty
-        })
-        notificationCenter.addObserver(forName: .searchHistoryRemove, object: nil, queue: nil, using: { (notification) in
+        }))
+        
+        tokens.append(notificationCenter.addObserver(forName: .searchHistoryRemove, object: nil, queue: nil, using: { (notification) in
             guard let userInfo = notification.userInfo, let user = userInfo["user"] as? Meta else { return }
             if self.users.contains(user) {
                 guard let removingUserIndex = self.users.index(of: user) else { return }
@@ -140,7 +146,7 @@ class HistoryListController: UICollectionViewController{
                 self.state = self.users.count < 1 ? .empty : .nonEmpty
                 self.collectionView?.reloadData()
             }
-        })
+        }))
     }
     
     private var state: State = .empty
@@ -148,6 +154,7 @@ class HistoryListController: UICollectionViewController{
     private let noUsersLabel = UILabel()
     private let notificationCenter = NotificationCenter.default
     private let editButton = UIButton(type: UIButtonType.system)
+    private var tokens: Array<NSObjectProtocol> = []
 }
 
 

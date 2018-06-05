@@ -33,5 +33,4 @@ class TwitchTabBarController: UITabBarController{
         let controller = HistoryListController(collectionViewLayout: layout)
         return controller
     }()
- 
 }

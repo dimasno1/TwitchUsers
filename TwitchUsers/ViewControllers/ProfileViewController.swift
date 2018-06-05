@@ -94,6 +94,7 @@ class ProfileViewController: UIViewController{
             make.right.equalTo(profileImageView)
             make.bottom.equalTo(view).offset(-20)
         }
+        
         closeButton.snp.makeConstraints { make in
             make.right.equalTo(view).offset(-10)
             make.top.equalTo(view).offset(10)

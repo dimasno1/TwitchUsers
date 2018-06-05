@@ -11,6 +11,9 @@
 		5204067920C13E600007A567 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5204067820C13E600007A567 /* AlertView.swift */; };
 		5210266220BFFD13002D6A3C /* TwitchAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5210266120BFFD13002D6A3C /* TwitchAlertController.swift */; };
 		5210266420C001DF002D6A3C /* TwitchAlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5210266320C001DF002D6A3C /* TwitchAlertAction.swift */; };
+		521830E320C6BAF600695CE3 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521830E220C6BAF600695CE3 /* StorageService.swift */; };
+		521830E520C6BB8500695CE3 /* Videos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521830E420C6BB8500695CE3 /* Videos.swift */; };
+		521830E720C6BB8F00695CE3 /* VidMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521830E620C6BB8F00695CE3 /* VidMeta.swift */; };
 		52224F5720A04B04001CE8AB /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52224F5620A04B04001CE8AB /* ProfileViewController.swift */; };
 		5248F32C20B0898E00EAB202 /* UsersPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5248F32B20B0898E00EAB202 /* UsersPageViewController.swift */; };
 		52499FD6209CBF9100F949D1 /* TwitchDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52499FD5209CBF9100F949D1 /* TwitchDataService.swift */; };
@@ -38,6 +41,9 @@
 		5204067820C13E600007A567 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		5210266120BFFD13002D6A3C /* TwitchAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchAlertController.swift; sourceTree = "<group>"; };
 		5210266320C001DF002D6A3C /* TwitchAlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchAlertAction.swift; sourceTree = "<group>"; };
+		521830E220C6BAF600695CE3 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		521830E420C6BB8500695CE3 /* Videos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Videos.swift; sourceTree = "<group>"; };
+		521830E620C6BB8F00695CE3 /* VidMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VidMeta.swift; sourceTree = "<group>"; };
 		52224F5620A04B04001CE8AB /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		523C260320A774100020EAC0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		5248F32B20B0898E00EAB202 /* UsersPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersPageViewController.swift; sourceTree = "<group>"; };
@@ -94,19 +100,38 @@
 			path = TwitchAlertController;
 			sourceTree = "<group>";
 		};
-		524CACA520B31376001E87F0 /* DataService */ = {
+		521830E020C6BA9700695CE3 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				521830E120C6BAA200695CE3 /* StorageService */,
+				524CACA520B31376001E87F0 /* NetworkDataService */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		521830E120C6BAA200695CE3 /* StorageService */ = {
+			isa = PBXGroup;
+			children = (
+				521830E220C6BAF600695CE3 /* StorageService.swift */,
+			);
+			path = StorageService;
+			sourceTree = "<group>";
+		};
+		524CACA520B31376001E87F0 /* NetworkDataService */ = {
 			isa = PBXGroup;
 			children = (
 				52499FD5209CBF9100F949D1 /* TwitchDataService.swift */,
 				524A6AAE20AF1A9C0087A7FC /* UserMetaHandler.swift */,
 				524A6AB020AF27EA0087A7FC /* VideoMetaHandler.swift */,
 			);
-			path = DataService;
+			path = NetworkDataService;
 			sourceTree = "<group>";
 		};
 		527877D920AD9FF700C0E207 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				521830E420C6BB8500695CE3 /* Videos.swift */,
+				521830E620C6BB8F00695CE3 /* VidMeta.swift */,
 				5276964020B4893700B1CD81 /* Users.swift */,
 				5276964220B48F0F00B1CD81 /* Meta.swift */,
 				524B81C720AB43EC004F4C14 /* SearchHistory.swift */,
@@ -139,8 +164,8 @@
 				529E70C12094E6F6004F9877 /* AppDelegate.swift */,
 				52F67DDF2098C0240032D121 /* ViewControllers */,
 				52BC783A209503770022F4B7 /* MainSearchBar.swift */,
-				524CACA520B31376001E87F0 /* DataService */,
 				527877D920AD9FF700C0E207 /* Model */,
+				521830E020C6BA9700695CE3 /* Services */,
 				529E70CA2094E6F7004F9877 /* LaunchScreen.storyboard */,
 				529E70CD2094E6F7004F9877 /* Info.plist */,
 				52BC7840209535B90022F4B7 /* Resources */,
@@ -288,10 +313,13 @@
 				529E70C42094E6F6004F9877 /* SearchViewController.swift in Sources */,
 				528C5BA620A874CF004C9A61 /* TwitchTabBarController.swift in Sources */,
 				5210266220BFFD13002D6A3C /* TwitchAlertController.swift in Sources */,
+				521830E520C6BB8500695CE3 /* Videos.swift in Sources */,
 				52BC7842209539E60022F4B7 /* TwitchUserCell.swift in Sources */,
 				524A6AB120AF27EA0087A7FC /* VideoMetaHandler.swift in Sources */,
 				52BC783D2095164C0022F4B7 /* HistoryListController.swift in Sources */,
+				521830E320C6BAF600695CE3 /* StorageService.swift in Sources */,
 				5276964120B4893700B1CD81 /* Users.swift in Sources */,
+				521830E720C6BB8F00695CE3 /* VidMeta.swift in Sources */,
 				52BC783B209503770022F4B7 /* MainSearchBar.swift in Sources */,
 				5248F32C20B0898E00EAB202 /* UsersPageViewController.swift in Sources */,
 				52499FD6209CBF9100F949D1 /* TwitchDataService.swift in Sources */,

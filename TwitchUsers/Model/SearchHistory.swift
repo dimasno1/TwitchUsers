@@ -13,12 +13,6 @@ class SearchHistory {
     private static var usersHistory = Set<Meta>()
     private static let notificationCenter = NotificationCenter.default
     
-    static let shared = SearchHistory()
-    
-    private init() {
-        
-    }
-    
     class func addUser(user: Meta){
         if !usersHistory.contains(user){
             usersHistory.insert(user)
@@ -37,6 +31,12 @@ class SearchHistory {
             usersHistory.remove(user)
             let removeNotification = Notification(name: .searchHistoryRemove, object: self, userInfo: ["user": user])
             notificationCenter.post(removeNotification)
+        }
+    }
+    
+    static var historyOfSearch: [Meta] {
+        get{
+            return Array(usersHistory)
         }
     }
 

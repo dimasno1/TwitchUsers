@@ -11,22 +11,14 @@ import UIKit
 class AlertView: UIView {
     
     public convenience init(titleView: UIView, messageView: UIView, buttonsStack: UIStackView, backgroundImage: UIImage?) {
-        
         self.init(frame: CGRect.zero)
         self.titleView = titleView
         self.messageView = messageView
         self.buttonsStackView = buttonsStack
         self.backgroundImageView.image = backgroundImage
-        
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
         self.backgroundColor = mainTwitchColor
-        center = superview?.center ?? CGPoint.zero
-        bounds.size = CGSize(width: 300, height: 300)
     }
-    
+
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         addSubviews(backgroundImageView, titleView, messageView, buttonsStackView)
@@ -35,7 +27,6 @@ class AlertView: UIView {
     }
     
     private func makeConstraits() {
-        
         titleView.translatesAutoresizingMaskIntoConstraints = false
         messageView.translatesAutoresizingMaskIntoConstraints = false
         buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -60,18 +51,18 @@ class AlertView: UIView {
         buttonsStackView.leadingAnchor.constraint(equalTo: titleView.leadingAnchor).isActive = true
         buttonsStackView.trailingAnchor.constraint(equalTo: titleView.trailingAnchor).isActive = true
         buttonsStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        
     }
     
     private func setup() {
-        
+        isOpaque = true
         clipsToBounds = true
         layer.cornerRadius = AlertView.cornerRadiusConstant
         
         backgroundImageView.contentMode = .scaleAspectFill
-        backgroundImageView.layer.cornerRadius = AlertView.cornerRadiusConstant
-        backgroundImageView.clipsToBounds = true
-        
+    }
+    
+    deinit {
+        backgroundImageView.image = nil
     }
     
     private let backgroundImageView = UIImageView()
@@ -81,7 +72,6 @@ class AlertView: UIView {
 }
 
 extension AlertView {
-    
     static let heightConstant: CGFloat = 40
     static let topOffsetConstant: CGFloat = 10
     static let cornerRadiusConstant: CGFloat = 30
