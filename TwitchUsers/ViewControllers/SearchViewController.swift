@@ -25,11 +25,12 @@ class SearchViewController: UIViewController {
     func updateHistory(with userMeta: Meta) {
         SearchHistory.addUser(user: userMeta)
     }
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        self.setupView()
+        setupView()
+        restoreHistory()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,7 +38,6 @@ class SearchViewController: UIViewController {
         if mainLabel.text != commonText{
             mainLabel.text = commonText
         }
-        restoreHistory()
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -133,7 +133,7 @@ extension SearchViewController: TwitchDataServiceDelegate {
             usersViewController.addAsChildViewContoller(profileViewController: self.profileController)
         }
         self.present(usersViewController, animated: true, completion: nil)
-    
+        
         storageService = StorageService(userMeta: SearchHistory.historyOfSearch)
         storageService.saveToDisk()
     }
@@ -142,15 +142,15 @@ extension SearchViewController: TwitchDataServiceDelegate {
         self.stopActivityIndicatorAnimation()
         let image = UIImage(named: "fish.jpg")
         alertController = TwitchAlertController(title: "No such user", message: "Try again", with: image)
-    
+        
         let retryAction = TwitchAlertAction(alertTitle: "Retry",
                                             style: .white,
                                             handler:
-                                                    {
-                                                        self.searchBar.becomeFirstResponder()
-                                                        self.dismiss(animated: true, completion: nil)
-                                                        self.searchBar.delegate?.searchBarSearchButtonClicked?(self.searchBar)
-                                                    })
+            {
+                self.searchBar.becomeFirstResponder()
+                self.dismiss(animated: true, completion: nil)
+                self.searchBar.delegate?.searchBarSearchButtonClicked?(self.searchBar)
+        })
         let closeAction = TwitchAlertAction(alertTitle: "Cancel", style: .destructive, handler: { self.dismiss(animated: true, completion: nil) })
         
         alertController.addActions(retryAction, closeAction)

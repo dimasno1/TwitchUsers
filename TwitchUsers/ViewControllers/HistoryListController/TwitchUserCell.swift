@@ -42,7 +42,7 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
         bioTextView.text = nil
         removeButton.imageView?.image = nil
     }
-  
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -50,20 +50,13 @@ class TwitchUserCell: UICollectionViewCell, UITextViewDelegate{
     func animate() {
         photoFrame.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
         textStackView.alpha = 0
-        UIView.animate(withDuration: 1,
-                       animations:
-            { [weak photoFrame, textStackView] in
-                photoFrame?.transform = .identity
-                textStackView.alpha = 1
-                photoFrame?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-                photoFrame?.transform = .identity
-                photoFrame?.layer.transform = CATransform3DMakeRotation(CGFloat.pi, 1, 0, 0)
-            },
-                       completion: { _ in
-                        UIView.animate(withDuration: 0.5) {
-                            self.photoFrame.layer.transform = CATransform3DIdentity
-                        }
-        })
+        
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: { [weak photoFrame, textStackView] in
+            
+            photoFrame?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+            textStackView.alpha = 1
+            photoFrame?.transform = .identity
+            }, completion: nil )
     }
     
     func animateForCurrentState(state: State) {

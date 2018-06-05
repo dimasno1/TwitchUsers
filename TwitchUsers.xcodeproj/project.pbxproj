@@ -187,12 +187,12 @@
 		52F67DDF2098C0240032D121 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				5210266520C001E7002D6A3C /* TwitchAlertController */,
-				5204067A20C156AA0007A567 /* HistoryListController */,
 				528C5BA520A874CF004C9A61 /* TwitchTabBarController.swift */,
 				529E70C32094E6F6004F9877 /* SearchViewController.swift */,
 				52224F5620A04B04001CE8AB /* ProfileViewController.swift */,
 				5248F32B20B0898E00EAB202 /* UsersPageViewController.swift */,
+				5210266520C001E7002D6A3C /* TwitchAlertController */,
+				5204067A20C156AA0007A567 /* HistoryListController */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

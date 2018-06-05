@@ -54,7 +54,7 @@ class HistoryListController: UICollectionViewController{
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        mode == .editing ? switchEditingState() : nil
+        editingState == .editing ? switchEditingState() : nil
     }
     
     //MARK: CollectionView DataSource:
@@ -88,8 +88,8 @@ class HistoryListController: UICollectionViewController{
     
     @objc func switchEditingState() {
         guard let cells = collectionView?.visibleCells as? [TwitchUserCell] else { return }
-        mode = mode == .editing ? .standart : .editing
-        switch mode {
+        editingState = editingState == .editing ? .standart : .editing
+        switch editingState {
         case .editing:
             cells.forEach {$0.animateForCurrentState(state: .editing)}
         case .standart:
@@ -150,7 +150,7 @@ class HistoryListController: UICollectionViewController{
     }
     
     private var state: State = .empty
-    private var mode: EditingState = .standart
+    private var editingState: EditingState = .standart
     private let noUsersLabel = UILabel()
     private let notificationCenter = NotificationCenter.default
     private let editButton = UIButton(type: UIButtonType.system)
