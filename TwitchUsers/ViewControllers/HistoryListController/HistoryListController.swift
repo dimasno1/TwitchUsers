@@ -149,6 +149,10 @@ class HistoryListController: UICollectionViewController{
         }))
     }
     
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
     private var state: State = .empty
     private var editingState: EditingState = .standart
     private let noUsersLabel = UILabel()

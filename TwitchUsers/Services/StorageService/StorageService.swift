@@ -20,10 +20,9 @@ class StorageService: NSObject {
         let encoder = JSONEncoder.init()
         let userJSONFile = try? encoder.encode(users)
         writingData = userJSONFile
-        print(needToWrite)
-        if needToWrite {
+        print(shouldWrite)
+        if shouldWrite {
             guard let url = Storage.users.getURL() else { return }
-            
             do {
                 try userJSONFile?.write(to: url)
             } catch {
@@ -47,7 +46,7 @@ class StorageService: NSObject {
         }
     }
     
-    private var needToWrite: Bool {
+    private var shouldWrite: Bool {
         readFromDisk(forCheck: true)
         return writingData != readedData
     }

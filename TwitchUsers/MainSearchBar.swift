@@ -12,7 +12,7 @@ class MainSearchBar: UISearchBar {
    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        barStyle = .blackTranslucent
+        barStyle = .blackOpaque
         tintColor = secondTwitchColor
         keyboardAppearance = .dark
         showsCancelButton = true
